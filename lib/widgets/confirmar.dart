@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Contrasena extends StatelessWidget {
-  const Contrasena({Key? key}) : super(key: key);
+class Confirmar extends StatelessWidget {
+  const Confirmar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class Contrasena extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 10.0),
                 child: Text(
-                  'Contraseña',
+                  'Confirmar contraseña',
                   style: TextStyle(color: Colors.white, fontSize: 16.0),
                 ),
               ),

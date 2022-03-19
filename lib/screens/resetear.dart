@@ -1,9 +1,8 @@
 import 'package:camp_express/widgets/input.dart';
-import 'package:camp_express/widgets/contrasena.dart';
 import 'package:flutter/material.dart';
 
-class Login extends StatelessWidget {
-  const Login({Key? key}) : super(key: key);
+class Resetear extends StatelessWidget {
+  const Resetear({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +22,11 @@ class Login extends StatelessWidget {
               ]),
           Form(
             child: Container(
+              margin: const EdgeInsets.only(top: 50.0, bottom: 45),
               decoration: BoxDecoration(
                   color: Color.fromARGB(255, 78, 160, 62),
                   borderRadius: BorderRadius.all(Radius.circular(20.0))),
-              height: MediaQuery.of(context).size.height * 0.64,
+              height: 380,
               width: MediaQuery.of(context).size.width,
               child: Padding(
                   padding: EdgeInsets.fromLTRB(50.0, 36.0, 50, 0),
@@ -35,7 +35,7 @@ class Login extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
                         Text(
-                          'Inicio de sesión',
+                          'Resetear contraseña',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Raleway',
@@ -44,44 +44,38 @@ class Login extends StatelessWidget {
                           ),
                         ),
                         Input(),
-                        Contrasena(),
-                        TextButton(
-                            onPressed: () {
-                              Navigator.pushReplacementNamed(
-                                  context, "resetear");
-                            },
-                            child: const Text('Contraseña olvidada?',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    decoration: TextDecoration.underline))),
-                        ElevatedButton(
-                            onPressed: () {
-                              // Navigator.pushReplacementNamed(context, "/");
-                            },
-                            style: ElevatedButton.styleFrom(
-                                primary: Color.fromARGB(255, 215, 233, 167),
-                                fixedSize: Size(314.0, 70.0),
-                                onPrimary: Color.fromARGB(255, 78, 160, 62),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0)),
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 22),
-                                textStyle: const TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w700)),
-                            child: Text('Iniciar sesión')),
+                        Container(
+                          padding: EdgeInsets.only(top: 45),
+                          child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.pushReplacementNamed(context, "/");
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  primary: Color.fromARGB(255, 215, 233, 167),
+                                  fixedSize: Size(314.0, 70.0),
+                                  onPrimary: Color.fromARGB(255, 78, 160, 62),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(10.0)),
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 22),
+                                  textStyle: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w700)),
+                              child: Text('Resetear')),
+                        ),
                         Container(
                             alignment: Alignment.center,
                             child: TextButton(
                               child: Text(
-                                'Crear cuenta',
+                                'Iniciar sesión',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 17.0,
                                     decoration: TextDecoration.underline),
                               ),
                               onPressed: () {
-                                Navigator.pushReplacementNamed(
-                                    context, "registro");
+                                Navigator.pushReplacementNamed(context, "/");
                               },
                             )),
                       ],
