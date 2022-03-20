@@ -51,7 +51,8 @@ class Registro extends StatelessWidget {
                           padding: EdgeInsets.only(top: 45),
                           child: ElevatedButton(
                               onPressed: () {
-                                Navigator.pushReplacementNamed(context, "/");
+                                Navigator.pushReplacementNamed(
+                                    context, "login");
                               },
                               style: ElevatedButton.styleFrom(
                                   primary: Color.fromARGB(255, 215, 233, 167),
@@ -78,7 +79,8 @@ class Registro extends StatelessWidget {
                                     decoration: TextDecoration.underline),
                               ),
                               onPressed: () {
-                                Navigator.pushReplacementNamed(context, "/");
+                                Navigator.pushReplacementNamed(
+                                    context, "login");
                               },
                             )),
                       ],
