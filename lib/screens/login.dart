@@ -56,7 +56,7 @@ class Login extends StatelessWidget {
                                     decoration: TextDecoration.underline))),
                         ElevatedButton(
                             onPressed: () {
-                              // Navigator.pushReplacementNamed(context, "/");
+                              Navigator.pushReplacementNamed(context, "home");
                             },
                             style: ElevatedButton.styleFrom(
                                 primary: Color.fromARGB(255, 215, 233, 167),
