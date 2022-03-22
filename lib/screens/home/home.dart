@@ -1,12 +1,9 @@
 import 'package:camp_express/widgets/home/todos_los_productos.dart';
 import 'package:camp_express/widgets/home/construir_botones_productos.dart';
-import 'package:camp_express/widgets/home/bottom_nav_bar.dart';
 import 'package:camp_express/widgets/home/populares.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unicons/unicons.dart';
-
-import '../../widgets/home/bottom_nav_bar.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -24,7 +21,7 @@ class _HomeState extends State<Home> {
         bottomOpacity: 0.0,
         elevation: 0.0,
         shadowColor: Colors.transparent,
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         leading: Padding(
           padding: EdgeInsets.only(
             left: size.width * 0.05,
@@ -33,9 +30,9 @@ class _HomeState extends State<Home> {
             height: size.width * 0.1,
             width: size.width * 0.1,
             child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Color.fromARGB(255, 255, 255, 255),
-                  borderRadius: const BorderRadius.all(
+                  borderRadius: BorderRadius.all(
                     Radius.circular(
                       10,
                     ),
@@ -43,7 +40,7 @@ class _HomeState extends State<Home> {
                 ),
                 child: Icon(
                   UniconsLine.bars,
-                  color: Color.fromARGB(255, 78, 160, 62),
+                  color: const Color.fromARGB(255, 78, 160, 62),
                   size: size.height * 0.025,
                 )),
           ),
@@ -63,26 +60,31 @@ class _HomeState extends State<Home> {
               right: size.width * 0.05,
             ),
             child: Container(
-              height: size.width * 0.1,
-              width: size.width * 0.1,
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 255, 255, 255),
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(10),
+                height: size.width * 0.1,
+                width: size.width * 0.1,
+                decoration: const BoxDecoration(
+                  color: Color.fromARGB(255, 255, 255, 255),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10),
+                  ),
                 ),
-              ),
-              child: Icon(
-                UniconsLine.search,
-                color: Color.fromARGB(255, 78, 160, 62),
-                size: size.height * 0.025,
-              ),
-            ),
+                child: IconButton(
+                  icon: Icon(
+                    UniconsLine.search,
+                    color: const Color.fromARGB(255, 78, 160, 62),
+                    size: size.height * 0.025,
+                  ),
+                  onPressed: () {
+                    //
+                  },
+                  color: Colors.purple,
+                  iconSize: 40,
+                )),
           ),
         ],
       ),
-      bottomNavigationBar: buildBottomNavBar(0, size),
       body: Container(
-        color: Color.fromARGB(255, 255, 255, 255),
+        color: const Color.fromARGB(255, 255, 255, 255),
         child: ListView(
           children: [
             Padding(
@@ -96,7 +98,7 @@ class _HomeState extends State<Home> {
                   Text(
                     'Productos',
                     style: GoogleFonts.poppins(
-                      color: Color.fromARGB(255, 78, 160, 62),
+                      color: const Color.fromARGB(255, 78, 160, 62),
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
                     ),
@@ -105,7 +107,7 @@ class _HomeState extends State<Home> {
                     padding: EdgeInsets.only(right: size.width * 0.1),
                     child: Icon(
                       UniconsLine.search_alt,
-                      color: Color.fromARGB(255, 78, 160, 62),
+                      color: const Color.fromARGB(255, 78, 160, 62),
                       size: size.width * 0.06,
                     ),
                   ),
