@@ -6,24 +6,18 @@ import 'package:unicons/unicons.dart';
 
 import '../../widgets/details/cantidad.dart';
 
-class DetailsPage extends StatefulWidget {
+class Detalles extends StatefulWidget {
   final String nombre;
   final int precio;
   final String cantidad;
-  //final String ram;
-  //final String processor;
-  // final String wifi;
   final double rating;
   final String image;
 
-  const DetailsPage({
+  const Detalles({
     Key? key,
     required this.nombre,
     required this.precio,
     required this.cantidad,
-    //required this.ram,
-    //required this.processor,
-    // required this.wifi,
     required this.rating,
     required this.image,
   }) : super(key: key);
@@ -32,7 +26,7 @@ class DetailsPage extends StatefulWidget {
   _DetailsPageState createState() => _DetailsPageState();
 }
 
-class _DetailsPageState extends State<DetailsPage> {
+class _DetailsPageState extends State<Detalles> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -57,8 +51,8 @@ class _DetailsPageState extends State<DetailsPage> {
                   Get.back();
                 },
                 child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(
                       Radius.circular(10),
                     ),
                   ),
@@ -74,11 +68,6 @@ class _DetailsPageState extends State<DetailsPage> {
           automaticallyImplyLeading: false,
           titleSpacing: 0,
           leadingWidth: size.width * 0.15,
-          /* title: Image.asset(
-            'assets/images/logo.png',
-            height: size.height * 0.06,
-            width: size.width * 0.35,
-          ),*/
           centerTitle: true,
           actions: <Widget>[
             Padding(
@@ -86,8 +75,8 @@ class _DetailsPageState extends State<DetailsPage> {
               child: Container(
                 height: size.width * 0.1,
                 width: size.width * 0.1,
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(
                     Radius.circular(10),
                   ),
                 ),
@@ -104,7 +93,7 @@ class _DetailsPageState extends State<DetailsPage> {
       body: Container(
         height: size.height,
         width: size.width,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Color.fromARGB(255, 255, 255, 255),
         ),
         child: Padding(
@@ -153,7 +142,7 @@ class _DetailsPageState extends State<DetailsPage> {
                         widget.nombre,
                         textAlign: TextAlign.left,
                         style: GoogleFonts.lato(
-                          color: Color.fromARGB(255, 78, 160, 62),
+                          color: const Color.fromARGB(255, 78, 160, 62),
                           fontSize: size.width * 0.05,
                           fontWeight: FontWeight.bold,
                         ),
@@ -185,7 +174,7 @@ class _DetailsPageState extends State<DetailsPage> {
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               primary: Colors.white,
-                              padding: EdgeInsets.all(0.0),
+                              padding: const EdgeInsets.all(0.0),
                               elevation: 0.0),
                           onPressed: () {},
                           child: const Text(

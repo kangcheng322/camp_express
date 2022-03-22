@@ -24,13 +24,10 @@ Padding construirCuadro(int i, Size size) {
       child: InkWell(
         onTap: () {
           Get.to(
-            DetailsPage(
+            () => Detalles(
               nombre: productos[i]['nombre'],
               precio: productos[i]['precio'],
               cantidad: productos[i]['cantidad'],
-              //ram: productos[i]['ram'],
-              // processor: productos[i]['processor'],
-              // wifi: productos[i]['wifi'],
               rating: productos[i]['rating'],
               image: productos[i]['image'],
             ),
