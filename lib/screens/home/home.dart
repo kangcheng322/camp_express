@@ -1,10 +1,12 @@
 import 'package:camp_express/widgets/home/todos_los_productos.dart';
 import 'package:camp_express/widgets/home/construir_botones_productos.dart';
-import 'package:camp_express/widgets/bottom_nav_bar.dart';
+import 'package:camp_express/widgets/home/bottom_nav_bar.dart';
 import 'package:camp_express/widgets/home/populares.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unicons/unicons.dart';
+
+import '../../widgets/home/bottom_nav_bar.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);

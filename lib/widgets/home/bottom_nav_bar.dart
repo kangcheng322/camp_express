@@ -1,4 +1,4 @@
-import 'package:camp_express/widgets/bottom_nav_item.dart';
+import 'package:camp_express/widgets/home/bottom_nav_item.dart';
 import 'package:flutter/material.dart';
 import 'package:unicons/unicons.dart';
 

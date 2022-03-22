@@ -3,6 +3,8 @@ import 'package:camp_express/data/productos_data.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../screens/details/detalles.dart';
+
 Padding construirCuadro(int i, Size size) {
   return Padding(
     padding: EdgeInsets.only(
@@ -20,11 +22,20 @@ Padding construirCuadro(int i, Size size) {
             color: Color.fromARGB(255, 78, 160, 62),
           )),
       child: InkWell(
-        /*onTap: () {
+        onTap: () {
           Get.to(
-            DetailsPage( ),
+            DetailsPage(
+              nombre: productos[i]['nombre'],
+              precio: productos[i]['precio'],
+              cantidad: productos[i]['cantidad'],
+              //ram: productos[i]['ram'],
+              // processor: productos[i]['processor'],
+              // wifi: productos[i]['wifi'],
+              rating: productos[i]['rating'],
+              image: productos[i]['image'],
+            ),
           );
-        },*/
+        },
         child: Column(
           children: [
             Padding(
@@ -51,7 +62,7 @@ Padding construirCuadro(int i, Size size) {
               child: SizedBox(
                 width: size.width * 0.55,
                 child: Text(
-                  productos[i]['name'],
+                  productos[i]['nombre'],
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.left,
                   style: GoogleFonts.lato(
