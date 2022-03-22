@@ -1,8 +1,8 @@
-import 'package:camp_express/screens/login.dart';
-import 'package:camp_express/screens/registro.dart';
-import 'package:camp_express/screens/resetear.dart';
-import 'package:camp_express/screens/presentacion.dart';
-import 'package:camp_express/screens/home.dart';
+import 'package:camp_express/screens/inicio/login.dart';
+import 'package:camp_express/screens/inicio/registro.dart';
+import 'package:camp_express/screens/inicio/resetear.dart';
+import 'package:camp_express/screens/inicio/presentacion.dart';
+import 'package:camp_express/screens/home/home.dart';
 import 'package:flutter/material.dart';
 
 Map<String, WidgetBuilder> getApplicationRoutes() {

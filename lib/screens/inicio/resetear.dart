@@ -1,5 +1,7 @@
-import 'package:camp_express/widgets/input.dart';
+import 'package:camp_express/widgets/inicio/input.dart';
 import 'package:flutter/material.dart';
+
+import '../../widgets/inicio/input.dart';
 
 class Resetear extends StatelessWidget {
   const Resetear({Key? key}) : super(key: key);
