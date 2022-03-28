@@ -13,13 +13,12 @@ Padding construirCuadro(int i, Size size) {
     child: Container(
       width: size.width * 0.48,
       decoration: BoxDecoration(
-          // color: Colors.grey.withOpacity(0.1),
           color: Colors.white.withOpacity(0.7),
           borderRadius: const BorderRadius.all(
             Radius.circular(17),
           ),
           border: Border.all(
-            color: Color.fromARGB(255, 78, 160, 62),
+            color: const Color.fromARGB(255, 78, 160, 62),
           )),
       child: InkWell(
         onTap: () {
@@ -63,7 +62,7 @@ Padding construirCuadro(int i, Size size) {
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.left,
                   style: GoogleFonts.lato(
-                    color: Color.fromARGB(255, 78, 160, 62),
+                    color: const Color.fromARGB(255, 78, 160, 62),
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),

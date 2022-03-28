@@ -12,6 +12,6 @@ Map<String, WidgetBuilder> getApplicationRoutes() {
     'login': (BuildContext context) => const Login(),
     'registro': (BuildContext context) => const Registro(),
     'resetear': (BuildContext context) => const Resetear(),
-    'bottom_nav_bar': (BuildContext context) => const bottomNavBar(),
+    'bottom_nav_bar': (BuildContext context) => const BottomNavBar(),
   };
 }

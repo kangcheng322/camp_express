@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Cantidad extends StatefulWidget {
+  const Cantidad({Key? key}) : super(key: key);
+
   @override
   _CantidadState createState() => _CantidadState();
 }
@@ -22,8 +24,8 @@ class _CantidadState extends State<Cantidad> {
             color: Color.fromARGB(255, 78, 160, 62),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 5),
+        const Padding(
+          padding: EdgeInsets.only(left: 5),
         ),
         OutlinedButton(
           onPressed: () {
@@ -45,26 +47,26 @@ class _CantidadState extends State<Cantidad> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
             ),
-            side: BorderSide(
+            side: const BorderSide(
               width: 2.5,
               color: Color.fromARGB(255, 78, 160, 62),
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 5),
+        const Padding(
+          padding: EdgeInsets.only(left: 5),
         ),
         Text(
           '$_n',
-          style: TextStyle(
+          style: const TextStyle(
             fontFamily: 'Raleway',
             fontWeight: FontWeight.bold,
             fontSize: 17,
             color: Color.fromARGB(255, 78, 160, 62),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(right: 5),
+        const Padding(
+          padding: EdgeInsets.only(right: 5),
         ),
         OutlinedButton(
           onPressed: () {
@@ -86,7 +88,7 @@ class _CantidadState extends State<Cantidad> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
             ),
-            side: BorderSide(
+            side: const BorderSide(
               width: 2.5,
               color: Color.fromARGB(255, 78, 160, 62),
             ),

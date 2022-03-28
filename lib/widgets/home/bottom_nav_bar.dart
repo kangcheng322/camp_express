@@ -5,16 +5,14 @@ import 'package:unicons/unicons.dart';
 import '../../screens/favoritos/favoritos.dart';
 import '../../screens/home/home.dart';
 
-// ignore: camel_case_types
-class bottomNavBar extends StatefulWidget {
-  const bottomNavBar({Key? key}) : super(key: key);
+class BottomNavBar extends StatefulWidget {
+  const BottomNavBar({Key? key}) : super(key: key);
 
   @override
-  State<bottomNavBar> createState() => _bottomNavBarState();
+  State<BottomNavBar> createState() => _BottomNavBarState();
 }
 
-// ignore: camel_case_types
-class _bottomNavBarState extends State<bottomNavBar> {
+class _BottomNavBarState extends State<BottomNavBar> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);

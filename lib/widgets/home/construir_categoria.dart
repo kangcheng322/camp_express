@@ -14,7 +14,7 @@ Row construirCategoria(String text, size) {
           text,
           textAlign: TextAlign.center,
           style: GoogleFonts.poppins(
-            color: Color.fromARGB(255, 78, 160, 62),
+            color: const Color.fromARGB(255, 78, 160, 62),
             fontWeight: FontWeight.bold,
             fontSize: size.width * 0.055,
           ),
@@ -28,7 +28,7 @@ Row construirCategoria(String text, size) {
           'Ver todo',
           textAlign: TextAlign.center,
           style: GoogleFonts.poppins(
-            color: Color.fromARGB(255, 78, 160, 62),
+            color: const Color.fromARGB(255, 78, 160, 62),
             fontSize: size.width * 0.04,
           ),
         ),

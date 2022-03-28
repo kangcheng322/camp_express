@@ -1,14 +1,21 @@
-import 'package:camp_express/widgets/inicio/input.dart';
+import 'package:camp_express/controller/login_controller.dart';
 import 'package:camp_express/widgets/inicio/contrasena.dart';
+import 'package:camp_express/widgets/inicio/input.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-import '../../widgets/inicio/contrasena.dart';
+class Login extends StatefulWidget {
+  const Login({
+    Key? key,
+  }) : super(key: key);
+  @override
+  _LoginState createState() => _LoginState();
+}
 
-class Login extends StatelessWidget {
-  const Login({Key? key}) : super(key: key);
-
+class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
+    LoginController loginController = Get.find();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color.fromARGB(255, 215, 233, 167),
@@ -45,7 +52,9 @@ class Login extends StatelessWidget {
                             color: Colors.white,
                           ),
                         ),
-                        const Input(),
+                        //Textfield del correo
+                        const Campo(),
+                        //Textfield de la contraseña
                         const Contrasena(),
                         TextButton(
                             onPressed: () {
@@ -58,8 +67,8 @@ class Login extends StatelessWidget {
                                     decoration: TextDecoration.underline))),
                         ElevatedButton(
                             onPressed: () {
-                              Navigator.pushReplacementNamed(
-                                  context, "bottom_nav_bar");
+                              loginController.comprobar(loginController.campo,
+                                  loginController.contrasena);
                             },
                             style: ElevatedButton.styleFrom(
                                 primary:
@@ -85,10 +94,20 @@ class Login extends StatelessWidget {
                                     decoration: TextDecoration.underline),
                               ),
                               onPressed: () {
+                                loginController.reiniciarMensaje('');
                                 Navigator.pushReplacementNamed(
                                     context, "registro");
                               },
                             )),
+                        Container(
+                          padding: const EdgeInsets.only(top: 20),
+                          alignment: Alignment.centerRight,
+                          child: Obx(() => Text(loginController.mensaje,
+                              style: const TextStyle(
+                                color: Colors.red,
+                                fontSize: 15.0,
+                              ))),
+                        )
                       ],
                     ),
                   )),
