@@ -37,7 +37,7 @@ class _DetailsPageState extends State<Detalles> {
           bottomOpacity: 0.0,
           elevation: 0.0,
           shadowColor: Colors.transparent,
-          backgroundColor: Color.fromARGB(255, 255, 255, 255),
+          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
           leading: Padding(
             padding: EdgeInsets.only(
               left: size.width * 0.05,
@@ -58,7 +58,7 @@ class _DetailsPageState extends State<Detalles> {
                   ),
                   child: Icon(
                     UniconsLine.multiply,
-                    color: Color.fromARGB(255, 78, 160, 62),
+                    color: const Color.fromARGB(255, 78, 160, 62),
                     size: size.height * 0.03,
                   ),
                 ),
@@ -82,7 +82,7 @@ class _DetailsPageState extends State<Detalles> {
                 ),
                 child: Icon(
                   UniconsLine.heart,
-                  color: Color.fromARGB(255, 78, 160, 62),
+                  color: const Color.fromARGB(255, 78, 160, 62),
                   size: size.height * 0.03,
                 ),
               ),

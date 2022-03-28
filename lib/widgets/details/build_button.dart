@@ -18,7 +18,7 @@ Padding buildButton(Size size) {
             borderRadius: BorderRadius.circular(
               15,
             ),
-            color: Color.fromARGB(255, 78, 160, 62),
+            color: const Color.fromARGB(255, 78, 160, 62),
           ),
           child: Align(
             child: Text(

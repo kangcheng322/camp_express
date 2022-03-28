@@ -16,7 +16,7 @@ Center botonProductos(Size size, String text) {
           },
           child: Text(
             text,
-            style: TextStyle(
+            style: const TextStyle(
               color: Color.fromARGB(255, 78, 160, 62),
             ),
           ),
@@ -25,7 +25,7 @@ Center botonProductos(Size size, String text) {
               borderRadius: BorderRadius.circular(16),
             ),
             backgroundColor: Colors.white.withOpacity(0.7),
-            side: BorderSide(
+            side: const BorderSide(
               width: 1.8,
               color: Color.fromARGB(255, 78, 160, 62),
             ),
