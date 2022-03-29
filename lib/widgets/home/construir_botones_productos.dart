@@ -1,8 +1,10 @@
-import 'package:camp_express/data/productos_data.dart';
 import 'package:camp_express/widgets/home/boton_productos.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../../controller/productos_controller.dart';
 
 Widget construirBotonesProductos(Size size) {
+  ProductosController productosController = Get.find();
   return SizedBox(
     height: size.height * 0.08,
     child: ListView.builder(
@@ -23,7 +25,7 @@ Widget construirBotonesProductos(Size size) {
         }
         return botonProductos(
           size,
-          productos[i - 2]['rango'],
+          productosController.producto.elementAt(i - 2).rango,
         );
       },
     ),

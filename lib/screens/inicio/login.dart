@@ -94,7 +94,7 @@ class _LoginState extends State<Login> {
                                     decoration: TextDecoration.underline),
                               ),
                               onPressed: () {
-                                loginController.reiniciarMensaje('');
+                                loginController.reiniciarMensaje();
                                 Navigator.pushReplacementNamed(
                                     context, "registro");
                               },

@@ -8,7 +8,7 @@ Center botonProductos(Size size, String text) {
         right: size.width * 0.015,
       ),
       child: SizedBox(
-        width: size.width * 0.3,
+        width: size.width * 0.34,
         height: size.height * 0.06,
         child: OutlinedButton(
           onPressed: () {

@@ -1,12 +1,12 @@
 import 'package:camp_express/routes/routes.dart';
 import 'package:flutter/material.dart';
-//import 'package:get/get_navigation/src/root/get_material_app.dart';
-//import 'package:get/get_navigation/src/routes/transitions_type.dart';
 import 'package:get/get.dart';
 import 'controller/login_controller.dart';
+import 'controller/productos_controller.dart';
 
 void main() {
   Get.put(LoginController());
+  Get.put(ProductosController());
   runApp(const MyApp());
 }
 

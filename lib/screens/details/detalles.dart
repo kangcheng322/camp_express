@@ -4,15 +4,17 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:camp_express/widgets/details/build_button.dart';
 import 'package:unicons/unicons.dart';
 
+import '../../controller/productos_controller.dart';
 import '../../widgets/details/cantidad.dart';
 
 class Detalles extends StatefulWidget {
   final String nombre;
-  final int precio;
+  final double precio;
   final String cantidad;
   final double rating;
   final String image;
-
+  final bool favorito;
+  final String id;
   const Detalles({
     Key? key,
     required this.nombre,
@@ -20,6 +22,8 @@ class Detalles extends StatefulWidget {
     required this.cantidad,
     required this.rating,
     required this.image,
+    required this.favorito,
+    required this.id,
   }) : super(key: key);
 
   @override
@@ -27,6 +31,7 @@ class Detalles extends StatefulWidget {
 }
 
 class _DetailsPageState extends State<Detalles> {
+  ProductosController productosController = Get.find();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -71,7 +76,7 @@ class _DetailsPageState extends State<Detalles> {
           centerTitle: true,
           actions: <Widget>[
             Padding(
-              padding: EdgeInsets.only(right: size.width * 0.05, top: 10),
+              padding: EdgeInsets.only(right: size.width * 0.05, top: 8),
               child: Container(
                 height: size.width * 0.1,
                 width: size.width * 0.1,
@@ -80,10 +85,17 @@ class _DetailsPageState extends State<Detalles> {
                     Radius.circular(10),
                   ),
                 ),
-                child: Icon(
-                  UniconsLine.heart,
-                  color: const Color.fromARGB(255, 78, 160, 62),
-                  size: size.height * 0.03,
+                child: IconButton(
+                  icon: Obx(() => Icon(
+                        productosController.obtenerFavorito(widget.id)
+                            ? Icons.favorite
+                            : UniconsLine.heart,
+                        size: size.height * 0.03,
+                        color: const Color.fromARGB(255, 78, 160, 62),
+                      )),
+                  onPressed: () {
+                    productosController.ajustarFavorito(widget.id);
+                  },
                 ),
               ),
             ),
@@ -186,7 +198,7 @@ class _DetailsPageState extends State<Detalles> {
                                 fontFamily: 'Raleway',
                                 decoration: TextDecoration.underline),
                           ))),
-                  Cantidad()
+                  const Cantidad()
                 ],
               ),
               buildButton(size),
