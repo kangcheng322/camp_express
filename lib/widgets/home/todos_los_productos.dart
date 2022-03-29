@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:camp_express/data/productos_data.dart';
 import 'package:camp_express/widgets/home/cuadro_productos.dart';
 import 'package:camp_express/widgets/home/construir_categoria.dart';
+import 'package:get/get.dart';
+
+import '../../controller/productos_controller.dart';
 
 Widget todoLosProductos(Size size) {
+  ProductosController productosController = Get.find();
   return Column(
     children: [
       construirCategoria('Todos los productos', size),
@@ -29,9 +32,9 @@ Widget todoLosProductos(Size size) {
                   crossAxisSpacing: 9,
                   mainAxisSpacing: 9,
                 ),
-                itemCount: productos.length,
+                itemCount: productosController.producto.length,
                 itemBuilder: (context, i) {
-                  return construirCuadro(i, size);
+                  return construirCuadro(i, size, productosController.producto);
                 },
               ),
             ),

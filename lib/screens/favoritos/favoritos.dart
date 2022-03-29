@@ -1,8 +1,9 @@
+import 'package:camp_express/screens/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unicons/unicons.dart';
-import '../../data/productos_data.dart';
+import '../../controller/productos_controller.dart';
 import '../../widgets/home/cuadro_productos.dart';
 
 class Favoritos extends StatefulWidget {
@@ -13,48 +14,25 @@ class Favoritos extends StatefulWidget {
 }
 
 class _FavoritosState extends State<Favoritos> {
+  ProductosController productosController = Get.find();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(40.0),
-          child: AppBar(
-            bottomOpacity: 0.0,
-            elevation: 0.0,
-            shadowColor: Colors.transparent,
-            backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-            leading: Padding(
-              padding: EdgeInsets.only(
-                left: size.width * 0.05,
-                top: 10,
-              ),
-              child: SizedBox(
-                height: size.width * 0.1,
-                width: size.width * 0.1,
-                child: InkWell(
-                  onTap: () {
-                    Get.back();
-                  },
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10),
-                      ),
-                    ),
-                    child: Icon(
-                      UniconsLine.multiply,
-                      color: const Color.fromARGB(255, 78, 160, 62),
-                      size: size.height * 0.03,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            automaticallyImplyLeading: false,
-            titleSpacing: 0,
-            leadingWidth: size.width * 0.15,
+        appBar: AppBar(
+          bottomOpacity: 0.0,
+          elevation: 0.0,
+          shadowColor: Colors.transparent,
+          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+          automaticallyImplyLeading: false,
+          titleSpacing: 0,
+          leadingWidth: size.width * 0.15,
+          title: Image.asset(
+            'assets/images/logo.png',
+            height: size.height * 0.07,
+            width: size.width * 0.35,
           ),
+          centerTitle: true,
         ),
         body: Container(
           color: const Color.fromARGB(255, 255, 255, 255),
@@ -104,9 +82,10 @@ class _FavoritosState extends State<Favoritos> {
                               crossAxisSpacing: 9,
                               mainAxisSpacing: 9,
                             ),
-                            itemCount: productos.length,
+                            itemCount: productosController.favoritos.length,
                             itemBuilder: (context, i) {
-                              return construirCuadro(i, size);
+                              return construirCuadro(
+                                  i, size, productosController.favoritos);
                             },
                           ),
                         ),

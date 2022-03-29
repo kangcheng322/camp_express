@@ -6,11 +6,11 @@ class LoginController extends GetxController {
   final _mensaje = ''.obs;
   final _mensaje2 = ''.obs;
   final _campo = ''.obs;
-  final _contrsena = ''.obs;
+  final _contrasena = ''.obs;
   final _confirmarContrasena = ''.obs;
 
   String get confirmarContrasena => _confirmarContrasena.value;
-  String get contrasena => _contrsena.value;
+  String get contrasena => _contrasena.value;
   String get campo => _campo.value;
   String get mensaje => _mensaje.value;
   String get mensaje2 => _mensaje2.value;
@@ -36,7 +36,7 @@ class LoginController extends GetxController {
   }
 
   obtenerContrsena(var contrasena) {
-    _contrsena.value = contrasena;
+    _contrasena.value = contrasena;
   }
 
   obtenerConfirmarContrasena(var confirmarContrasena) {
@@ -51,7 +51,7 @@ class LoginController extends GetxController {
         _usuario.add(Usuario(_usuario.length, correo, contrasena));
         Get.toNamed("login");
         _campo.value = '';
-        _contrsena.value = '';
+        _contrasena.value = '';
       } else {
         _mensaje2.value = 'El correo ya existe';
       }
@@ -60,7 +60,9 @@ class LoginController extends GetxController {
     }
   }
 
-  reiniciarMensaje(var mensaje) {
-    _mensaje.value = mensaje;
+  reiniciarMensaje() {
+    _mensaje.value = '';
+    _campo.value = '';
+    _contrasena.value = '';
   }
 }
