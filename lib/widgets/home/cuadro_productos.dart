@@ -1,12 +1,10 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../controller/productos_controller.dart';
 import '../../domain/productos.dart';
 import '../../screens/details/detalles.dart';
 
 Padding construirCuadro(int i, Size size, List<Producto> tipo) {
-  ProductosController productosController = Get.find();
   return Padding(
     padding: EdgeInsets.only(
       right: size.width * 0.03,

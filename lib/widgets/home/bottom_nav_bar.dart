@@ -4,6 +4,7 @@ import 'package:unicons/unicons.dart';
 
 import '../../screens/favoritos/favoritos.dart';
 import '../../screens/home/home.dart';
+import '../../screens/cart/carrito.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key}) : super(key: key);
@@ -19,10 +20,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   static const List<Widget> _widgetOptions = <Widget>[
     Home(),
     Favoritos(),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
+    Carrito(),
     Text(
       'Index 3: Settings',
       style: optionStyle,

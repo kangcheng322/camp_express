@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-Padding buildButton(Size size) {
+Padding buildButton(Size size, String texto) {
   return Padding(
     padding: EdgeInsets.only(
       top: size.height * 0.8,
@@ -22,12 +21,12 @@ Padding buildButton(Size size) {
           ),
           child: Align(
             child: Text(
-              'Agregar al carrito',
+              texto,
               textAlign: TextAlign.center,
-              style: GoogleFonts.lato(
+              style: const TextStyle(
                 color: Colors.white,
-                fontSize: size.width * 0.04,
-                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
               ),
             ),
           ),
