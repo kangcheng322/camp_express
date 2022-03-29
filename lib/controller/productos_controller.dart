@@ -27,7 +27,8 @@ class ProductosController extends GetxController {
       _favoritos.add(producto);
     } else {
       producto.favorito = false;
-      _favoritos.removeAt(indice);
+      var indice2 = _favoritos.indexWhere((element) => element.id == id);
+      _favoritos.removeAt(indice2);
     }
     _producto.fillRange(indice, indice + 1, producto);
   }

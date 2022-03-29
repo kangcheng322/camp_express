@@ -1,8 +1,6 @@
-import 'package:camp_express/screens/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:unicons/unicons.dart';
 import '../../controller/productos_controller.dart';
 import '../../widgets/home/cuadro_productos.dart';
 
@@ -72,22 +70,22 @@ class _FavoritosState extends State<Favoritos> {
                         SizedBox(
                           width: size.width,
                           height: size.height * 1.02,
-                          child: GridView.builder(
-                            primary: false,
-                            physics: const NeverScrollableScrollPhysics(),
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              childAspectRatio: 0.68,
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 9,
-                              mainAxisSpacing: 9,
-                            ),
-                            itemCount: productosController.favoritos.length,
-                            itemBuilder: (context, i) {
-                              return construirCuadro(
-                                  i, size, productosController.favoritos);
-                            },
-                          ),
+                          child: Obx(() => GridView.builder(
+                                primary: false,
+                                physics: const NeverScrollableScrollPhysics(),
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  childAspectRatio: 0.68,
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 9,
+                                  mainAxisSpacing: 9,
+                                ),
+                                itemCount: productosController.favoritos.length,
+                                itemBuilder: (context, i) {
+                                  return construirCuadro(
+                                      i, size, productosController.favoritos);
+                                },
+                              )),
                         ),
                       ],
                     ),
