@@ -62,7 +62,7 @@ class CartItem extends StatelessWidget {
                     color: Colors.black,
                   ),
                 ),
-                const CantidadCarrito()
+                CantidadCarrito(id: id),
               ],
             ),
             InkWell(

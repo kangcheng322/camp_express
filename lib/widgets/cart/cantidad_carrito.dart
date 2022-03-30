@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../controller/productos_controller.dart';
 
 class CantidadCarrito extends StatefulWidget {
-  const CantidadCarrito({Key? key}) : super(key: key);
+  final String id;
+  const CantidadCarrito({Key? key, required this.id}) : super(key: key);
 
   @override
   _CantidadCarritoState createState() => _CantidadCarritoState();
@@ -10,6 +14,7 @@ class CantidadCarrito extends StatefulWidget {
 int _n = 0;
 
 class _CantidadCarritoState extends State<CantidadCarrito> {
+  ProductosController productosController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -29,11 +34,12 @@ class _CantidadCarritoState extends State<CantidadCarrito> {
         ),
         OutlinedButton(
           onPressed: () {
-            setState(() {
+            /* setState(() {
               if (_n > 0) {
                 _n--;
               }
-            });
+            });*/
+            productosController.resCantidad(widget.id);
           },
           child: const Text(
             '-',
@@ -56,25 +62,26 @@ class _CantidadCarritoState extends State<CantidadCarrito> {
         const Padding(
           padding: EdgeInsets.only(left: 5),
         ),
-        Text(
-          '$_n',
-          style: const TextStyle(
-            fontFamily: 'Raleway',
-            fontWeight: FontWeight.bold,
-            fontSize: 17,
-            color: Color.fromARGB(255, 78, 160, 62),
-          ),
-        ),
+        Obx(() => Text(
+              productosController.cantidadCarrito(widget.id).toString(),
+              style: const TextStyle(
+                fontFamily: 'Raleway',
+                fontWeight: FontWeight.bold,
+                fontSize: 17,
+                color: Color.fromARGB(255, 78, 160, 62),
+              ),
+            )),
         const Padding(
           padding: EdgeInsets.only(right: 5),
         ),
         OutlinedButton(
           onPressed: () {
-            setState(() {
+            /*  setState(() {
               if (_n < 50) {
                 _n++;
               }
-            });
+            });*/
+            productosController.addCantidad(widget.id);
           },
           child: const Text(
             '+',
