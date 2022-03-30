@@ -1,7 +1,10 @@
 //import 'package:ecommerce_app/screens/checkout.dart';
 import 'package:camp_express/widgets/cart/carrito_item.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../../controller/productos_controller.dart';
 
 // Carrito de compras
 class Carrito extends StatefulWidget {
@@ -14,6 +17,7 @@ class Carrito extends StatefulWidget {
 class _CarritoState extends State<Carrito> {
   @override
   Widget build(BuildContext context) {
+    ProductosController productosController = Get.find();
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
@@ -56,37 +60,23 @@ class _CarritoState extends State<Carrito> {
           children: [
             //const SizedBox(height: 10),
             Expanded(
-              child: ListView(children: const [
-                CartItem(
-                  assetPath: 'assets/images/arroz.png',
-                  title: 'Arroz',
-                  price: 579,
-                ),
-                Padding(padding: EdgeInsets.only(bottom: 10)),
-                CartItem(
-                  title: 'Sandía',
-                  assetPath: 'assets/images/sandia.png',
-                  price: 375,
-                ),
-                Padding(padding: EdgeInsets.only(bottom: 10)),
-                CartItem(
-                  title: 'Tomate',
-                  assetPath: 'assets/images/tomate.png',
-                  price: 375,
-                ),
-                Padding(padding: EdgeInsets.only(bottom: 10)),
-                CartItem(
-                  title: 'Papa',
-                  assetPath: 'assets/images/papas.png',
-                  price: 375,
-                ),
-                Padding(padding: EdgeInsets.only(bottom: 10)),
-                CartItem(
-                  title: 'Maiz',
-                  assetPath: 'assets/images/maiz.png',
-                  price: 375,
-                ),
-              ]),
+              child: Obx(() => ListView.separated(
+                    itemCount: productosController.carrito.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return CartItem(
+                        assetPath:
+                            productosController.carrito.elementAt(index).image,
+                        title:
+                            productosController.carrito.elementAt(index).nombre,
+                        price:
+                            productosController.carrito.elementAt(index).precio,
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) =>
+                        const Divider(
+                      color: Color.fromARGB(255, 255, 255, 255),
+                    ),
+                  )),
             ),
             //const SizedBox(height: 10),
             Row(

@@ -25,7 +25,7 @@ class CartItem extends StatelessWidget {
             color: const Color.fromARGB(255, 78, 160, 62),
           )),
       child: Padding(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Row(children: [
             Image(
               image: AssetImage(assetPath),
@@ -55,28 +55,6 @@ class CartItem extends StatelessWidget {
                     color: Colors.black,
                   ),
                 ),
-                /* Row(
-                    children: [
-                      const Text('Quantity'),
-                      ElevatedButton(
-                        style: style,
-                        onPressed: () {},
-                        child: const Text('-'),
-                      ),
-                      const Text(
-                        '1',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 15,
-                        ),
-                      ),
-                      ElevatedButton(
-                        style: style,
-                        onPressed: () {},
-                        child: const Text('+'),
-                      ),
-                    ],
-                  )*/
                 const CantidadCarrito()
               ],
             )
