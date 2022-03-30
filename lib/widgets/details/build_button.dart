@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-Padding buildButton(Size size, String texto) {
+import '../../controller/productos_controller.dart';
+import '../../domain/productos.dart';
+
+Padding buildButton(Size size, String texto, String id) {
+  ProductosController productosController = Get.find();
   return Padding(
     padding: EdgeInsets.only(
       top: size.height * 0.8,
@@ -11,7 +16,9 @@ Padding buildButton(Size size, String texto) {
       height: size.height * 0.08,
       width: size.width * 0.75,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          productosController.agregarCarrito(id);
+        },
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(

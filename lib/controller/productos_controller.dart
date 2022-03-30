@@ -15,9 +15,11 @@ class ProductosController extends GetxController {
         'assets/images/tomate.png')
   ].obs;
   final List<Producto> _favoritos = <Producto>[].obs;
+  final List<Producto> _carrito = <Producto>[].obs;
 
   List<Producto> get producto => _producto;
   List<Producto> get favoritos => _favoritos;
+  List<Producto> get carrito => _carrito;
 
   ajustarFavorito(String id) {
     var producto = _producto.firstWhere((element) => element.id == id);
@@ -36,5 +38,10 @@ class ProductosController extends GetxController {
   obtenerFavorito(String id) {
     var producto = _producto.firstWhere((element) => element.id == id);
     return producto.favorito;
+  }
+
+  agregarCarrito(String id) {
+    var producto = _producto.firstWhere((element) => element.id == id);
+    _carrito.add(producto);
   }
 }
