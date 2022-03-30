@@ -58,4 +58,12 @@ class ProductosController extends GetxController {
     var producto = _producto.firstWhere((element) => element.id == id);
     return producto.cesta;
   }
+
+  vaciarCarrito() {
+    _carrito.removeRange(0, _carrito.length);
+    for (var i = 0; i < _producto.length; i++) {
+      _producto.elementAt(i).cesta = false;
+      _producto.fillRange(i, i + 1, _producto.elementAt(i));
+    }
+  }
 }
