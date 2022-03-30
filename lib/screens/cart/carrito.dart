@@ -47,14 +47,14 @@ class _CarritoState extends State<Carrito> {
               color: Colors.red,
             ),
             onPressed: () {
-              // do something
+              productosController.vaciarCarrito();
             },
           ),
           const SizedBox(width: 8)
         ],
       ),
       body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 19),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
