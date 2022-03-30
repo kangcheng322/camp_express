@@ -201,7 +201,7 @@ class _DetailsPageState extends State<Detalles> {
                   const Cantidad()
                 ],
               ),
-              buildButton(size, 'Agregar al carrito', widget.id),
+              buildButton(size, widget.id),
             ],
           ),
         ),
