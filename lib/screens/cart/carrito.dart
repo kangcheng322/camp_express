@@ -44,7 +44,7 @@ class _CarritoState extends State<Carrito> {
             icon: const Icon(
               Icons.delete_outline,
               size: 28,
-              color: Color.fromARGB(255, 78, 160, 62),
+              color: Colors.red,
             ),
             onPressed: () {
               // do something
@@ -70,6 +70,7 @@ class _CarritoState extends State<Carrito> {
                             productosController.carrito.elementAt(index).nombre,
                         price:
                             productosController.carrito.elementAt(index).precio,
+                        id: productosController.carrito.elementAt(index).id,
                       );
                     },
                     separatorBuilder: (BuildContext context, int index) =>
