@@ -198,7 +198,23 @@ class _DetailsPageState extends State<Detalles> {
                                 fontFamily: 'Raleway',
                                 decoration: TextDecoration.underline),
                           ))),
-                  const Cantidad()
+                  Row(
+                    children: [
+                      Obx(() => Text(
+                            productosController
+                                    .obtenerSubtotal(widget.id)
+                                    .toString() +
+                                '\$',
+                            style: GoogleFonts.lato(
+                              color: Colors.black,
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )),
+                      const Spacer(),
+                      Cantidad(id: widget.id)
+                    ],
+                  )
                 ],
               ),
               buildButton(size, widget.id),

@@ -91,14 +91,14 @@ class _CarritoState extends State<Carrito> {
                     color: Colors.black,
                   ),
                 ),
-                Text(
-                  '954\$',
-                  style: GoogleFonts.lato(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
+                Obx(() => Text(
+                      productosController.total.toString() + '\$',
+                      style: GoogleFonts.lato(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    )),
               ],
             ),
             const SizedBox(height: 30),

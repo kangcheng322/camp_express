@@ -16,10 +16,12 @@ class ProductosController extends GetxController {
   ].obs;
   final List<Producto> _favoritos = <Producto>[].obs;
   final List<Producto> _carrito = <Producto>[].obs;
+  late final RxDouble _total = 0.0.obs;
 
   List<Producto> get producto => _producto;
   List<Producto> get favoritos => _favoritos;
   List<Producto> get carrito => _carrito;
+  double get total => _total.value;
 
   ajustarFavorito(String id) {
     var producto = _producto.firstWhere((element) => element.id == id);
@@ -65,5 +67,52 @@ class ProductosController extends GetxController {
       _producto.elementAt(i).cesta = false;
       _producto.fillRange(i, i + 1, _producto.elementAt(i));
     }
+  }
+
+  addCantidad(String id) {
+    var _actualizar = _producto.firstWhere((element) => element.id == id);
+    var indice = _producto.indexWhere((element) => element.id == id);
+    if (_actualizar.cantidadCarrito < 50) {
+      _actualizar.cantidadCarrito += 1;
+      _producto.fillRange(indice, indice + 1, _actualizar);
+      suma(_actualizar.precio);
+      subtotal(id);
+    }
+  }
+
+  resCantidad(String id) {
+    var _actualizar = _producto.firstWhere((element) => element.id == id);
+    var indice = _producto.indexWhere((element) => element.id == id);
+    if (_actualizar.cantidadCarrito > 0) {
+      _actualizar.cantidadCarrito -= 1;
+      _producto.fillRange(indice, indice + 1, _actualizar);
+      resta(_actualizar.precio);
+      subtotal(id);
+    }
+  }
+
+  int cantidadCarrito(String id) {
+    var cant = _producto.firstWhere((element) => element.id == id);
+    return cant.cantidadCarrito;
+  }
+
+  suma(double x) {
+    _total.value = _total.value + x;
+  }
+
+  resta(double x) {
+    _total.value = _total.value - x;
+  }
+
+  subtotal(String id) {
+    var producto = _producto.firstWhere((element) => element.id == id);
+    var indice = _producto.indexWhere((element) => element.id == id);
+    producto.subtotal = producto.cantidadCarrito * producto.precio;
+    _producto.fillRange(indice, indice + 1, producto);
+  }
+
+  double obtenerSubtotal(String id) {
+    var producto = _producto.firstWhere((element) => element.id == id);
+    return producto.subtotal;
   }
 }
