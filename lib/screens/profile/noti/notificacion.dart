@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:unicons/unicons.dart';
 
 class Notificacion extends StatefulWidget {
   const Notificacion({Key? key}) : super(key: key);
@@ -38,7 +37,7 @@ class _NotificacionState extends State<Notificacion> {
             icon: const Icon(
               Icons.more_vert,
               size: 28,
-              color: Colors.red,
+              color: Color.fromARGB(255, 78, 160, 62),
             ),
             onPressed: () {},
           ),
@@ -50,24 +49,29 @@ class _NotificacionState extends State<Notificacion> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            //const SizedBox(height: 10),
+            const SizedBox(height: 10),
             Expanded(
               child: ListView(
-                children: const [
+                children: [
                   Card(
+                    elevation: 10,
                     child: ListTile(
-                      leading: Icon(
-                        UniconsLine.bell,
-                        color: Colors.red,
-                      ),
-                      title: Text('Three-line ListTile'),
-                      subtitle: Text(
-                          'A sufficiently long subtitle warrants three lines.'),
-                      trailing: Icon(
+                      leading: Image.asset('assets/images/notificacion.png'),
+                      title: const Text('¡BIENVENIDO!',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 78, 160, 62),
+                              fontWeight: FontWeight.bold)),
+                      subtitle: const Text(
+                          'Gracias por darnos una oportunidad, no te decepcionaremos :)',
+                          style: TextStyle(color: Colors.black)),
+                      trailing: const Icon(
                         Icons.more_vert,
-                        color: Colors.red,
+                        color: Color.fromARGB(255, 78, 160, 62),
                       ),
                       isThreeLine: true,
+                      tileColor: Colors.white.withOpacity(0.7),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0)),
                     ),
                   ),
                 ],
