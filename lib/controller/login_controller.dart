@@ -65,4 +65,10 @@ class LoginController extends GetxController {
     _campo.value = '';
     _contrasena.value = '';
   }
+
+  cerrarSesion() {
+    Get.toNamed("login");
+    _campo.value = '';
+    _contrasena.value = '';
+  }
 }

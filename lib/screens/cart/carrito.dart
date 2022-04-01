@@ -107,7 +107,7 @@ class _CarritoState extends State<Carrito> {
                 style: ElevatedButton.styleFrom(
                     primary: const Color.fromARGB(255, 78, 160, 62),
                     fixedSize: const Size(314.0, 70.0),
-                    onPrimary: Colors.white,
+                    onPrimary: const Color.fromARGB(255, 255, 255, 255),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0)),
                     padding: const EdgeInsets.symmetric(vertical: 22),

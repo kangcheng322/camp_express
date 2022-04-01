@@ -1,8 +1,11 @@
-import 'package:camp_express/screens/help/ayuda.dart';
+import 'package:camp_express/screens/home/help/ayuda.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../controller/login_controller.dart';
+
 Widget menuLateral(Size size) {
+  LoginController loginController = Get.find();
   return Drawer(
     backgroundColor: const Color.fromARGB(255, 255, 255, 255),
     child: Column(
@@ -57,7 +60,9 @@ Widget menuLateral(Size size) {
                 color: Color.fromARGB(255, 78, 160, 62)),
           ),
           tileColor: Colors.white.withOpacity(0.7),
-          onTap: () {},
+          onTap: () {
+            loginController.cerrarSesion();
+          },
         ),
         const Divider(),
       ],

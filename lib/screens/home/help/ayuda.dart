@@ -158,7 +158,7 @@ class Ayuda extends StatelessWidget {
                   color: Colors.blue,
                   size: 30.0,
                 ),
-                title: const Text('Camp Express',
+                title: const Text('Camp Express Oficial',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Color.fromARGB(255, 78, 160, 62))),
