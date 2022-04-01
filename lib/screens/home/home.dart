@@ -1,3 +1,4 @@
+import 'package:camp_express/widgets/home/menu_lateral.dart';
 import 'package:camp_express/widgets/home/todos_los_productos.dart';
 import 'package:camp_express/widgets/home/construir_botones_productos.dart';
 import 'package:camp_express/widgets/home/populares.dart';
@@ -18,34 +19,14 @@ class _HomeState extends State<Home> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
+        iconTheme: const IconThemeData(
+          color: Color.fromARGB(255, 78, 160, 62),
+        ),
         bottomOpacity: 0.0,
         elevation: 0.0,
         shadowColor: Colors.transparent,
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-        leading: Padding(
-          padding: EdgeInsets.only(
-            left: size.width * 0.05,
-          ),
-          child: SizedBox(
-            height: size.width * 0.1,
-            width: size.width * 0.1,
-            child: Container(
-                decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 255, 255, 255),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(
-                      10,
-                    ),
-                  ),
-                ),
-                child: Icon(
-                  UniconsLine.bars,
-                  color: const Color.fromARGB(255, 78, 160, 62),
-                  size: size.height * 0.025,
-                )),
-          ),
-        ),
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: true,
         titleSpacing: 0,
         leadingWidth: size.width * 0.15,
         title: Image.asset(
@@ -83,6 +64,7 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
+      drawer: menuLateral(size),
       body: Container(
         color: const Color.fromARGB(255, 255, 255, 255),
         child: ListView(

@@ -68,9 +68,9 @@ class _ResetearState extends State<Resetear> {
                                   ),
                                 ],
                               ),
-                              TextField(
+                              const TextField(
                                 //  controller: _inputController,
-                                decoration: const InputDecoration(
+                                decoration: InputDecoration(
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(color: Colors.white),
                                   ),
@@ -81,9 +81,9 @@ class _ResetearState extends State<Resetear> {
                                     borderSide: BorderSide(color: Colors.white),
                                   ),
                                 ),
-                                style: const TextStyle(color: Colors.white),
+                                style: TextStyle(color: Colors.white),
                                 cursorColor: Colors.white,
-                                cursorRadius: const Radius.circular(16),
+                                cursorRadius: Radius.circular(16),
                                 cursorWidth: 7.0,
                               )
                             ],
