@@ -5,6 +5,7 @@ import 'package:unicons/unicons.dart';
 import '../../screens/favoritos/favoritos.dart';
 import '../../screens/home/home.dart';
 import '../../screens/cart/carrito.dart';
+import '../../screens/profile/perfil.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key}) : super(key: key);
@@ -21,10 +22,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     Home(),
     Favoritos(),
     Carrito(),
-    Text(
-      'Index 3: Settings',
-      style: optionStyle,
-    ),
+    Perfil(),
   ];
 
   void _onItemTapped(int index) {
