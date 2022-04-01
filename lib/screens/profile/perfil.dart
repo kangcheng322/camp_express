@@ -1,4 +1,6 @@
+import 'package:camp_express/screens/profile/noti/notificacion.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Perfil extends StatelessWidget {
   const Perfil({Key? key}) : super(key: key);
@@ -110,7 +112,11 @@ class Perfil extends StatelessWidget {
             PerfilOpciones(text: 'Dirección de envío', onClick: () {}),
             PerfilOpciones(text: 'Ordenes', onClick: () {}),
             PerfilOpciones(text: 'Tarjetas', onClick: () {}),
-            PerfilOpciones(text: 'Notificaciones', onClick: () {}),
+            PerfilOpciones(
+                text: 'Notificaciones',
+                onClick: () {
+                  Get.to(() => const Notificacion());
+                }),
           ],
         ),
       ),
