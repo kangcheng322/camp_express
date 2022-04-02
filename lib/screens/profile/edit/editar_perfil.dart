@@ -60,7 +60,7 @@ class _EditarPerfilState extends State<EditarPerfil> {
                                 spreadRadius: 2,
                                 blurRadius: 10,
                                 color: Colors.black.withOpacity(0.1),
-                                offset: Offset(0, 10))
+                                offset: const Offset(0, 10))
                           ],
                           shape: BoxShape.circle,
                           image: const DecorationImage(
@@ -94,8 +94,8 @@ class _EditarPerfilState extends State<EditarPerfil> {
               const SizedBox(
                 height: 35,
               ),
-              buildTextField("Usuario", "Kang", false),
-              buildTextField("Correo", "alexd@gmail.com", false),
+              buildTextField("Usuario", "Lucía Pérez", false),
+              buildTextField("Correo", "lucía_p@gmail.com", false),
               buildTextField("Contraseña", "********", true),
               buildTextField("Edad", "22", false),
               const SizedBox(
@@ -127,6 +127,8 @@ class _EditarPerfilState extends State<EditarPerfil> {
       child: TextField(
         obscureText: isPasswordTextField ? showPassword : false,
         decoration: InputDecoration(
+          filled: true,
+          fillColor: Colors.white.withOpacity(0.7),
           enabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(
                   color: Color.fromARGB(255, 78, 160, 62), width: 0.0)),
@@ -139,7 +141,7 @@ class _EditarPerfilState extends State<EditarPerfil> {
           hintText: placeholder,
           hintStyle: const TextStyle(
             fontSize: 16,
-            color: Colors.black87,
+            color: Colors.black54,
           ),
           suffixIcon: isPasswordTextField
               ? IconButton(
@@ -164,36 +166,6 @@ class _EditarPerfilState extends State<EditarPerfil> {
         ),
         style: const TextStyle(color: Colors.black87),
         cursorColor: Colors.black87,
-        /*  decoration: InputDecoration(
-            border: const OutlineInputBorder(),
-            suffixIcon: isPasswordTextField
-                ? IconButton(
-                    onPressed: () {
-                      setState(() {
-                        showPassword = !showPassword;
-                      });
-                    },
-                    icon: const Icon(
-                      Icons.remove_red_eye,
-                      color: Color.fromARGB(255, 78, 160, 62),
-                    ),
-                  )
-                : null,
-            contentPadding: const EdgeInsets.only(bottom: 3),
-            labelText: labelText,
-            labelStyle: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Color.fromARGB(255, 78, 160, 62),
-            ),
-            floatingLabebelStyle: floatingst,
-            hintText: plBehavior: FloatingLabelBehavior.always,
-            //floatingLalaceholder,
-            hintStyle: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            )),*/
       ),
     );
   }
