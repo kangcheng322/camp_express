@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'controller/login_controller.dart';
 import 'controller/productos_controller.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   Get.put(LoginController());
@@ -19,6 +20,11 @@ class MyApp extends StatefulWidget {
 class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+
     return GetMaterialApp(
       defaultTransition: Transition.rightToLeft,
       transitionDuration: const Duration(milliseconds: 500),

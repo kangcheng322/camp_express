@@ -1,3 +1,5 @@
+import 'package:camp_express/screens/profile/edit/direccion_envio.dart';
+import 'package:camp_express/screens/profile/edit/tarjeta.dart';
 import 'package:camp_express/screens/profile/noti/notificacion.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -115,9 +117,17 @@ class Perfil extends StatelessWidget {
                 onClick: () {
                   Get.to(() => const EditarPerfil());
                 }),
-            PerfilOpciones(text: 'Dirección de envío', onClick: () {}),
+            PerfilOpciones(
+                text: 'Dirección de envío',
+                onClick: () {
+                  Get.to(() => const Direccion());
+                }),
             PerfilOpciones(text: 'Ordenes', onClick: () {}),
-            PerfilOpciones(text: 'Tarjetas', onClick: () {}),
+            PerfilOpciones(
+                text: 'Tarjetas',
+                onClick: () {
+                  Get.to(() => const Tarjeta());
+                }),
             PerfilOpciones(
                 text: 'Notificaciones',
                 onClick: () {
