@@ -9,6 +9,11 @@ class EditarPerfil extends StatefulWidget {
 }
 
 class _EditarPerfilState extends State<EditarPerfil> {
+  String dropdownvalue = 'Masculino';
+  var items = [
+    'Masculino',
+    'Femenino',
+  ];
   bool showPassword = false;
   @override
   Widget build(BuildContext context) {
@@ -95,9 +100,47 @@ class _EditarPerfilState extends State<EditarPerfil> {
                 height: 35,
               ),
               buildTextField("Usuario", "Lucía Pérez", false),
-              buildTextField("Correo", "lucía_p@gmail.com", false),
               buildTextField("Contraseña", "********", true),
               buildTextField("Edad", "22", false),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  const Text(
+                    'Género:    ',
+                    style: TextStyle(
+                        color: Color.fromARGB(255, 78, 160, 62), fontSize: 16),
+                  ),
+                  DropdownButton(
+                    // Valor inicial
+                    value: dropdownvalue,
+
+                    // Icono flecha abajo
+                    icon: const Icon(
+                      Icons.keyboard_arrow_down,
+                      color: Colors.black87,
+                    ),
+
+                    // Array list de items
+                    items: items.map((String items) {
+                      return DropdownMenuItem(
+                        value: items,
+                        child: Text(items),
+                      );
+                    }).toList(),
+                    // Mostrar en la primera posición el valor seleccionado
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        dropdownvalue = newValue!;
+                      });
+                    },
+                    style: const TextStyle(color: Colors.black87, fontSize: 15),
+                    underline: Container(
+                      height: 1,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ],
+              ),
               const SizedBox(
                 height: 35,
               ),

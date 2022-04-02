@@ -1,4 +1,5 @@
 import 'package:camp_express/screens/home/help/ayuda.dart';
+import 'package:camp_express/screens/home/sell/venta.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -32,7 +33,9 @@ Widget menuLateral(Size size) {
                 color: Color.fromARGB(255, 78, 160, 62)),
           ),
           tileColor: Colors.white.withOpacity(0.7),
-          onTap: () {},
+          onTap: () {
+            Get.to(() => const Venta());
+          },
         ),
         const Divider(),
         ListTile(

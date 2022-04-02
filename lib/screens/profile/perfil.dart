@@ -4,6 +4,7 @@ import 'package:camp_express/screens/profile/noti/notificacion.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../orders/ordenes.dart';
 import 'edit/editar_perfil.dart';
 
 class Perfil extends StatelessWidget {
@@ -122,7 +123,11 @@ class Perfil extends StatelessWidget {
                 onClick: () {
                   Get.to(() => const Direccion());
                 }),
-            PerfilOpciones(text: 'Ordenes', onClick: () {}),
+            PerfilOpciones(
+                text: 'Ordenes',
+                onClick: () {
+                  Get.to(() => const Orden());
+                }),
             PerfilOpciones(
                 text: 'Tarjetas',
                 onClick: () {
