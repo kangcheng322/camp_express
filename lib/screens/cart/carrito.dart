@@ -103,7 +103,11 @@ class _CarritoState extends State<Carrito> {
             ),
             const SizedBox(height: 30),
             ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  var nowTime = DateTime.now();
+
+                  print(nowTime);
+                },
                 style: ElevatedButton.styleFrom(
                     primary: const Color.fromARGB(255, 78, 160, 62),
                     fixedSize: const Size(314.0, 70.0),

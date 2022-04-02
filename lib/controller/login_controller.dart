@@ -2,7 +2,9 @@ import 'package:camp_express/domain/users.dart';
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
-  final List<Usuario> _usuario = <Usuario>[Usuario(0, "kang", '123')].obs;
+  final List<Usuario> _usuario = <Usuario>[
+    Usuario(0, "luci@gmail.com", '123', 'Lucía Pérez', 22, 'Femenino')
+  ].obs;
   final _mensaje = ''.obs;
   final _mensaje2 = ''.obs;
   final _campo = ''.obs;
@@ -48,7 +50,8 @@ class LoginController extends GetxController {
       var _validar =
           _usuario.firstWhereOrNull((element) => element.correo == correo);
       if (_validar == null) {
-        _usuario.add(Usuario(_usuario.length, correo, contrasena));
+        _usuario.add(Usuario(
+            _usuario.length, correo, contrasena, 'Nuevo Usuario', 99, ''));
         Get.toNamed("login");
         _campo.value = '';
         _contrasena.value = '';
@@ -71,4 +74,6 @@ class LoginController extends GetxController {
     _campo.value = '';
     _contrasena.value = '';
   }
+
+  editarUsuario() {}
 }
