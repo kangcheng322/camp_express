@@ -21,13 +21,6 @@ class _OrdenState extends State<Orden> {
         elevation: 0,
         centerTitle: true,
         backgroundColor: Colors.transparent,
-        leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
-          icon: const Icon(Icons.arrow_back,
-              color: Color.fromARGB(255, 78, 160, 62)),
-        ),
         title: const Text(
           "Mis ordenes",
           style: TextStyle(

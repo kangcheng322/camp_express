@@ -5,9 +5,12 @@ import 'controller/login_controller.dart';
 import 'controller/productos_controller.dart';
 import 'package:flutter/services.dart';
 
+import 'controller/tarjeta_controller.dart';
+
 void main() {
   Get.put(LoginController());
   Get.put(ProductosController());
+  Get.lazyPut(() => TarjetaController());
   runApp(const MyApp());
 }
 
