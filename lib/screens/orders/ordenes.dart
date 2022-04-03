@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../controller/productos_controller.dart';
+import '../../widgets/orders/orden_item.dart';
+
 class Orden extends StatefulWidget {
   const Orden({Key? key}) : super(key: key);
 
@@ -9,9 +12,9 @@ class Orden extends StatefulWidget {
 }
 
 class _OrdenState extends State<Orden> {
-  bool showPassword = false;
   @override
   Widget build(BuildContext context) {
+    ProductosController productosController = Get.find();
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
@@ -35,15 +38,25 @@ class _OrdenState extends State<Orden> {
         ),
       ),
       body: Column(
-        children: const <Widget>[
-          ExpansionTile(
-            title: Text('7831131\$'),
-            subtitle: Text('Fecha cuando se seleccionó'),
-            children: <Widget>[
-              ListTile(
-                  title: Text(
-                      'Producto                                                             1*12\$')),
-            ],
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          //const SizedBox(height: 10),
+          Expanded(
+            child: Obx(() => ListView.separated(
+                  itemCount: productosController.ordenes.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ordenItem(
+                        productosController.ordenes.elementAt(index).total,
+                        productosController.ordenes.elementAt(index).date,
+                        productosController.ordenes.elementAt(index).productos,
+                        productosController.ordenes.elementAt(index).cantidades,
+                        productosController.ordenes.elementAt(index).precios);
+                  },
+                  separatorBuilder: (BuildContext context, int index) =>
+                      const Divider(
+                    color: Color.fromARGB(255, 255, 255, 255),
+                  ),
+                )),
           ),
         ],
       ),

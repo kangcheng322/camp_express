@@ -1,3 +1,4 @@
+import 'package:camp_express/domain/orden.dart';
 import 'package:camp_express/domain/productos.dart';
 import 'package:get/get.dart';
 
@@ -17,11 +18,13 @@ class ProductosController extends GetxController {
   final List<Producto> _favoritos = <Producto>[].obs;
   final List<Producto> _carrito = <Producto>[].obs;
   late final RxDouble _total = 0.0.obs;
+  final List<Orden> _ordenes = <Orden>[].obs;
 
   List<Producto> get producto => _producto;
   List<Producto> get favoritos => _favoritos;
   List<Producto> get carrito => _carrito;
   double get total => _total.value;
+  List<Orden> get ordenes => _ordenes;
 
   ajustarFavorito(String id) {
     var producto = _producto.firstWhere((element) => element.id == id);
@@ -50,8 +53,11 @@ class ProductosController extends GetxController {
       _carrito.add(producto);
     } else {
       producto.cesta = false;
+      producto.cantidadCarrito = 0;
       var indice3 = _carrito.indexWhere((element) => element.id == id);
       _carrito.removeAt(indice3);
+      _total.value = _total.value - producto.subtotal;
+      producto.subtotal = 0;
     }
     _producto.fillRange(indice, indice + 1, producto);
   }
@@ -65,8 +71,11 @@ class ProductosController extends GetxController {
     _carrito.removeRange(0, _carrito.length);
     for (var i = 0; i < _producto.length; i++) {
       _producto.elementAt(i).cesta = false;
+      _producto.elementAt(i).cantidadCarrito = 0;
+      _producto.elementAt(i).subtotal = 0.0;
       _producto.fillRange(i, i + 1, _producto.elementAt(i));
     }
+    _total.value = 0.0;
   }
 
   addCantidad(String id) {
@@ -114,5 +123,18 @@ class ProductosController extends GetxController {
   double obtenerSubtotal(String id) {
     var producto = _producto.firstWhere((element) => element.id == id);
     return producto.subtotal;
+  }
+
+  agregarOrden(DateTime date) {
+    List productos = [];
+    List<String> cantidades = [];
+    List precios = [];
+    for (var i = 0; i < _carrito.length; i++) {
+      productos.add(_carrito.elementAt(i).nombre);
+      var unir = _carrito.elementAt(i).cantidadCarrito.toString() + 'x';
+      cantidades.add(unir);
+      precios.add(_carrito.elementAt(i).precio);
+    }
+    _ordenes.add(Orden(_total.value, date, productos, cantidades, precios));
   }
 }
