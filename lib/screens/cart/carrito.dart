@@ -104,9 +104,9 @@ class _CarritoState extends State<Carrito> {
             const SizedBox(height: 30),
             ElevatedButton(
                 onPressed: () {
-                  var nowTime = DateTime.now();
-
-                  print(nowTime);
+                  DateTime nowTime = DateTime.now();
+                  productosController.agregarOrden(nowTime);
+                  productosController.vaciarCarrito();
                 },
                 style: ElevatedButton.styleFrom(
                     primary: const Color.fromARGB(255, 78, 160, 62),
