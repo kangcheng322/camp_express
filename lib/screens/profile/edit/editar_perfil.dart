@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../controller/login_controller.dart';
+
 class EditarPerfil extends StatefulWidget {
   const EditarPerfil({Key? key}) : super(key: key);
 
@@ -9,8 +11,18 @@ class EditarPerfil extends StatefulWidget {
 }
 
 class _EditarPerfilState extends State<EditarPerfil> {
-  String dropdownvalue = 'Masculino';
+  late String dropdownvalue;
+  LoginController loginController = Get.find();
+  @override
+  void initState() {
+    super.initState();
+    loginController.mostrarDatosUsuario();
+    dropdownvalue = loginController.dropDownValue();
+  }
+
+  //String dropdownvalue = 'Vacío';
   var items = [
+    'Sin definir',
     'Masculino',
     'Femenino',
   ];
@@ -26,6 +38,7 @@ class _EditarPerfilState extends State<EditarPerfil> {
         leading: IconButton(
           onPressed: () {
             Get.back();
+            loginController.reasignarValor();
           },
           icon: const Icon(Icons.arrow_back,
               color: Color.fromARGB(255, 78, 160, 62)),
@@ -99,9 +112,10 @@ class _EditarPerfilState extends State<EditarPerfil> {
               const SizedBox(
                 height: 35,
               ),
-              buildTextField("Usuario", "Lucía Pérez", false),
-              buildTextField("Contraseña", "********", true),
-              buildTextField("Edad", "22", false),
+              Obx(() => buildTextField(
+                  "Usuario", loginController.nombreUsuario, false, 1)),
+              buildTextField("Contraseña", '**********', true, 2),
+              Obx(() => buildTextField("Edad", loginController.edad, false, 3)),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
@@ -112,6 +126,7 @@ class _EditarPerfilState extends State<EditarPerfil> {
                   ),
                   DropdownButton(
                     // Valor inicial
+
                     value: dropdownvalue,
 
                     // Icono flecha abajo
@@ -129,8 +144,9 @@ class _EditarPerfilState extends State<EditarPerfil> {
                     }).toList(),
                     // Mostrar en la primera posición el valor seleccionado
                     onChanged: (String? newValue) {
+                      loginController.obtenerGenero(newValue!);
                       setState(() {
-                        dropdownvalue = newValue!;
+                        dropdownvalue = newValue;
                       });
                     },
                     style: const TextStyle(color: Colors.black87, fontSize: 15),
@@ -145,7 +161,10 @@ class _EditarPerfilState extends State<EditarPerfil> {
                 height: 35,
               ),
               ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    loginController.editarUsuario('', 4, true);
+                    Get.back();
+                  },
                   style: ElevatedButton.styleFrom(
                       primary: const Color.fromARGB(255, 78, 160, 62),
                       fixedSize: const Size(314.0, 70.0),
@@ -163,11 +182,14 @@ class _EditarPerfilState extends State<EditarPerfil> {
     );
   }
 
-  Widget buildTextField(
-      String labelText, String placeholder, bool isPasswordTextField) {
+  Widget buildTextField(String labelText, String placeholder,
+      bool isPasswordTextField, int tipo) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 35.0),
-      child: TextField(
+      child: TextFormField(
+        onChanged: (text) {
+          loginController.editarUsuario(text, tipo, false);
+        },
         obscureText: isPasswordTextField ? showPassword : false,
         decoration: InputDecoration(
           filled: true,
@@ -199,14 +221,30 @@ class _EditarPerfilState extends State<EditarPerfil> {
                   ),
                 )
               : null,
-          floatingLabelStyle:
+          /* floatingLabelStyle:
               MaterialStateTextStyle.resolveWith((Set<MaterialState> states) {
             final Color color = states.contains(MaterialState.error)
                 ? Theme.of(context).errorColor
                 : const Color.fromARGB(255, 78, 160, 62);
             return TextStyle(color: color, letterSpacing: 1.3);
-          }),
+          }),*/
         ),
+
+        /* validator: (String? value) {
+          if (value == null || value == '') {
+            if (num == 1) {
+              return 'Enter name';
+            } else {
+              if (num == 2) {
+                return 'Enter contraseña';
+              } else {
+                return 'Enter edad';
+              }
+            }
+          }
+          return null;
+        },
+        autovalidateMode: AutovalidateMode.always,*/
         style: const TextStyle(color: Colors.black87),
         cursorColor: Colors.black87,
       ),
