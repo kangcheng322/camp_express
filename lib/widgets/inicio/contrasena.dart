@@ -36,6 +36,7 @@ class _ContrasenaState extends State<Contrasena> {
             ],
           ),
           TextField(
+            key: const Key('TextField_contrasena'),
             onChanged: (text) {
               loginController.obtenerContrsena(text);
             },

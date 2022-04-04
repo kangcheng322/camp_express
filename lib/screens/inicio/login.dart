@@ -66,6 +66,7 @@ class _LoginState extends State<Login> {
                                     color: Colors.white,
                                     decoration: TextDecoration.underline))),
                         ElevatedButton(
+                            key: const Key('boton_iniciar_sesión'),
                             onPressed: () {
                               loginController.comprobar(loginController.campo,
                                   loginController.contrasena);

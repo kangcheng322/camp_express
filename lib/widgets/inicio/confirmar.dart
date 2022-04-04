@@ -32,6 +32,7 @@ class _ConfirmarState extends State<Confirmar> {
             ],
           ),
           TextField(
+            key: const Key('TextField_confirmar'),
             onChanged: (text) {
               loginController.obtenerConfirmarContrasena(text);
             },

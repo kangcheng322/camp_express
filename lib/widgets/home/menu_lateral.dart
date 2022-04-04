@@ -8,6 +8,7 @@ import '../../controller/login_controller.dart';
 Widget menuLateral(Size size) {
   LoginController loginController = Get.find();
   return Drawer(
+    key: const Key('menu_lateral'),
     backgroundColor: const Color.fromARGB(255, 255, 255, 255),
     child: Column(
       children: <Widget>[

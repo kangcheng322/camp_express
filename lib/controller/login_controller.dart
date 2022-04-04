@@ -1,5 +1,7 @@
 import 'package:camp_express/domain/users.dart';
+import 'package:camp_express/screens/inicio/login.dart';
 import 'package:get/get.dart';
+import '../widgets/home/bottom_nav_bar.dart';
 
 class LoginController extends GetxController {
   final List<Usuario> _usuario = <Usuario>[
@@ -33,7 +35,7 @@ class LoginController extends GetxController {
     if (_validar != null) {
       if (_validar.constrasena == contrasena) {
         _mensaje.value = '';
-        Get.toNamed("bottom_nav_bar");
+        Get.to(const BottomNavBar());
       } else {
         _mensaje.value = 'Correo y/o contraseña inválido';
       }
@@ -61,9 +63,10 @@ class LoginController extends GetxController {
       if (_validar == null) {
         _usuario.add(Usuario(_usuario.length, correo, contrasena, 'Sin editar',
             'Sin editar', 'Sin definir'));
-        Get.toNamed("login");
+        Get.to(const Login());
         _campo.value = '';
         _contrasena.value = '';
+        _mensaje2.value = '';
       } else {
         _mensaje2.value = 'El correo ya existe';
       }

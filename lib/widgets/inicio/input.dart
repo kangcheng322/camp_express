@@ -32,6 +32,7 @@ class _CampoState extends State<Campo> {
             ],
           ),
           TextField(
+            key: const Key('TextField_correo'),
             onChanged: (text) {
               loginController.obtenerCampo(text);
             },
