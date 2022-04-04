@@ -1,6 +1,6 @@
 # camp_express
 
-A new Flutter project.
+Un ecommerce especializado en productos del campo y artesanía.
 
 ## Getting Started
 
