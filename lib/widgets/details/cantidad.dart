@@ -11,8 +11,6 @@ class Cantidad extends StatefulWidget {
   _CantidadState createState() => _CantidadState();
 }
 
-int _n = 0;
-
 class _CantidadState extends State<Cantidad> {
   ProductosController productosController = Get.find();
   @override

@@ -103,6 +103,7 @@ class _CarritoState extends State<Carrito> {
             ),
             const SizedBox(height: 30),
             ElevatedButton(
+                key: const Key('boton_carrito'),
                 onPressed: () {
                   DateTime nowTime = DateTime.now();
                   productosController.agregarOrden(nowTime);

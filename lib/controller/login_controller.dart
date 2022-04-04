@@ -29,6 +29,7 @@ class LoginController extends GetxController {
   String get genero => _genero.value;
   List get aux => _aux;
 
+//Comprobar que los campos sean válidos para el inicio de sesión
   comprobar(var correo, var contrasena) {
     var _validar =
         _usuario.firstWhereOrNull((element) => element.correo == correo);
@@ -56,6 +57,7 @@ class LoginController extends GetxController {
     _confirmarContrasena.value = confirmarContrasena;
   }
 
+//Crea un usuario en la interfaz de registro con sus respectivas validaciones
   crearUsuario(var correo, var contrasena, var confirmarContrasena) {
     if (contrasena == confirmarContrasena && contrasena != '') {
       var _validar =
@@ -75,6 +77,7 @@ class LoginController extends GetxController {
     }
   }
 
+//El mensaje de error y los campos vuelven a su condición inicial
   reiniciarMensaje() {
     _mensaje.value = '';
     _campo.value = '';
@@ -101,6 +104,7 @@ class LoginController extends GetxController {
     _genero.value = genero;
   }
 
+//Edita un usuario, detectando si un campo se llenó y luego guardar el usuario
   editarUsuario(var campo, int tipo, bool guardar) {
     if (tipo == 1) {
       _aux[0] = campo;
@@ -133,12 +137,14 @@ class LoginController extends GetxController {
     }
   }
 
+  //La lista auxiliar de los campos vuelven a su condición inicial
   reasignarValor() {
     _aux[0] = '';
     _aux[1] = '';
     _aux[2] = '';
   }
 
+  //Devuelve el valor inicial para el menú de género
   String dropDownValue() {
     var x = _usuario.firstWhere((element) => element.correo == _campo.value);
     return x.genero;

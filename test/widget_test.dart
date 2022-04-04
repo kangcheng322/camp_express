@@ -7,10 +7,17 @@
 
 import 'package:camp_express/controller/login_controller.dart';
 import 'package:camp_express/controller/productos_controller.dart';
+import 'package:camp_express/screens/cart/carrito.dart';
+import 'package:camp_express/screens/favoritos/favoritos.dart';
+import 'package:camp_express/screens/home/help/ayuda.dart';
 import 'package:camp_express/screens/home/home.dart';
 import 'package:camp_express/screens/inicio/login.dart';
 import 'package:camp_express/screens/inicio/registro.dart';
 import 'package:camp_express/screens/inicio/resetear.dart';
+import 'package:camp_express/screens/profile/edit/editar_perfil.dart';
+import 'package:camp_express/screens/profile/edit/tarjeta.dart';
+import 'package:camp_express/screens/profile/noti/notificacion.dart';
+import 'package:camp_express/screens/profile/perfil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
@@ -88,12 +95,13 @@ void main() {
     expect(find.text('Resetear'), findsOneWidget);
     expect(find.text('Iniciar sesión'), findsOneWidget);
   });
-  testWidgets('Home: ', (WidgetTester tester) async {
+  testWidgets(
+      'Home: Verificar que los widgets estén bien y que el menú lateral funcione',
+      (WidgetTester tester) async {
     await tester.pumpWidget(const GetMaterialApp(
         home: Scaffold(
       body: Home(),
     )));
-
     expect(find.text('Productos'), findsOneWidget);
     expect(find.text('Campo'), findsOneWidget);
     expect(find.text('Artesanías'), findsOneWidget);
@@ -103,7 +111,59 @@ void main() {
     expect(find.text('Mazorca'), findsNWidgets(2));
     await tester.tap(find.byIcon(UniconsLine.search));
     await tester.tap(find.byTooltip('Open navigation menu'));
-    // await tester.pump();
-    //find.byType(ListTile).at(index)
+    await tester.pump();
+    expect(find.text('Cerrar sesión'), findsOneWidget);
+    expect(find.text('Vender'), findsOneWidget);
+    expect(find.text('Ayuda'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('cerrar_sesion')));
+    await tester.pump();
+  });
+  testWidgets('Favoritos: Verificar que los widgets estén bien',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const GetMaterialApp(
+        home: Scaffold(
+      body: Favoritos(),
+    )));
+    expect(find.text('Favoritos'), findsOneWidget);
+  });
+  testWidgets('Carrito: Verificar que los widgets estén bien',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const GetMaterialApp(
+        home: Scaffold(
+      body: Carrito(),
+    )));
+    expect(find.text('Carrito'), findsOneWidget);
+    expect(find.text('Total'), findsOneWidget);
+    expect(find.text('0.0\$'), findsOneWidget);
+    expect(find.text('Comprar'), findsOneWidget);
+    await tester.tap(find.byIcon(Icons.delete_outline));
+    await tester.tap(find.byKey(const Key('boton_carrito')));
+    await tester.pump();
+  });
+  testWidgets('Notificaciones: Verificar que los campos estén bien',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const GetMaterialApp(
+        home: Scaffold(
+      body: Notificacion(),
+    )));
+    expect(find.text('Notificaciones'), findsOneWidget);
+    expect(find.text('¡BIENVENIDO!'), findsOneWidget);
+    expect(find.byIcon(Icons.more_vert), findsNWidgets(2));
+  });
+  testWidgets('Ayuda: Verificar que los campos estén bien',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const GetMaterialApp(
+        home: Scaffold(
+      body: Ayuda(),
+    )));
+    expect(find.text('Canales de atención'), findsOneWidget);
+    expect(find.text('camp_express@gmail.com'), findsOneWidget);
+    expect(find.text('3192220499'), findsOneWidget);
+    expect(find.text('3212270498'), findsOneWidget);
+    expect(find.text('Línea de atención al cliente: 01-800-0912348'),
+        findsOneWidget);
+    expect(find.text('Camp Express'), findsOneWidget);
+    expect(find.text('Camp_Express'), findsOneWidget);
+    expect(find.text('Camp Express Oficial'), findsOneWidget);
   });
 }

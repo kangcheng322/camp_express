@@ -8,7 +8,6 @@ import '../../controller/login_controller.dart';
 Widget menuLateral(Size size) {
   LoginController loginController = Get.find();
   return Drawer(
-    key: const Key('menu_lateral'),
     backgroundColor: const Color.fromARGB(255, 255, 255, 255),
     child: Column(
       children: <Widget>[
@@ -55,6 +54,7 @@ Widget menuLateral(Size size) {
         ),
         const Divider(),
         ListTile(
+          key: const Key('cerrar_sesion'),
           leading: const Icon(Icons.exit_to_app,
               color: Color.fromARGB(255, 78, 160, 62)),
           title: const Text(
