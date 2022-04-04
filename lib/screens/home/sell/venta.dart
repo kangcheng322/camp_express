@@ -10,6 +10,8 @@ class Venta extends StatefulWidget {
   State<Venta> createState() => _VentaState();
 }
 
+void addToList() {}
+
 class _VentaState extends State<Venta> {
   @override
   Widget build(BuildContext context) {
