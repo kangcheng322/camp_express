@@ -8,9 +8,9 @@ import '../widgets/home/bottom_nav_bar.dart';
 
 Map<String, WidgetBuilder> getApplicationRoutes() {
   return <String, WidgetBuilder>{
-    '/': (BuildContext context) => const Presentacion(),
+    // '/': (BuildContext context) => const Presentacion(),
     'login': (BuildContext context) => const Login(),
-    'registro': (BuildContext context) => const Registro(),
+    // 'registro': (BuildContext context) => const Registro(),
     'resetear': (BuildContext context) => const Resetear(),
     'bottom_nav_bar': (BuildContext context) => const BottomNavBar(),
   };

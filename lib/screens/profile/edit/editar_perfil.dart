@@ -16,8 +16,8 @@ class _EditarPerfilState extends State<EditarPerfil> {
   @override
   void initState() {
     super.initState();
-    loginController.mostrarDatosUsuario();
-    dropdownvalue = loginController.dropDownValue();
+    // loginController.mostrarDatosUsuario();
+    // dropdownvalue = loginController.dropDownValue();
   }
 
   //String dropdownvalue = 'Vacío';
@@ -38,7 +38,7 @@ class _EditarPerfilState extends State<EditarPerfil> {
         leading: IconButton(
           onPressed: () {
             Get.back();
-            loginController.reasignarValor();
+            // loginController.reasignarValor();
           },
           icon: const Icon(Icons.arrow_back,
               color: Color.fromARGB(255, 78, 160, 62)),
@@ -112,10 +112,10 @@ class _EditarPerfilState extends State<EditarPerfil> {
               const SizedBox(
                 height: 35,
               ),
-              Obx(() => buildTextField(
-                  "Usuario", loginController.nombreUsuario, false, 1)),
+              buildTextField(
+                  "Usuario", loginController.nombreUsuario, false, 1),
               buildTextField("Contraseña", '**********', true, 2),
-              Obx(() => buildTextField("Edad", loginController.edad, false, 3)),
+              buildTextField("Edad", loginController.edad, false, 3),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
@@ -144,9 +144,9 @@ class _EditarPerfilState extends State<EditarPerfil> {
                     }).toList(),
                     // Mostrar en la primera posición el valor seleccionado
                     onChanged: (String? newValue) {
-                      loginController.obtenerGenero(newValue!);
+                      // loginController.obtenerGenero(newValue!);
                       setState(() {
-                        dropdownvalue = newValue;
+                        // dropdownvalue = newValue;
                       });
                     },
                     style: const TextStyle(color: Colors.black87, fontSize: 15),
@@ -162,7 +162,7 @@ class _EditarPerfilState extends State<EditarPerfil> {
               ),
               ElevatedButton(
                   onPressed: () {
-                    loginController.editarUsuario('', 4, true);
+                    // loginController.editarUsuario('', 4, true);
                     Get.back();
                   },
                   style: ElevatedButton.styleFrom(
@@ -188,7 +188,7 @@ class _EditarPerfilState extends State<EditarPerfil> {
       padding: const EdgeInsets.only(bottom: 35.0),
       child: TextFormField(
         onChanged: (text) {
-          loginController.editarUsuario(text, tipo, false);
+          // loginController.editarUsuario(text, tipo, false);
         },
         obscureText: isPasswordTextField ? showPassword : false,
         decoration: InputDecoration(

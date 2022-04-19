@@ -1,3 +1,4 @@
+import 'package:camp_express/controller/auth_controller.dart';
 import 'package:camp_express/controller/login_controller.dart';
 import 'package:camp_express/screens/profile/edit/direccion_envio.dart';
 import 'package:camp_express/screens/profile/edit/tarjeta.dart';
@@ -13,6 +14,7 @@ class Perfil extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AuthController authController = Get.find();
     LoginController loginController = Get.find();
     Size size = MediaQuery.of(context).size;
     return Scaffold(
@@ -90,13 +92,13 @@ class Perfil extends StatelessWidget {
                                 )
                               ],
                             ),
-                            Obx(() => Text(
-                                  loginController.obtenerNombreUsuario(),
-                                  style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600,
-                                      color: Color.fromARGB(255, 78, 160, 62)),
-                                )),
+                            Text(
+                              authController.userEmail(),
+                              style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color.fromARGB(255, 78, 160, 62)),
+                            ),
                             const SizedBox(height: 12),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,4 +1,6 @@
+import 'package:camp_express/firebase_auth/firebase_central.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Presentacion extends StatefulWidget {
   const Presentacion({Key? key}) : super(key: key);
@@ -31,7 +33,7 @@ class _PresentacionState extends State<Presentacion>
   Future<void> _cambiar() async {
     await Future.delayed(const Duration(seconds: 4), () {
       // Navigator.pushReplacementNamed(context, "login");
-      Navigator.of(context).pushReplacementNamed("login");
+      Get.to(FirebaseCentral());
     });
   }
 

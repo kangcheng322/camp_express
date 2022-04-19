@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "320830994519",
+    "project_id": "campexpress-36d33",
+    "storage_bucket": "campexpress-36d33.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320830994519:android:c1779ca69a9265dbe0cb12",
+        "android_client_info": {
+          "package_name": "com.example.camp_express"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320830994519-qu2jlq17qnhonq6nlpntlfu5njjagr27.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJAsmLHCzrQEW2iAxwwKUjzi8mx0U9k0g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320830994519-qu2jlq17qnhonq6nlpntlfu5njjagr27.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

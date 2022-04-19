@@ -1,3 +1,4 @@
+import 'package:camp_express/controller/auth_controller.dart';
 import 'package:camp_express/widgets/inicio/input.dart';
 import 'package:camp_express/widgets/inicio/contrasena.dart';
 import 'package:camp_express/widgets/inicio/confirmar.dart';
@@ -8,7 +9,36 @@ import '../../controller/login_controller.dart';
 import '../../widgets/inicio/confirmar.dart';
 
 class Registro extends StatelessWidget {
-  const Registro({Key? key}) : super(key: key);
+  AuthController authController = Get.find();
+
+  _signup(theEmail, thePassword, confirmPass) async {
+    if (thePassword == confirmPass) {
+      try {
+        await authController.signUp(theEmail, thePassword);
+
+        Get.snackbar(
+          "Sign Up",
+          'OK',
+          icon: Icon(Icons.person, color: Colors.red),
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      } catch (err) {
+        Get.snackbar(
+          "Sign Up",
+          err.toString(),
+          icon: Icon(Icons.person, color: Colors.red),
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+    } else {
+      Get.snackbar(
+        "Verifique la contraseña",
+        'No coinciden',
+        icon: Icon(Icons.person, color: Colors.red),
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,8 +90,12 @@ class Registro extends StatelessWidget {
                             padding: const EdgeInsets.only(top: 45),
                             child: ElevatedButton(
                                 key: const Key('boton_registro'),
-                                onPressed: () {
-                                  loginController.crearUsuario(
+                                onPressed: () async {
+                                  // loginController.crearUsuario(
+                                  //     loginController.campo,
+                                  //     loginController.contrasena,
+                                  //     loginController.confirmarContrasena);
+                                  await _signup(
                                       loginController.campo,
                                       loginController.contrasena,
                                       loginController.confirmarContrasena);

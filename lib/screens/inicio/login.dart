@@ -1,8 +1,11 @@
 import 'package:camp_express/controller/login_controller.dart';
+import 'package:camp_express/screens/inicio/registro.dart';
 import 'package:camp_express/widgets/inicio/contrasena.dart';
 import 'package:camp_express/widgets/inicio/input.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../controller/auth_controller.dart';
 
 class Login extends StatefulWidget {
   const Login({
@@ -13,6 +16,22 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  AuthController authController = Get.find();
+
+  _login(theEmail, thePassword) async {
+    print('_login $theEmail $thePassword');
+    try {
+      await authController.login(theEmail, thePassword);
+    } catch (err) {
+      Get.snackbar(
+        "Login",
+        err.toString(),
+        icon: Icon(Icons.person, color: Colors.red),
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     LoginController loginController = Get.find();
@@ -67,8 +86,10 @@ class _LoginState extends State<Login> {
                                     decoration: TextDecoration.underline))),
                         ElevatedButton(
                             key: const Key('boton_iniciar_sesión'),
-                            onPressed: () {
-                              loginController.comprobar(loginController.campo,
+                            onPressed: () async {
+                              // loginController.comprobar(loginController.campo,
+                              //     loginController.contrasena);
+                              await _login(loginController.campo,
                                   loginController.contrasena);
                             },
                             style: ElevatedButton.styleFrom(
@@ -95,9 +116,10 @@ class _LoginState extends State<Login> {
                                     decoration: TextDecoration.underline),
                               ),
                               onPressed: () {
-                                loginController.reiniciarMensaje();
-                                Navigator.pushReplacementNamed(
-                                    context, "registro");
+                                // loginController.reiniciarMensaje();
+                                // Navigator.pushReplacementNamed(
+                                //     context, "registro");
+                                Get.to(Registro());
                               },
                             )),
                         Container(

@@ -37,6 +37,8 @@ dependencies:
   unicons: ^2.1.0
   get: ^4.6.1
   flutter_credit_card: ^3.0.1
+  firebase_core: ^1.14.0
+  firebase_auth: ^3.3.12
 
 dev_dependencies:
   flutter_test:
