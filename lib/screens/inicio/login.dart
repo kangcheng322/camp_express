@@ -1,3 +1,4 @@
+import 'package:camp_express/controller/User_controller.dart';
 import 'package:camp_express/controller/login_controller.dart';
 import 'package:camp_express/screens/inicio/registro.dart';
 import 'package:camp_express/widgets/inicio/contrasena.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controller/auth_controller.dart';
+import '../../domain/usuario.dart';
 
 class Login extends StatefulWidget {
   const Login({
@@ -17,11 +19,13 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   AuthController authController = Get.find();
+  UserController userController = Get.find();
 
   _login(theEmail, thePassword) async {
     print('_login $theEmail $thePassword');
     try {
       await authController.login(theEmail, thePassword);
+      await userController.getUserData();
     } catch (err) {
       Get.snackbar(
         "Login",
@@ -29,6 +33,16 @@ class _LoginState extends State<Login> {
         icon: Icon(Icons.person, color: Colors.red),
         snackPosition: SnackPosition.BOTTOM,
       );
+    }
+  }
+
+  _getuserData() async {
+    try {
+      await userController.getUserData();
+      Usuario currentUser = userController.user.value;
+      printInfo(info: currentUser.name);
+    } catch (e) {
+      printError(info: e.toString());
     }
   }
 
@@ -75,15 +89,15 @@ class _LoginState extends State<Login> {
                         const Campo(),
                         //Textfield de la contraseña
                         const Contrasena(),
-                        TextButton(
-                            onPressed: () {
-                              Navigator.pushReplacementNamed(
-                                  context, "resetear");
-                            },
-                            child: const Text('Contraseña olvidada?',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    decoration: TextDecoration.underline))),
+                        // TextButton(
+                        //     onPressed: () {
+                        //       Navigator.pushReplacementNamed(
+                        //           context, "resetear");
+                        //     },
+                        //     child: const Text('Contraseña olvidada?',
+                        //         style: TextStyle(
+                        //             color: Colors.white,
+                        //             decoration: TextDecoration.underline))),
                         ElevatedButton(
                             key: const Key('boton_iniciar_sesión'),
                             onPressed: () async {
@@ -91,6 +105,7 @@ class _LoginState extends State<Login> {
                               //     loginController.contrasena);
                               await _login(loginController.campo,
                                   loginController.contrasena);
+                              await _getuserData();
                             },
                             style: ElevatedButton.styleFrom(
                                 primary:

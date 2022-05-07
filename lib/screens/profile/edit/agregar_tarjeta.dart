@@ -1,4 +1,5 @@
 import 'package:camp_express/controller/tarjeta_controller.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -91,8 +92,8 @@ class _LoginPageState extends State<AgregarTarjeta> {
                     ElevatedButton(
                         onPressed: () {
                           TarjetaController tarjetaController = Get.find();
-                          tarjetaController.agregarTarjeta(Tarjeta(numero.text,
-                              fecha.text, cvv.text, propietario.text));
+                          tarjetaController.addCreditCard(
+                              numero.text, fecha.text, cvv.text);
                           Get.back();
                         },
                         style: ElevatedButton.styleFrom(

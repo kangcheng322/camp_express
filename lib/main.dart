@@ -1,3 +1,4 @@
+import 'package:camp_express/controller/User_controller.dart';
 import 'package:camp_express/controller/auth_controller.dart';
 import 'package:camp_express/firebase_auth/firebase_central.dart';
 import 'package:camp_express/routes/routes.dart';
@@ -21,6 +22,7 @@ Future<void> main() async {
   Get.lazyPut(() => TarjetaController());
   Get.put(AuthController());
   Get.put(TarjetaController());
+  Get.put(UserController());
 
   runApp(const MyApp());
 }

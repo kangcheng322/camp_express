@@ -32,11 +32,13 @@ class ProductosController extends GetxController {
     var indice = _producto.indexWhere((element) => element.id == id);
     if (producto.favorito == false) {
       producto.favorito = true;
-      _favoritos.add(producto);
+      _favoritos.add(producto); //modificar favorito en base de datos
+      // actualizar la lista con la base de datos
     } else {
       producto.favorito = false;
       var indice2 = _favoritos.indexWhere((element) => element.id == id);
-      _favoritos.removeAt(indice2);
+      _favoritos.removeAt(indice2); // modificar favorito en base de datos
+      // actualizar la lista con la base de datos
     }
     _producto.fillRange(indice, indice + 1, producto);
   }

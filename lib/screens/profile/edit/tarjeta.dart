@@ -42,14 +42,14 @@ class _TarjetaState extends State<Tarjeta> {
         children: [
           Expanded(
             child: Obx(() => ListView.separated(
-                  itemCount: tarjetaController.listaTarjeta.length,
+                  itemCount: tarjetaController.cardsList.length,
                   itemBuilder: (BuildContext context, int index) {
                     return CreditCardWidget(
-                      cardNumber: tarjetaController.listaTarjeta[index].numero,
-                      expiryDate: tarjetaController.listaTarjeta[index].fecha,
+                      cardNumber: tarjetaController.cardsList[index].numero,
+                      expiryDate: tarjetaController.cardsList[index].fecha,
                       cardHolderName:
-                          tarjetaController.listaTarjeta[index].propietario,
-                      cvvCode: tarjetaController.listaTarjeta[index].cvv,
+                          tarjetaController.cardsList[index].propietario,
+                      cvvCode: tarjetaController.cardsList[index].cvv,
                       showBackView: false,
                       isHolderNameVisible: true,
                       cardBgColor: Colors.green,

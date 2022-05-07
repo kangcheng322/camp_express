@@ -1,7 +1,9 @@
+import 'package:camp_express/controller/User_controller.dart';
 import 'package:camp_express/controller/auth_controller.dart';
 import 'package:camp_express/widgets/inicio/input.dart';
 import 'package:camp_express/widgets/inicio/contrasena.dart';
 import 'package:camp_express/widgets/inicio/confirmar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,33 +12,57 @@ import '../../widgets/inicio/confirmar.dart';
 
 class Registro extends StatelessWidget {
   AuthController authController = Get.find();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final nameController = TextEditingController();
+  final edadController = TextEditingController();
+  final generoController = TextEditingController();
 
-  _signup(theEmail, thePassword, confirmPass) async {
-    if (thePassword == confirmPass) {
-      try {
-        await authController.signUp(theEmail, thePassword);
+  // _signup(theEmail, thePassword, confirmPass) async {
+  //   if (thePassword == confirmPass) {
+  //     try {
+  //       await authController.signUp(theEmail, thePassword);
 
-        Get.snackbar(
-          "Sign Up",
-          'OK',
-          icon: Icon(Icons.person, color: Colors.red),
+  //       Get.snackbar(
+  //         "Sign Up",
+  //         'OK',
+  //         icon: Icon(Icons.person, color: Colors.red),
+  //         snackPosition: SnackPosition.BOTTOM,
+  //       );
+  //     } catch (err) {
+  //       Get.snackbar(
+  //         "Sign Up",
+  //         err.toString(),
+  //         icon: Icon(Icons.person, color: Colors.red),
+  //         snackPosition: SnackPosition.BOTTOM,
+  //       );
+  //     }
+  //   } else {
+  //     Get.snackbar(
+  //       "Verifique la contraseña",
+  //       'No coinciden',
+  //       icon: Icon(Icons.person, color: Colors.red),
+  //       snackPosition: SnackPosition.BOTTOM,
+  //     );
+  //   }
+  // }
+
+  _signup(name, edad, genero, email, password) async {
+    UserController userController = Get.find();
+    AuthController authController = Get.find();
+
+    try {
+      await authController.signUp(email, password);
+      await userController.createUser(name, edad, genero);
+    } on FirebaseAuthException catch (e) {
+      Get.snackbar('Error', e.code,
           snackPosition: SnackPosition.BOTTOM,
-        );
-      } catch (err) {
-        Get.snackbar(
-          "Sign Up",
-          err.toString(),
-          icon: Icon(Icons.person, color: Colors.red),
-          snackPosition: SnackPosition.BOTTOM,
-        );
-      }
-    } else {
-      Get.snackbar(
-        "Verifique la contraseña",
-        'No coinciden',
-        icon: Icon(Icons.person, color: Colors.red),
-        snackPosition: SnackPosition.BOTTOM,
-      );
+          backgroundColor: Color(0xFF808080),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
     }
   }
 
@@ -80,12 +106,68 @@ class Registro extends StatelessWidget {
                               color: Colors.white,
                             ),
                           ),
-                          //Textfield del correo
-                          const Campo(),
-                          //Textfield de la contraseña
-                          const Contrasena(),
-                          //Textfield de confirmar contraseña
-                          const Confirmar(),
+                          // //Textfield del correo
+                          // const Campo(),
+                          // //Textfield de la contraseña
+                          // const Contrasena(),
+                          // //Textfield de confirmar contraseña
+                          // const Confirmar(),
+                          Padding(
+                            padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
+                            child: TextFormField(
+                              controller: nameController,
+                              decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                  filled: true,
+                                  fillColor: Color(0xFFF6F6F6),
+                                  labelText: 'Name'),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
+                            child: TextFormField(
+                              controller: edadController,
+                              decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                  filled: true,
+                                  fillColor: Color(0xFFF6F6F6),
+                                  labelText: 'Name'),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
+                            child: TextFormField(
+                              controller: generoController,
+                              decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                  filled: true,
+                                  fillColor: Color(0xFFF6F6F6),
+                                  labelText: 'Name'),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
+                            child: TextFormField(
+                              controller: emailController,
+                              decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                  filled: true,
+                                  fillColor: Color(0xFFF6F6F6),
+                                  labelText: 'Name'),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
+                            child: TextFormField(
+                              controller: passwordController,
+                              decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                  filled: true,
+                                  fillColor: Color(0xFFF6F6F6),
+                                  labelText: 'Name'),
+                            ),
+                          ),
+
                           Container(
                             padding: const EdgeInsets.only(top: 45),
                             child: ElevatedButton(
@@ -96,9 +178,11 @@ class Registro extends StatelessWidget {
                                   //     loginController.contrasena,
                                   //     loginController.confirmarContrasena);
                                   await _signup(
-                                      loginController.campo,
-                                      loginController.contrasena,
-                                      loginController.confirmarContrasena);
+                                      nameController.text,
+                                      edadController.text,
+                                      generoController.text,
+                                      emailController.text,
+                                      passwordController.text);
                                 },
                                 style: ElevatedButton.styleFrom(
                                     primary: const Color.fromARGB(
