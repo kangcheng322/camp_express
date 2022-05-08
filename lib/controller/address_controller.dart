@@ -7,12 +7,11 @@ import '../domain/tarjeta.dart';
 
 class AddressController extends GetxController {
   List<Direccion> addressesList = <Direccion>[].obs;
-  List<Tarjeta> cardsList = <Tarjeta>[].obs;
 
   Future<void> addAddress(String address) async {
     try {
       final _firestore = FirebaseFirestore.instance;
-      await _firestore.collection("creditCards").add({
+      await _firestore.collection("direcciones").add({
         "direccion": address,
         "uid": FirebaseAuth.instance.currentUser!.uid,
       });
@@ -28,7 +27,7 @@ class AddressController extends GetxController {
       var uid = FirebaseAuth.instance.currentUser!.uid;
       var sRef =
           _firestore.collection("direcciones").where('uid', isEqualTo: uid);
-
+      addressesList = [];
       QuerySnapshot Requests = await sRef.get();
       if (Requests.docs.isNotEmpty) {
         for (var doc in Requests.docs) {

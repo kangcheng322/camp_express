@@ -1,4 +1,3 @@
-import 'package:camp_express/controller/User_controller.dart';
 import 'package:camp_express/controller/auth_controller.dart';
 import 'package:camp_express/widgets/inicio/input.dart';
 import 'package:camp_express/widgets/inicio/contrasena.dart';
@@ -8,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controller/login_controller.dart';
+import '../../controller/usuario_controller.dart';
 import '../../widgets/inicio/confirmar.dart';
 
 class Registro extends StatelessWidget {
@@ -47,13 +47,14 @@ class Registro extends StatelessWidget {
   //   }
   // }
 
-  _signup(name, edad, genero, email, password) async {
-    UserController userController = Get.find();
+  _signup(String name, String edad, String genero, String email,
+      String password) async {
+    //UserController userController = Get.find();
     AuthController authController = Get.find();
+    printInfo(info: edad + ' ' + name + ' ' + genero);
 
     try {
       await authController.signUp(email, password);
-      await userController.createUser(name, edad, genero);
     } on FirebaseAuthException catch (e) {
       Get.snackbar('Error', e.code,
           snackPosition: SnackPosition.BOTTOM,
@@ -131,7 +132,7 @@ class Registro extends StatelessWidget {
                                   border: InputBorder.none,
                                   filled: true,
                                   fillColor: Color(0xFFF6F6F6),
-                                  labelText: 'Name'),
+                                  labelText: 'Edad'),
                             ),
                           ),
                           Padding(
@@ -142,7 +143,7 @@ class Registro extends StatelessWidget {
                                   border: InputBorder.none,
                                   filled: true,
                                   fillColor: Color(0xFFF6F6F6),
-                                  labelText: 'Name'),
+                                  labelText: 'Genero'),
                             ),
                           ),
                           Padding(
@@ -153,18 +154,19 @@ class Registro extends StatelessWidget {
                                   border: InputBorder.none,
                                   filled: true,
                                   fillColor: Color(0xFFF6F6F6),
-                                  labelText: 'Name'),
+                                  labelText: 'email'),
                             ),
                           ),
                           Padding(
                             padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
                             child: TextFormField(
                               controller: passwordController,
+                              obscureText: true,
                               decoration: const InputDecoration(
                                   border: InputBorder.none,
                                   filled: true,
                                   fillColor: Color(0xFFF6F6F6),
-                                  labelText: 'Name'),
+                                  labelText: 'password'),
                             ),
                           ),
 
@@ -183,6 +185,13 @@ class Registro extends StatelessWidget {
                                       generoController.text,
                                       emailController.text,
                                       passwordController.text);
+                                  UsuarioController usuarioController =
+                                      Get.find();
+                                  await usuarioController.createUser(
+                                      nameController.text,
+                                      edadController.text,
+                                      generoController.text,
+                                      emailController.text);
                                 },
                                 style: ElevatedButton.styleFrom(
                                     primary: const Color.fromARGB(

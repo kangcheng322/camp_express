@@ -15,7 +15,7 @@ import 'package:camp_express/screens/inicio/login.dart';
 import 'package:camp_express/screens/inicio/registro.dart';
 import 'package:camp_express/screens/inicio/resetear.dart';
 import 'package:camp_express/screens/profile/edit/editar_perfil.dart';
-import 'package:camp_express/screens/profile/edit/tarjeta.dart';
+import 'package:camp_express/screens/profile/edit/tarjetasdart';
 import 'package:camp_express/screens/profile/noti/notificacion.dart';
 import 'package:camp_express/screens/profile/perfil.dart';
 import 'package:flutter/material.dart';

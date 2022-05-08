@@ -1,4 +1,3 @@
-import 'package:camp_express/controller/User_controller.dart';
 import 'package:camp_express/controller/auth_controller.dart';
 import 'package:camp_express/firebase_auth/firebase_central.dart';
 import 'package:camp_express/routes/routes.dart';
@@ -15,6 +14,7 @@ import 'controller/productos_controller.dart';
 import 'package:flutter/services.dart';
 
 import 'controller/tarjeta_controller.dart';
+import 'controller/usuario_controller.dart';
 
 Future<void> main() async {
   Get.put(LoginController());
@@ -22,7 +22,8 @@ Future<void> main() async {
   Get.lazyPut(() => TarjetaController());
   Get.put(AuthController());
   Get.put(TarjetaController());
-  Get.put(UserController());
+  //Get.put(UserController());
+  Get.put(UsuarioController());
 
   runApp(const MyApp());
 }

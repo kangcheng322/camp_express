@@ -4,10 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
-class UserController extends GetxController {
+class UsuarioController extends GetxController {
   //List<Usuario> usersList = [];
+  //final user = Usuario(id: "", correo: "",name: "", edad: "", genero: "").obs;
   var user = Usuario("", "", "", "", "").obs;
-
   Future<void> getUserData() async {
     try {
       final _firestore = FirebaseFirestore.instance;
@@ -54,12 +54,11 @@ class UserController extends GetxController {
     }
   }
 
-  Future<void> createUser(String name, String edad, String genero) async {
+  Future<void> createUser(name, edad, genero, email) async {
     try {
       final _firestore = FirebaseFirestore.instance;
       await _firestore.collection("users").add({
-        "email": FirebaseAuth.instance.currentUser!.email,
-        "id": FirebaseAuth.instance.currentUser!.uid,
+        "email": email,
         "name": name,
         "edad": edad,
         "genero": genero,
@@ -74,15 +73,33 @@ class UserController extends GetxController {
     try {
       String uid = FirebaseAuth.instance.currentUser!.uid;
       final _firestore = FirebaseFirestore.instance;
-      await _firestore.collection("users").doc(uid).update({
-        "name": name,
-        "edad": edad,
-        "genero": genero,
+      var email = FirebaseAuth.instance.currentUser!.email;
+      getUserId(email).then((value) async {
+        if (value != "user not found") {
+          await _firestore.collection("users").doc(value).update({
+            "name": name,
+            "edad": edad,
+            "genero": genero,
+          });
+        }
       });
 
       return Future.value(true);
     } catch (e) {
       return Future.error(e);
     }
+  }
+
+  Future<String> getUserId(email) async {
+    final _firestore = FirebaseFirestore.instance;
+    var sRef = _firestore.collection("users").where("email", isEqualTo: email);
+
+    QuerySnapshot users = await sRef.get();
+    if (users.docs.isNotEmpty) {
+      for (var doc in users.docs) {
+        return doc.id;
+      }
+    }
+    return "user not found";
   }
 }

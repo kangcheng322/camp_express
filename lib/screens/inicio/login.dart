@@ -1,5 +1,5 @@
-import 'package:camp_express/controller/User_controller.dart';
 import 'package:camp_express/controller/login_controller.dart';
+import 'package:camp_express/controller/usuario_controller.dart';
 import 'package:camp_express/screens/inicio/registro.dart';
 import 'package:camp_express/widgets/inicio/contrasena.dart';
 import 'package:camp_express/widgets/inicio/input.dart';
@@ -19,13 +19,13 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   AuthController authController = Get.find();
-  UserController userController = Get.find();
+  UsuarioController usuarioController = Get.find();
 
   _login(theEmail, thePassword) async {
     print('_login $theEmail $thePassword');
     try {
       await authController.login(theEmail, thePassword);
-      await userController.getUserData();
+      await usuarioController.getUserData();
     } catch (err) {
       Get.snackbar(
         "Login",
@@ -36,15 +36,15 @@ class _LoginState extends State<Login> {
     }
   }
 
-  _getuserData() async {
-    try {
-      await userController.getUserData();
-      Usuario currentUser = userController.user.value;
-      printInfo(info: currentUser.name);
-    } catch (e) {
-      printError(info: e.toString());
-    }
-  }
+  // _getuserData() async {
+  //   try {
+  //     await userController.getUserData();
+  //     Usuario currentUser = userController.user.value;
+  //     printInfo(info: currentUser.name);
+  //   } catch (e) {
+  //     printError(info: e.toString());
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +105,7 @@ class _LoginState extends State<Login> {
                               //     loginController.contrasena);
                               await _login(loginController.campo,
                                   loginController.contrasena);
-                              await _getuserData();
+                              //await _getuserData();
                             },
                             style: ElevatedButton.styleFrom(
                                 primary:

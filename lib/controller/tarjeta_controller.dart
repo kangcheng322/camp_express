@@ -1,4 +1,4 @@
-import 'package:camp_express/controller/user_controller.dart';
+import 'package:camp_express/controller/usuario_controller.dart';
 import 'package:camp_express/domain/tarjeta.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,19 +20,20 @@ class TarjetaController extends GetxController {
   //   }
   // }
 
-  Future<void> addCreditCard(String numero, String fecha, String cvv) async {
+  Future<void> addCreditCard(
+      String numero, String fecha, String cvv, email) async {
     try {
       final _firestore = FirebaseFirestore.instance;
-      UserController userController = Get.find();
+      UsuarioController userController = Get.find();
       Usuario currentUser = userController.user.value;
-      await _firestore.collection("creditCards").add({
+      await _firestore.collection("tarjetas").add({
         "numero": numero,
         "fecha": fecha,
         "cvv": cvv,
-        "uid": FirebaseAuth.instance.currentUser!.uid,
+        "email": email,
         "propietario": currentUser.name,
       });
-      getCreditCards();
+
       return Future.value(true);
     } catch (e) {
       return Future.error(e);
@@ -42,14 +43,15 @@ class TarjetaController extends GetxController {
   Future<void> getCreditCards() async {
     try {
       final _firestore = FirebaseFirestore.instance;
-      var uid = FirebaseAuth.instance.currentUser!.uid;
-      var sRef = _firestore.collection("tarjetas").where('uid', isEqualTo: uid);
+      var email = FirebaseAuth.instance.currentUser!.email;
+      var sRef =
+          _firestore.collection("tarjetas").where('email', isEqualTo: email);
       cardsList = [];
       QuerySnapshot Requests = await sRef.get();
       if (Requests.docs.isNotEmpty) {
         for (var doc in Requests.docs) {
           cardsList.add(Tarjeta(doc["numero"], doc["fecha"], doc["cvv"],
-              doc["propietario"], doc["uid"]));
+              doc["propietario"], doc["email"]));
         }
       }
       return Future.value(true);
