@@ -2,6 +2,7 @@ import 'package:camp_express/controller/auth_controller.dart';
 import 'package:camp_express/controller/login_controller.dart';
 import 'package:camp_express/controller/tarjeta_controller.dart';
 import 'package:camp_express/screens/profile/edit/direccion_envio.dart';
+import 'package:camp_express/screens/profile/edit/mapa_direcciones.dart';
 import 'package:camp_express/screens/profile/noti/notificacion.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -154,6 +155,11 @@ class Perfil extends StatelessWidget {
                       text: 'Notificaciones',
                       onClick: () {
                         Get.to(() => const Notificacion());
+                      }),
+                  PerfilOpciones(
+                      text: 'Ver direcciones',
+                      onClick: () {
+                        Get.to(() => MapaDirecciones());
                       }),
                 ],
               ),

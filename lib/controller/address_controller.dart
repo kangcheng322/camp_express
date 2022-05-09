@@ -22,6 +22,7 @@ class AddressController extends GetxController {
         "longitud": longitud,
         "email": FirebaseAuth.instance.currentUser!.email,
       });
+      printInfo(info: "Entró a addAdress");
       return Future.value(true);
     } catch (e) {
       return Future.error(e);
