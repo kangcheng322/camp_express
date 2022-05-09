@@ -21,8 +21,25 @@ class _DireccionState extends State<Direccion> {
     'C.C.',
     'C.E.',
   ];
+  var latitud = "";
+  var longitud = "";
 
   Future<List<String>> getCurrentLocation() async {
+    LocationPermission permission = await Geolocator.checkPermission();
+
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        print('Location permissions are denied');
+      } else if (permission == LocationPermission.deniedForever) {
+        print("'Location permissions are permanently denied");
+      } else {
+        print("GPS Location service is granted");
+      }
+    } else {
+      print("GPS Location permission granted.");
+    }
+
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
 
@@ -35,6 +52,9 @@ class _DireccionState extends State<Direccion> {
     List<String> location = [];
     location.add(long);
     location.add(lat);
+
+    this.latitud = lat;
+    this.longitud = long;
 
     return location;
   }

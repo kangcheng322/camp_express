@@ -8,12 +8,26 @@ import '../domain/tarjeta.dart';
 class AddressController extends GetxController {
   List<Direccion> addressesList = <Direccion>[].obs;
 
-  Future<void> addAddress(String address) async {
+  Future<void> addAddress(
+      String direccion,
+      String barrio,
+      String celular,
+      String nombre,
+      String numero,
+      String latutud,
+      String longitud,
+      String email) async {
     try {
       final _firestore = FirebaseFirestore.instance;
       await _firestore.collection("direcciones").add({
-        "direccion": address,
-        "uid": FirebaseAuth.instance.currentUser!.uid,
+        "direccion": direccion,
+        "barrio": barrio,
+        "celular": celular,
+        "nombre": nombre,
+        "numero": numero,
+        "latitud": latutud,
+        "longitud": longitud,
+        "email": FirebaseAuth.instance.currentUser!.email,
       });
       return Future.value(true);
     } catch (e) {
