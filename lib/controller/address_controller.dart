@@ -31,9 +31,9 @@ class AddressController extends GetxController {
   Future<void> getAddresses() async {
     try {
       final _firestore = FirebaseFirestore.instance;
-      var uid = FirebaseAuth.instance.currentUser!.uid;
+      var email = FirebaseAuth.instance.currentUser!.email;
       var sRef =
-          _firestore.collection("direcciones").where('uid', isEqualTo: uid);
+          _firestore.collection("direcciones").where('email', isEqualTo: email);
       addressesList = [];
       QuerySnapshot Requests = await sRef.get();
       if (Requests.docs.isNotEmpty) {

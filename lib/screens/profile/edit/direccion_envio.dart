@@ -1,4 +1,5 @@
 import 'package:camp_express/controller/address_controller.dart';
+import 'package:camp_express/screens/profile/perfil.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -160,16 +161,20 @@ class _DireccionState extends State<Direccion> {
                         fontSize: 20, fontWeight: FontWeight.w700)),
                 child: const Text('Get current location')),
             ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   AddressController addressController = Get.find();
-                  addressController.addAddress(
+                  await addressController.addAddress(
                       direccionController.text,
                       barrioController.text,
                       celularController.text,
                       nombreController.text,
                       numeroController.text,
-                      this.latitud,
-                      this.longitud);
+                      latitud,
+                      longitud);
+
+                  latitud = "";
+                  longitud = "";
+                  Get.to(() => const Perfil());
                 },
                 style: ElevatedButton.styleFrom(
                     primary: const Color.fromARGB(255, 78, 160, 62),
