@@ -31,7 +31,15 @@ class AddressController extends GetxController {
       QuerySnapshot Requests = await sRef.get();
       if (Requests.docs.isNotEmpty) {
         for (var doc in Requests.docs) {
-          addressesList.add(Direccion(doc["direccion"], doc["uid"]));
+          addressesList.add(Direccion(
+              doc["direccion"],
+              doc["barrio"],
+              doc["celular"],
+              doc["nombre"],
+              doc["numero"],
+              doc["latitud"],
+              doc["longitud"],
+              doc["email"]));
         }
       }
       return Future.value(true);

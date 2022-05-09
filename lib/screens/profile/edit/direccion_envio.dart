@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:geolocator/geolocator.dart';
 
 class Direccion extends StatefulWidget {
   const Direccion({Key? key}) : super(key: key);
@@ -10,10 +11,33 @@ class Direccion extends StatefulWidget {
 
 class _DireccionState extends State<Direccion> {
   String dropdownvalue = 'C.C.';
+  final direccionController = TextEditingController();
+  final barrioController = TextEditingController();
+  final ciudadController = TextEditingController();
+  final celularController = TextEditingController();
+  final nombreController = TextEditingController();
+  final numeroController = TextEditingController();
   var items = [
     'C.C.',
     'C.E.',
   ];
+
+  Future<List<String>> getCurrentLocation() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+
+    String long = position.longitude.toString();
+    String lat = position.latitude.toString();
+
+    printInfo(info: long);
+    printInfo(info: lat);
+
+    List<String> location = [];
+    location.add(long);
+    location.add(lat);
+
+    return location;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,12 +67,13 @@ class _DireccionState extends State<Direccion> {
         padding: const EdgeInsets.only(left: 16, top: 50, right: 16),
         child: ListView(
           children: [
-            buildTextField("Dirección", "cra 23b # 60 -15", true),
-            buildTextField("Barrio", "Los Andes", false),
-            buildTextField("Ciudad", "Barranquilla", false),
-            buildTextField("Celular", "3212220987", false),
+            buildTextField(
+                "Dirección", "cra 23b # 60 -15", true, direccionController),
+            buildTextField("Barrio", "Los Andes", false, barrioController),
+            buildTextField("Ciudad", "Barranquilla", false, ciudadController),
+            buildTextField("Celular", "3212220987", false, celularController),
             buildTextField("Nombre completo de tu documento de identidad",
-                "Lucía Pérez Rodríguez", false),
+                "Lucía Pérez Rodríguez", false, nombreController),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -88,14 +113,30 @@ class _DireccionState extends State<Direccion> {
                 Container(
                   padding: EdgeInsets.only(top: 10),
                   width: 300,
-                  child: buildTextField(
-                      "Número del documento de identidad", "3212220987", false),
+                  child: buildTextField("Número del documento de identidad",
+                      "3212220987", false, numeroController),
                 )
               ],
             ),
             const SizedBox(
               height: 35,
             ),
+            ElevatedButton(
+                onPressed: () async {
+                  List<String> list = await getCurrentLocation();
+                  printInfo(info: list[0]);
+                  printInfo(info: list[1]);
+                },
+                style: ElevatedButton.styleFrom(
+                    primary: const Color.fromARGB(255, 78, 160, 62),
+                    fixedSize: const Size(314.0, 70.0),
+                    onPrimary: const Color.fromARGB(255, 255, 255, 255),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0)),
+                    padding: const EdgeInsets.symmetric(vertical: 22),
+                    textStyle: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.w700)),
+                child: const Text('Get current location')),
             ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
@@ -114,8 +155,8 @@ class _DireccionState extends State<Direccion> {
     );
   }
 
-  Widget buildTextField(
-      String labelText, String placeholder, bool isPasswordTextField) {
+  Widget buildTextField(String labelText, String placeholder,
+      bool isPasswordTextField, TextEditingController controller) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 35.0),
       child: TextField(
