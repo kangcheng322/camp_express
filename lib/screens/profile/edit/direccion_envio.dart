@@ -1,3 +1,5 @@
+import 'package:camp_express/controller/address_controller.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
@@ -158,7 +160,17 @@ class _DireccionState extends State<Direccion> {
                         fontSize: 20, fontWeight: FontWeight.w700)),
                 child: const Text('Get current location')),
             ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  AddressController addressController = Get.find();
+                  addressController.addAddress(
+                      direccionController.text,
+                      barrioController.text,
+                      celularController.text,
+                      nombreController.text,
+                      numeroController.text,
+                      this.latitud,
+                      this.longitud);
+                },
                 style: ElevatedButton.styleFrom(
                     primary: const Color.fromARGB(255, 78, 160, 62),
                     fixedSize: const Size(314.0, 70.0),
