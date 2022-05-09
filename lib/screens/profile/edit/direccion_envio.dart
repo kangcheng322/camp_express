@@ -90,13 +90,67 @@ class _DireccionState extends State<Direccion> {
         padding: const EdgeInsets.only(left: 16, top: 50, right: 16),
         child: ListView(
           children: [
-            buildTextField(
-                "Dirección", "cra 23b # 60 -15", true, direccionController),
-            buildTextField("Barrio", "Los Andes", false, barrioController),
-            buildTextField("Ciudad", "Barranquilla", false, ciudadController),
-            buildTextField("Celular", "3212220987", false, celularController),
-            buildTextField("Nombre completo de tu documento de identidad",
-                "Lucía Pérez Rodríguez", false, nombreController),
+            // buildTextField("Dirección", "cra 23b # 60 -15", true),
+            // buildTextField("Barrio", "Los Andes", false),
+            // buildTextField("Ciudad", "Barranquilla", false),
+            // buildTextField("Celular", "3212220987", false),
+            // buildTextField("Nombre completo de tu documento de identidad",
+            //     "Lucía Pérez Rodríguez", false),
+            Padding(
+              padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
+              child: TextFormField(
+                controller: direccionController,
+                decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    filled: true,
+                    fillColor: Color(0xFFF6F6F6),
+                    labelText: 'Dirección'),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
+              child: TextFormField(
+                controller: barrioController,
+                decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    filled: true,
+                    fillColor: Color(0xFFF6F6F6),
+                    labelText: 'Barrio'),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
+              child: TextFormField(
+                controller: ciudadController,
+                decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    filled: true,
+                    fillColor: Color(0xFFF6F6F6),
+                    labelText: 'Ciudad'),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
+              child: TextFormField(
+                controller: celularController,
+                decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    filled: true,
+                    fillColor: Color(0xFFF6F6F6),
+                    labelText: 'Celular'),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
+              child: TextFormField(
+                controller: nombreController,
+                decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    filled: true,
+                    fillColor: Color(0xFFF6F6F6),
+                    labelText: 'Nombre'),
+              ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -136,8 +190,8 @@ class _DireccionState extends State<Direccion> {
                 Container(
                   padding: EdgeInsets.only(top: 10),
                   width: 300,
-                  child: buildTextField("Número del documento de identidad",
-                      "3212220987", false, numeroController),
+                  child: buildTextField(
+                      "Número del documento de identidad", "3212220987", false),
                 )
               ],
             ),
@@ -147,8 +201,6 @@ class _DireccionState extends State<Direccion> {
             ElevatedButton(
                 onPressed: () async {
                   List<String> list = await getCurrentLocation();
-                  printInfo(info: list[0]);
-                  printInfo(info: list[1]);
                 },
                 style: ElevatedButton.styleFrom(
                     primary: const Color.fromARGB(255, 78, 160, 62),
@@ -192,8 +244,8 @@ class _DireccionState extends State<Direccion> {
     );
   }
 
-  Widget buildTextField(String labelText, String placeholder,
-      bool isPasswordTextField, TextEditingController controller) {
+  Widget buildTextField(
+      String labelText, String placeholder, bool isPasswordTextField) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 35.0),
       child: TextField(

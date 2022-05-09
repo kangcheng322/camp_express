@@ -13,30 +13,30 @@ class MapaDirecciones extends StatefulWidget {
 
 class MapaDireccionesState extends State<MapaDirecciones> {
   @override
-  void initState() async {
+  void initState() {
     super.initState();
-    await getMarkers();
+    //getMarkers();
   }
 
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
 
-  getMarkers() async {
-    AddressController addressController = Get.find();
-    await addressController.getAddresses();
-    int cont = 0;
-    for (Direccion i in addressController.addressesList) {
-      Marker marker = Marker(
-          markerId: MarkerId(cont.toString()),
-          position: LatLng(double.parse(i.latitud), double.parse(i.longitud)),
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueCyan),
-          infoWindow: InfoWindow(
-              title: "Hytech City",
-              onTap: () {},
-              snippet: "Snipet Hitech City"));
-      markers[MarkerId(cont.toString())] = marker;
-      cont++;
-    }
-  }
+  // getMarkers() async {
+  //   AddressController addressController = Get.find();
+  //   await addressController.getAddresses();
+  //   int cont = 0;
+  //   for (Direccion i in addressController.addressesList) {
+  //     Marker marker = Marker(
+  //         markerId: MarkerId(cont.toString()),
+  //         position: LatLng(double.parse(i.latitud), double.parse(i.longitud)),
+  //         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueCyan),
+  //         infoWindow: InfoWindow(
+  //             title: "Hytech City",
+  //             onTap: () {},
+  //             snippet: "Snipet Hitech City"));
+  //     // markers[MarkerId(cont.toString())] = marker;
+  //     cont++;
+  //   }
+  // }
 
   Completer<GoogleMapController> _controller = Completer();
 
@@ -57,7 +57,7 @@ class MapaDireccionesState extends State<MapaDirecciones> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: GoogleMap(
-          mapType: MapType.hybrid,
+          //mapType: MapType.hybrid,
           initialCameraPosition: _kGooglePlex,
           onMapCreated: (GoogleMapController controller) {
             _controller.complete(controller);
