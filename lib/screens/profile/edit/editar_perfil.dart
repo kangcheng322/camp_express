@@ -1,3 +1,4 @@
+import 'package:camp_express/controller/usuario_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,6 +14,9 @@ class EditarPerfil extends StatefulWidget {
 class _EditarPerfilState extends State<EditarPerfil> {
   late String dropdownvalue;
   LoginController loginController = Get.find();
+  final nameController = TextEditingController();
+  final edadController = TextEditingController();
+  final generoController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -112,57 +116,95 @@ class _EditarPerfilState extends State<EditarPerfil> {
               const SizedBox(
                 height: 35,
               ),
-              buildTextField(
-                  "Usuario", loginController.nombreUsuario, false, 1),
-              buildTextField("Contraseña", '**********', true, 2),
-              buildTextField("Edad", loginController.edad, false, 3),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  const Text(
-                    'Género:    ',
-                    style: TextStyle(
-                        color: Color.fromARGB(255, 78, 160, 62), fontSize: 16),
-                  ),
-                  DropdownButton(
-                    // Valor inicial
 
-                    value: dropdownvalue,
-
-                    // Icono flecha abajo
-                    icon: const Icon(
-                      Icons.keyboard_arrow_down,
-                      color: Colors.black87,
-                    ),
-
-                    // Array list de items
-                    items: items.map((String items) {
-                      return DropdownMenuItem(
-                        value: items,
-                        child: Text(items),
-                      );
-                    }).toList(),
-                    // Mostrar en la primera posición el valor seleccionado
-                    onChanged: (String? newValue) {
-                      // loginController.obtenerGenero(newValue!);
-                      setState(() {
-                        // dropdownvalue = newValue;
-                      });
-                    },
-                    style: const TextStyle(color: Colors.black87, fontSize: 15),
-                    underline: Container(
-                      height: 1,
-                      color: Colors.black87,
-                    ),
-                  ),
-                ],
+              Padding(
+                padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
+                child: TextFormField(
+                  controller: nameController,
+                  decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      filled: true,
+                      fillColor: Color(0xFFF6F6F6),
+                      labelText: 'Name'),
+                ),
               ),
+              Padding(
+                padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
+                child: TextFormField(
+                  controller: edadController,
+                  decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      filled: true,
+                      fillColor: Color(0xFFF6F6F6),
+                      labelText: 'Edad'),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
+                child: TextFormField(
+                  controller: generoController,
+                  decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      filled: true,
+                      fillColor: Color(0xFFF6F6F6),
+                      labelText: 'Genero'),
+                ),
+              ),
+
+              // buildTextField(
+              //     "Usuario", loginController.nombreUsuario, false, 1),
+              // buildTextField("Contraseña", '**********', true, 2),
+              // buildTextField("Edad", loginController.edad, false, 3),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.start,
+              //   children: <Widget>[
+              //     const Text(
+              //       'Género:    ',
+              //       style: TextStyle(
+              //           color: Color.fromARGB(255, 78, 160, 62), fontSize: 16),
+              //     ),
+              //     DropdownButton(
+              //       // Valor inicial
+
+              //       value: dropdownvalue,
+
+              //       // Icono flecha abajo
+              //       icon: const Icon(
+              //         Icons.keyboard_arrow_down,
+              //         color: Colors.black87,
+              //       ),
+
+              //       // Array list de items
+              //       items: items.map((String items) {
+              //         return DropdownMenuItem(
+              //           value: items,
+              //           child: Text(items),
+              //         );
+              //       }).toList(),
+              //       // Mostrar en la primera posición el valor seleccionado
+              //       onChanged: (String? newValue) {
+              //         // loginController.obtenerGenero(newValue!);
+              //         setState(() {
+              //           // dropdownvalue = newValue;
+              //         });
+              //       },
+              //       style: const TextStyle(color: Colors.black87, fontSize: 15),
+              //       underline: Container(
+              //         height: 1,
+              //         color: Colors.black87,
+              //       ),
+              //     ),
+              //   ],
+              // ),
               const SizedBox(
                 height: 35,
               ),
               ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     // loginController.editarUsuario('', 4, true);
+                    UsuarioController usuarioController = Get.find();
+                    await usuarioController.updateUser(nameController.text,
+                        edadController.text, generoController.text);
                     Get.back();
                   },
                   style: ElevatedButton.styleFrom(

@@ -4,14 +4,14 @@ import 'package:get/get.dart';
 import '../edit/agregar_tarjeta.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 
-class Tarjeta extends StatefulWidget {
-  const Tarjeta({Key? key}) : super(key: key);
+class Tarjetas extends StatefulWidget {
+  const Tarjetas({Key? key}) : super(key: key);
 
   @override
-  State<Tarjeta> createState() => _TarjetaState();
+  State<Tarjetas> createState() => _TarjetasState();
 }
 
-class _TarjetaState extends State<Tarjeta> {
+class _TarjetasState extends State<Tarjetas> {
   bool showPassword = false;
   TarjetaController tarjetaController = Get.find();
   @override
@@ -41,27 +41,48 @@ class _TarjetaState extends State<Tarjeta> {
       body: Column(
         children: [
           Expanded(
-            child: Obx(() => ListView.separated(
-                  itemCount: tarjetaController.listaTarjeta.length,
-                  itemBuilder: (BuildContext context, int index) {
+            child: GetBuilder<TarjetaController>(
+              builder: (tarjetaController) => ListView.builder(
+                  itemCount: tarjetaController.cardsList.length,
+                  itemBuilder: (context, index) {
                     return CreditCardWidget(
-                      cardNumber: tarjetaController.listaTarjeta[index].numero,
-                      expiryDate: tarjetaController.listaTarjeta[index].fecha,
+                      cardNumber: tarjetaController.cardsList[index].numero,
+                      expiryDate: tarjetaController.cardsList[index].fecha,
                       cardHolderName:
-                          tarjetaController.listaTarjeta[index].propietario,
-                      cvvCode: tarjetaController.listaTarjeta[index].cvv,
+                          tarjetaController.cardsList[index].propietario,
+                      cvvCode: tarjetaController.cardsList[index].cvv,
                       showBackView: false,
                       isHolderNameVisible: true,
                       cardBgColor: Colors.green,
                       onCreditCardWidgetChange:
                           (CreditCardBrand) {}, //true when you want to show cvv(back) view
                     );
-                  },
-                  separatorBuilder: (BuildContext context, int index) =>
-                      const Divider(
-                    color: Color.fromARGB(255, 255, 255, 255),
-                  ),
-                )),
+                  }),
+            ),
+
+            //Obx(() => ListView.builder(
+            //       itemCount: tarjetaController.cardsList.length,
+            //       itemBuilder: (BuildContext context, int index) {
+            //         // return CreditCardWidget(
+            //         //   cardNumber: tarjetaController.cardsList[index].numero,
+            //         //   expiryDate: tarjetaController.cardsList[index].fecha,
+            //         //   cardHolderName:
+            //         //       tarjetaController.cardsList[index].propietario,
+            //         //   cvvCode: tarjetaController.cardsList[index].cvv,
+            //         //   showBackView: false,
+            //         //   isHolderNameVisible: true,
+            //         //   cardBgColor: Colors.green,
+            //         //   onCreditCardWidgetChange:
+            //         //       (CreditCardBrand) {}, //true when you want to show cvv(back) view
+            //         // );
+            //         //return Text(tarjetaController.cardsList[index].numero);
+            //         return const Text("hola");
+            //       },
+            //       // separatorBuilder: (BuildContext context, int index) =>
+            //       //     const Divider(
+            //       //   color: Color.fromARGB(255, 255, 255, 255),
+            //       // ),
+            //     )),
           ),
           Padding(
             padding: EdgeInsets.all(10.0),

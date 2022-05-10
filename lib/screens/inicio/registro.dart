@@ -2,41 +2,132 @@ import 'package:camp_express/controller/auth_controller.dart';
 import 'package:camp_express/widgets/inicio/input.dart';
 import 'package:camp_express/widgets/inicio/contrasena.dart';
 import 'package:camp_express/widgets/inicio/confirmar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controller/login_controller.dart';
+import '../../controller/usuario_controller.dart';
 import '../../widgets/inicio/confirmar.dart';
 
 class Registro extends StatelessWidget {
   AuthController authController = Get.find();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final nameController = TextEditingController();
+  final edadController = TextEditingController();
+  final generoController = TextEditingController();
 
-  _signup(theEmail, thePassword, confirmPass) async {
-    if (thePassword == confirmPass) {
-      try {
-        await authController.signUp(theEmail, thePassword);
+  bool validateData() {
+    if (emailController.text == "" || emailController.text.isEmpty) {
+      Get.snackbar('Error', 'Por favor ingrese su dirección',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0xFF808080),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
+      return false;
+    }
 
-        Get.snackbar(
-          "Sign Up",
-          'OK',
-          icon: Icon(Icons.person, color: Colors.red),
+    if (passwordController.text == "" || passwordController.text.isEmpty) {
+      Get.snackbar('Error', 'Por favor ingrese su barrio',
           snackPosition: SnackPosition.BOTTOM,
-        );
-      } catch (err) {
-        Get.snackbar(
-          "Sign Up",
-          err.toString(),
-          icon: Icon(Icons.person, color: Colors.red),
+          backgroundColor: Color(0xFF808080),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
+      return false;
+    }
+
+    if (nameController.text == "" || nameController.text.isEmpty) {
+      Get.snackbar('Error', 'Por favor ingrese su ciudad',
           snackPosition: SnackPosition.BOTTOM,
-        );
-      }
-    } else {
-      Get.snackbar(
-        "Verifique la contraseña",
-        'No coinciden',
-        icon: Icon(Icons.person, color: Colors.red),
-        snackPosition: SnackPosition.BOTTOM,
-      );
+          backgroundColor: Color(0xFF808080),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
+      return false;
+    }
+
+    if (edadController.text == "" || edadController.text.isEmpty) {
+      Get.snackbar('Error', 'Por favor ingrese su edad',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0xFF808080),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
+      return false;
+    }
+
+    if (generoController.text == "" || generoController.text.isEmpty) {
+      Get.snackbar('Error', 'Por favor ingrese su género',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0xFF808080),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
+      return false;
+    }
+
+    return true;
+  }
+
+  // _signup(theEmail, thePassword, confirmPass) async {
+  //   if (thePassword == confirmPass) {
+  //     try {
+  //       await authController.signUp(theEmail, thePassword);
+
+  //       Get.snackbar(
+  //         "Sign Up",
+  //         'OK',
+  //         icon: Icon(Icons.person, color: Colors.red),
+  //         snackPosition: SnackPosition.BOTTOM,
+  //       );
+  //     } catch (err) {
+  //       Get.snackbar(
+  //         "Sign Up",
+  //         err.toString(),
+  //         icon: Icon(Icons.person, color: Colors.red),
+  //         snackPosition: SnackPosition.BOTTOM,
+  //       );
+  //     }
+  //   } else {
+  //     Get.snackbar(
+  //       "Verifique la contraseña",
+  //       'No coinciden',
+  //       icon: Icon(Icons.person, color: Colors.red),
+  //       snackPosition: SnackPosition.BOTTOM,
+  //     );
+  //   }
+  // }
+
+  _signup(String name, String edad, String genero, String email,
+      String password) async {
+    //UserController userController = Get.find();
+    AuthController authController = Get.find();
+    printInfo(info: edad + ' ' + name + ' ' + genero);
+
+    try {
+      await authController.signUp(email, password);
+    } on FirebaseAuthException catch (e) {
+      Get.snackbar('Error', e.code,
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0xFF808080),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
     }
   }
 
@@ -80,12 +171,69 @@ class Registro extends StatelessWidget {
                               color: Colors.white,
                             ),
                           ),
-                          //Textfield del correo
-                          const Campo(),
-                          //Textfield de la contraseña
-                          const Contrasena(),
-                          //Textfield de confirmar contraseña
-                          const Confirmar(),
+                          // //Textfield del correo
+                          // const Campo(),
+                          // //Textfield de la contraseña
+                          // const Contrasena(),
+                          // //Textfield de confirmar contraseña
+                          // const Confirmar(),
+                          Padding(
+                            padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
+                            child: TextFormField(
+                              controller: nameController,
+                              decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                  filled: true,
+                                  fillColor: Color(0xFFF6F6F6),
+                                  labelText: 'Name'),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
+                            child: TextFormField(
+                              controller: edadController,
+                              decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                  filled: true,
+                                  fillColor: Color(0xFFF6F6F6),
+                                  labelText: 'Edad'),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
+                            child: TextFormField(
+                              controller: generoController,
+                              decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                  filled: true,
+                                  fillColor: Color(0xFFF6F6F6),
+                                  labelText: 'Genero'),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
+                            child: TextFormField(
+                              controller: emailController,
+                              decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                  filled: true,
+                                  fillColor: Color(0xFFF6F6F6),
+                                  labelText: 'email'),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
+                            child: TextFormField(
+                              controller: passwordController,
+                              obscureText: true,
+                              decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                  filled: true,
+                                  fillColor: Color(0xFFF6F6F6),
+                                  labelText: 'password'),
+                            ),
+                          ),
+
                           Container(
                             padding: const EdgeInsets.only(top: 45),
                             child: ElevatedButton(
@@ -95,10 +243,21 @@ class Registro extends StatelessWidget {
                                   //     loginController.campo,
                                   //     loginController.contrasena,
                                   //     loginController.confirmarContrasena);
-                                  await _signup(
-                                      loginController.campo,
-                                      loginController.contrasena,
-                                      loginController.confirmarContrasena);
+                                  if (validateData()) {
+                                    await _signup(
+                                        nameController.text,
+                                        edadController.text,
+                                        generoController.text,
+                                        emailController.text,
+                                        passwordController.text);
+                                    UsuarioController usuarioController =
+                                        Get.find();
+                                    await usuarioController.createUser(
+                                        nameController.text,
+                                        edadController.text,
+                                        generoController.text,
+                                        emailController.text);
+                                  }
                                 },
                                 style: ElevatedButton.styleFrom(
                                     primary: const Color.fromARGB(

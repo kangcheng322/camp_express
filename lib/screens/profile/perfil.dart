@@ -1,13 +1,17 @@
+import 'package:camp_express/controller/address_controller.dart';
 import 'package:camp_express/controller/auth_controller.dart';
 import 'package:camp_express/controller/login_controller.dart';
+import 'package:camp_express/controller/tarjeta_controller.dart';
 import 'package:camp_express/screens/profile/edit/direccion_envio.dart';
-import 'package:camp_express/screens/profile/edit/tarjeta.dart';
+import 'package:camp_express/screens/profile/edit/mapa_direcciones.dart';
 import 'package:camp_express/screens/profile/noti/notificacion.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../controller/usuario_controller.dart';
 import '../orders/ordenes.dart';
 import 'edit/editar_perfil.dart';
+import 'edit/tarjetas.dart';
 
 class Perfil extends StatelessWidget {
   const Perfil({Key? key}) : super(key: key);
@@ -15,6 +19,7 @@ class Perfil extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AuthController authController = Get.find();
+    UsuarioController usuarioController = Get.find();
     LoginController loginController = Get.find();
     Size size = MediaQuery.of(context).size;
     return Scaffold(
@@ -108,14 +113,18 @@ class Perfil extends StatelessWidget {
                                 const SizedBox(
                                   width: 10,
                                 ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: const <Widget>[
-                                    Text('Dirección: Cra 23b # 60 - 15'),
-                                    Text('Barrio: Los Andes'),
-                                    Text('Barranquilla, Colombia'),
-                                  ],
-                                )
+                                GetX<UsuarioController>(
+                                    builder: (usuarioController) {
+                                  return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(usuarioController.user.value.name),
+                                      Text(usuarioController.user.value.correo),
+                                      Text(usuarioController.user.value.edad),
+                                    ],
+                                  );
+                                })
                               ],
                             )
                           ]),
@@ -138,13 +147,22 @@ class Perfil extends StatelessWidget {
                       }),
                   PerfilOpciones(
                       text: 'Tarjetas',
-                      onClick: () {
-                        Get.to(() => const Tarjeta());
+                      onClick: () async {
+                        TarjetaController tarjetaController = Get.find();
+                        await tarjetaController.getCreditCards();
+                        Get.to(() => const Tarjetas());
                       }),
                   PerfilOpciones(
                       text: 'Notificaciones',
                       onClick: () {
                         Get.to(() => const Notificacion());
+                      }),
+                  PerfilOpciones(
+                      text: 'Ver direcciones',
+                      onClick: ()  {
+                        AddressController addressController = Get.find();
+                         addressController.getAddresses();
+                        Get.to(() => MapaDirecciones());
                       }),
                 ],
               ),

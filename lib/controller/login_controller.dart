@@ -1,4 +1,4 @@
-import 'package:camp_express/domain/users.dart';
+import 'package:camp_express/domain/usuario.dart';
 import 'package:camp_express/screens/inicio/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -6,8 +6,7 @@ import '../widgets/home/bottom_nav_bar.dart';
 
 class LoginController extends GetxController {
   final List<Usuario> _usuario = <Usuario>[
-    Usuario(
-        0, "luci@gmail.com", '123', 'Sin editar', 'Sin editar', 'Sin definir')
+    Usuario("0", "luci@gmail.com", '123', 'Sin editar', 'Sin editar')
   ].obs;
   final _mensaje = ''.obs;
   final _mensaje2 = ''.obs;
@@ -35,12 +34,12 @@ class LoginController extends GetxController {
     var _validar =
         _usuario.firstWhereOrNull((element) => element.correo == correo);
     if (_validar != null) {
-      if (_validar.constrasena == contrasena) {
-        _mensaje.value = '';
-        Get.to(const BottomNavBar());
-      } else {
-        _mensaje.value = 'Correo y/o contraseña inválido';
-      }
+      // if (_validar.constrasena == contrasena) {
+      //   _mensaje.value = '';
+      //   Get.to(const BottomNavBar());
+      // } else {
+      //   _mensaje.value = 'Correo y/o contraseña inválido';
+      // }
     } else {
       _mensaje.value = 'Correo y/o contraseña inválido';
     }
