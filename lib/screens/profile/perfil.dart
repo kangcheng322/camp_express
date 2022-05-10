@@ -1,3 +1,4 @@
+import 'package:camp_express/controller/address_controller.dart';
 import 'package:camp_express/controller/auth_controller.dart';
 import 'package:camp_express/controller/login_controller.dart';
 import 'package:camp_express/controller/tarjeta_controller.dart';
@@ -158,7 +159,9 @@ class Perfil extends StatelessWidget {
                       }),
                   PerfilOpciones(
                       text: 'Ver direcciones',
-                      onClick: () {
+                      onClick: ()  {
+                        AddressController addressController = Get.find();
+                         addressController.getAddresses();
                         Get.to(() => MapaDirecciones());
                       }),
                 ],
