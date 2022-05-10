@@ -15,7 +15,7 @@ import 'package:camp_express/screens/inicio/login.dart';
 import 'package:camp_express/screens/inicio/registro.dart';
 import 'package:camp_express/screens/inicio/resetear.dart';
 import 'package:camp_express/screens/profile/edit/editar_perfil.dart';
-import 'package:camp_express/screens/profile/edit/tarjetasdart';
+// import 'package:camp_express/screens/profile/edit/tarjetasdart';
 import 'package:camp_express/screens/profile/noti/notificacion.dart';
 import 'package:camp_express/screens/profile/perfil.dart';
 import 'package:flutter/material.dart';
@@ -57,8 +57,8 @@ void main() {
       (WidgetTester tester) async {
     await tester.pumpWidget(const GetMaterialApp(
         home: Scaffold(
-      body: Registro(),
-    )));
+            // body: Registro(),
+            )));
     expect(find.text('Correo electrónico'), findsOneWidget);
     expect(find.text('Contraseña'), findsOneWidget);
     expect(find.text('Confirmar contrseña'), findsOneWidget);

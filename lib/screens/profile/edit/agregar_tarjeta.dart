@@ -83,19 +83,20 @@ class _LoginPageState extends State<AgregarTarjeta> {
                       padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
                       child: TextFormField(
                         controller: propietario,
-                        decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            filled: true,
-                            fillColor: Color(0xFFF6F6F6),
-                            labelText: 'Nombre del propietario'),
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          filled: true,
+                          fillColor: Color(0xFFF6F6F6),
+                          labelText: 'Propietario',
+                        ),
                       ),
                     ),
                     ElevatedButton(
                         onPressed: () async {
                           TarjetaController tarjetaController = Get.find();
                           var email = FirebaseAuth.instance.currentUser!.email;
-                          await tarjetaController.addCreditCard(
-                              numero.text, fecha.text, cvv.text, email);
+                          await tarjetaController.addCreditCard(numero.text,
+                              fecha.text, cvv.text, email, propietario.text);
                           await tarjetaController.getCreditCards();
                           //Get.back();
                           Get.to(() => const Tarjetas());

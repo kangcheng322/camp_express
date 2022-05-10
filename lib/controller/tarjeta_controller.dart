@@ -20,18 +20,18 @@ class TarjetaController extends GetxController {
   //   }
   // }
 
-  Future<void> addCreditCard(
-      String numero, String fecha, String cvv, email) async {
+  Future<void> addCreditCard(String numero, String fecha, String cvv, email,
+      String propietario) async {
     try {
       final _firestore = FirebaseFirestore.instance;
-      UsuarioController userController = Get.find();
-      Usuario currentUser = userController.user.value;
+      // UsuarioController userController = Get.find();
+      // Usuario currentUser = userController.user.value;
       await _firestore.collection("tarjetas").add({
         "numero": numero,
         "fecha": fecha,
         "cvv": cvv,
         "email": email,
-        "propietario": currentUser.name,
+        "propietario": propietario,
       });
 
       return Future.value(true);
