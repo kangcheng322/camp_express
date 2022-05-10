@@ -18,6 +18,70 @@ class Registro extends StatelessWidget {
   final edadController = TextEditingController();
   final generoController = TextEditingController();
 
+  bool validateData() {
+    if (emailController.text == "" || emailController.text.isEmpty) {
+      Get.snackbar('Error', 'Por favor ingrese su dirección',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0xFF808080),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
+      return false;
+    }
+
+    if (passwordController.text == "" || passwordController.text.isEmpty) {
+      Get.snackbar('Error', 'Por favor ingrese su barrio',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0xFF808080),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
+      return false;
+    }
+
+    if (nameController.text == "" || nameController.text.isEmpty) {
+      Get.snackbar('Error', 'Por favor ingrese su ciudad',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0xFF808080),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
+      return false;
+    }
+
+    if (edadController.text == "" || edadController.text.isEmpty) {
+      Get.snackbar('Error', 'Por favor ingrese su edad',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0xFF808080),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
+      return false;
+    }
+
+    if (generoController.text == "" || generoController.text.isEmpty) {
+      Get.snackbar('Error', 'Por favor ingrese su género',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0xFF808080),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
+      return false;
+    }
+
+    return true;
+  }
+
   // _signup(theEmail, thePassword, confirmPass) async {
   //   if (thePassword == confirmPass) {
   //     try {
@@ -179,19 +243,21 @@ class Registro extends StatelessWidget {
                                   //     loginController.campo,
                                   //     loginController.contrasena,
                                   //     loginController.confirmarContrasena);
-                                  await _signup(
-                                      nameController.text,
-                                      edadController.text,
-                                      generoController.text,
-                                      emailController.text,
-                                      passwordController.text);
-                                  UsuarioController usuarioController =
-                                      Get.find();
-                                  await usuarioController.createUser(
-                                      nameController.text,
-                                      edadController.text,
-                                      generoController.text,
-                                      emailController.text);
+                                  if (validateData()) {
+                                    await _signup(
+                                        nameController.text,
+                                        edadController.text,
+                                        generoController.text,
+                                        emailController.text,
+                                        passwordController.text);
+                                    UsuarioController usuarioController =
+                                        Get.find();
+                                    await usuarioController.createUser(
+                                        nameController.text,
+                                        edadController.text,
+                                        generoController.text,
+                                        emailController.text);
+                                  }
                                 },
                                 style: ElevatedButton.styleFrom(
                                     primary: const Color.fromARGB(
