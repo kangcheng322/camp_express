@@ -2,6 +2,7 @@ import 'package:camp_express/controller/address_controller.dart';
 import 'package:camp_express/screens/profile/perfil.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:geocode/geocode.dart';
 import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -26,8 +27,100 @@ class _DireccionState extends State<Direccion> {
   ];
   var latitud = "";
   var longitud = "";
+  bool currentLocation = false;
 
-  Future<List<String>> getCurrentLocation() async {
+  bool validateData() {
+    if (direccionController.text == "" || direccionController.text.isEmpty) {
+      Get.snackbar('Error', 'Por favor escriba una dirección',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0xFF808080),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
+      return false;
+    }
+
+    if (barrioController.text == "" || barrioController.text.isEmpty) {
+      Get.snackbar('Error', 'Por favor escriba un barrio',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0xFF808080),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
+      return false;
+    }
+
+    if (ciudadController.text == "" || ciudadController.text.isEmpty) {
+      Get.snackbar('Error', 'Por favor escriba una ciudad',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0xFF808080),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
+      return false;
+    }
+
+    if (celularController.text == "" || celularController.text.isEmpty) {
+      Get.snackbar('Error', 'Por favor escriba un celular',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0xFF808080),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
+      return false;
+    }
+
+    if (nombreController.text == "" || nombreController.text.isEmpty) {
+      Get.snackbar('Error', 'Por favor escriba un nombre',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0xFF808080),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
+      return false;
+    }
+
+    if (numeroController.text == "" || numeroController.text.isEmpty) {
+      Get.snackbar('Error', 'Ingrese su documento de identidad',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0xFF808080),
+          colorText: Colors.white,
+          borderRadius: 10,
+          margin: EdgeInsets.all(10),
+          snackStyle: SnackStyle.FLOATING,
+          duration: Duration(seconds: 3));
+      return false;
+    }
+
+    return true;
+  }
+
+  Future<void> addressToLocation(String direccion) async {
+    GeoCode geoCode = GeoCode();
+
+    try {
+      Coordinates coordinates =
+          await geoCode.forwardGeocoding(address: direccion);
+      latitud = coordinates.latitude.toString();
+      longitud = coordinates.longitude.toString();
+      printInfo(info: latitud);
+      printInfo(info: longitud);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> getCurrentLocation() async {
     LocationPermission permission = await Geolocator.checkPermission();
 
     if (permission == LocationPermission.denied) {
@@ -52,14 +145,8 @@ class _DireccionState extends State<Direccion> {
     printInfo(info: long);
     printInfo(info: lat);
 
-    List<String> location = [];
-    location.add(long);
-    location.add(lat);
-
-    this.latitud = lat;
-    this.longitud = long;
-
-    return location;
+    latitud = lat;
+    longitud = long;
   }
 
   @override
@@ -190,8 +277,19 @@ class _DireccionState extends State<Direccion> {
                 Container(
                   padding: EdgeInsets.only(top: 10),
                   width: 300,
-                  child: buildTextField(
-                      "Número del documento de identidad", "3212220987", false),
+                  // child: buildTextField(
+                  //     "Número del documento de identidad", "3212220987", false),
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
+                    child: TextFormField(
+                      controller: numeroController,
+                      decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          filled: true,
+                          fillColor: Color(0xFFF6F6F6),
+                          labelText: 'Número de identidad'),
+                    ),
+                  ),
                 )
               ],
             ),
@@ -200,7 +298,10 @@ class _DireccionState extends State<Direccion> {
             ),
             ElevatedButton(
                 onPressed: () async {
-                  List<String> list = await getCurrentLocation();
+                  await getCurrentLocation();
+                  setState(() {
+                    currentLocation = true;
+                  });
                 },
                 style: ElevatedButton.styleFrom(
                     primary: const Color.fromARGB(255, 78, 160, 62),
@@ -214,19 +315,28 @@ class _DireccionState extends State<Direccion> {
                 child: const Text('Get current location')),
             ElevatedButton(
                 onPressed: () async {
-                  AddressController addressController = Get.find();
-                  await addressController.addAddress(
-                      direccionController.text,
-                      barrioController.text,
-                      celularController.text,
-                      nombreController.text,
-                      numeroController.text,
-                      latitud,
-                      longitud);
+                  if (validateData()) {
+                    if (currentLocation == false) {
+                      await addressToLocation(direccionController.text);
+                    }
 
-                  latitud = "";
-                  longitud = "";
-                  Get.to(() => const Perfil());
+                    AddressController addressController = Get.find();
+                    await addressController.addAddress(
+                        direccionController.text,
+                        barrioController.text,
+                        celularController.text,
+                        nombreController.text,
+                        numeroController.text,
+                        latitud,
+                        longitud);
+
+                    setState(() {
+                      currentLocation = true;
+                      latitud = "";
+                      longitud = "";
+                    });
+                    Get.to(() => const Perfil());
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                     primary: const Color.fromARGB(255, 78, 160, 62),
