@@ -296,29 +296,27 @@ class _DireccionState extends State<Direccion> {
             const SizedBox(
               height: 35,
             ),
-            ElevatedButton(
-                onPressed: () async {
-                  await getCurrentLocation();
-                  setState(() {
-                    currentLocation = true;
-                  });
-                },
-                style: ElevatedButton.styleFrom(
-                    primary: const Color.fromARGB(255, 78, 160, 62),
-                    fixedSize: const Size(314.0, 70.0),
-                    onPrimary: const Color.fromARGB(255, 255, 255, 255),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0)),
-                    padding: const EdgeInsets.symmetric(vertical: 22),
-                    textStyle: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.w700)),
-                child: const Text('Get current location')),
+            // ElevatedButton(
+            //     onPressed: () async {
+            //       await getCurrentLocation();
+            //       setState(() {
+            //         currentLocation = true;
+            //       });
+            //     },
+            //     style: ElevatedButton.styleFrom(
+            //         primary: const Color.fromARGB(255, 78, 160, 62),
+            //         fixedSize: const Size(314.0, 70.0),
+            //         onPrimary: const Color.fromARGB(255, 255, 255, 255),
+            //         shape: RoundedRectangleBorder(
+            //             borderRadius: BorderRadius.circular(10.0)),
+            //         padding: const EdgeInsets.symmetric(vertical: 22),
+            //         textStyle: const TextStyle(
+            //             fontSize: 20, fontWeight: FontWeight.w700)),
+            //     child: const Text('Get current location')),
             ElevatedButton(
                 onPressed: () async {
                   if (validateData()) {
-                    if (currentLocation == false) {
-                      await addressToLocation(direccionController.text);
-                    }
+                    await getCurrentLocation();
 
                     AddressController addressController = Get.find();
                     await addressController.addAddress(
