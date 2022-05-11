@@ -2,6 +2,7 @@ import 'package:camp_express/controller/address_controller.dart';
 import 'package:camp_express/controller/auth_controller.dart';
 import 'package:camp_express/controller/login_controller.dart';
 import 'package:camp_express/controller/tarjeta_controller.dart';
+import 'package:camp_express/domain/usuario.dart';
 import 'package:camp_express/screens/profile/edit/direccion_envio.dart';
 import 'package:camp_express/screens/profile/edit/mapa_direcciones.dart';
 import 'package:camp_express/screens/profile/noti/notificacion.dart';
@@ -14,7 +15,21 @@ import 'edit/editar_perfil.dart';
 import 'edit/tarjetas.dart';
 
 class Perfil extends StatelessWidget {
-  const Perfil({Key? key}) : super(key: key);
+const Perfil({Key? key}) : super(key: key);
+
+  // Usuario usuario = Usuario("", "", "", "", "");
+
+
+  // initState(){
+  //   UsuarioController usuarioController = Get.find();
+  //   usuarioController.getUserData()
+  //   .then((value)  {
+  //     setState(() {
+        
+  //     });
+      
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {

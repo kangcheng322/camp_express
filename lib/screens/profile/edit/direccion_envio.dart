@@ -333,7 +333,7 @@ class _DireccionState extends State<Direccion> {
                       latitud = "";
                       longitud = "";
                     });
-                    Get.to(() => const Perfil());
+                    Get.to(() =>  Perfil());
                   }
                 },
                 style: ElevatedButton.styleFrom(
