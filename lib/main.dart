@@ -18,6 +18,8 @@ import 'controller/tarjeta_controller.dart';
 import 'controller/usuario_controller.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   Get.put(LoginController());
   Get.put(ProductosController());
   Get.lazyPut(() => TarjetaController());
