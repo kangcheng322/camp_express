@@ -1,6 +1,13 @@
+import 'dart:io';
+
 import 'package:camp_express/controller/usuario_controller.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 
 import '../../../controller/login_controller.dart';
 
@@ -12,6 +19,10 @@ class EditarPerfil extends StatefulWidget {
 }
 
 class _EditarPerfilState extends State<EditarPerfil> {
+  File? image;
+  String? url;
+  String? image2;
+  List<dynamic> postList = [];
   late String dropdownvalue;
   LoginController loginController = Get.find();
   final nameController = TextEditingController();
@@ -20,8 +31,93 @@ class _EditarPerfilState extends State<EditarPerfil> {
   @override
   void initState() {
     super.initState();
+    // DatabaseReference postsRef = FirebaseDatabase.instance.ref('Posts');
+    // //Escuchar y obtener los valores del Realtime Database
+    // postsRef.onValue.listen((DatabaseEvent event) {
+    //   var data = event.snapshot.value;
+    //   if (data != null) {
+    //     Map<String, dynamic>.from(data as dynamic)
+    //         .forEach((key, value) => postList.add(value));
+    //   }
+    //   //Mostrar las url de cada imagen
+    //   for (var i = 0; i < postList.length; i++) {
+    //     print(postList[i]['image']);
+    //   }
+    //   //Utilizo una url para cargarla como imagen
+    //   setState(
+    //       () => image2 = postList.isNotEmpty ? postList[0]['image'] : null);
+
+    //   print(image2);
+    //   postList = [];
+    // });
     // loginController.mostrarDatosUsuario();
     // dropdownvalue = loginController.dropDownValue();
+  }
+
+    Future pickImageC() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.camera);
+
+      if (image == null) return;
+
+      final imageTemp = File(image.path);
+
+      setState(() => this.image = imageTemp);
+      uploadStatusImage();
+    } on PlatformException catch (e) {
+      print('Failed to pick image: $e');
+    }
+  }
+  
+  Future pickImage() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+
+      if (image == null) return;
+
+      final imageTemp = File(image.path);
+
+      setState(() => this.image = imageTemp);
+      uploadStatusImage();
+    } on PlatformException catch (e) {
+      print('Failed to pick image: $e');
+    }
+  }
+
+    //Subir imagen a Storage
+  void uploadStatusImage() async {
+    //Referenciar storage
+    final storageRef = FirebaseStorage.instance.ref().child('Post Images');
+    //Tiempo actual
+    DateTime timeKey = DateTime.now();
+    //Agregar imagen a la carpeta
+    final UploadTask uploadTask =
+        storageRef.child('$timeKey.jpg').putFile(image!);
+    //Obtener url
+    var imageUrl = await (await uploadTask).ref.getDownloadURL();
+    url = imageUrl.toString();
+
+    saveToDatabase(url!);
+  }
+
+  //Guardar datos a Realtime Database
+  void saveToDatabase(String url) {
+    //Tiempo actual
+    var dbTimeKey = DateTime.now();
+    //Formato de fecha
+    var formatDate = DateFormat('MMM d, yyyy');
+    //Formato del tiempo
+    var formatTime = DateFormat('EEEE, hh:mm aaa');
+    //Formatear en fecha y hora
+    String date = formatDate.format(dbTimeKey);
+    String time = formatTime.format(dbTimeKey);
+    //Referenciar la base de datos
+    DatabaseReference ref = FirebaseDatabase.instance.ref('Posts');
+    //Crear el cuerpo que se va a enviar
+    var data = {'image': url, 'date': date, 'time': time};
+    //Mandar los datos a la base de datos
+    ref.push().set(data);
+    // getValues();
   }
 
   //String dropdownvalue = 'Vacío';
@@ -56,21 +152,21 @@ class _EditarPerfilState extends State<EditarPerfil> {
           ),
         ),
       ),
-      body: Container(
-        padding: const EdgeInsets.only(left: 16, top: 60, right: 16),
-        child: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).unfocus();
-          },
-          child: ListView(
+      body: Center(
+        //padding: const EdgeInsets.only(left: 16, top: 60, right: 16),
+          child: Column(
             children: [
               const SizedBox(
                 height: 15,
               ),
               Center(
+                child: GestureDetector(
+                  onTap: () {},
+                
                 child: Stack(
                   children: [
-                    Container(
+                    image != null
+                    ? Container(
                       width: 130,
                       height: 130,
                       decoration: BoxDecoration(
@@ -85,12 +181,38 @@ class _EditarPerfilState extends State<EditarPerfil> {
                                 offset: const Offset(0, 10))
                           ],
                           shape: BoxShape.circle,
-                          image: const DecorationImage(
+                          ),
+                          child: ClipOval(
+                            child: Image.file(
+                              image!,
                               fit: BoxFit.cover,
-                              image: AssetImage(
-                                'assets/images/avatar.png',
-                              ))),
-                    ),
+                            )
+                            ))
+                                                        : Container(
+                                width: 130,
+                                height: 130,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      width: 4,
+                                      color: Theme.of(context)
+                                          .scaffoldBackgroundColor),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        spreadRadius: 2,
+                                        blurRadius: 10,
+                                        color: Colors.black.withOpacity(0.1),
+                                        offset: const Offset(0, 10))
+                                  ],
+                                  shape: BoxShape.circle,
+                                ),
+                                child: ClipOval(
+                                  // borderRadius: BorderRadius.circular(150),
+                                  child: Icon(
+                                    Icons.people,
+                                    size: 60,
+                                    color: Colors.grey[800],
+                                  ),
+                                )),
                     Positioned(
                         bottom: 0,
                         right: 0,
@@ -105,13 +227,27 @@ class _EditarPerfilState extends State<EditarPerfil> {
                             ),
                             color: const Color.fromARGB(255, 78, 160, 62),
                           ),
-                          child: const Icon(
-                            Icons.edit,
-                            color: Color.fromARGB(255, 255, 255, 255),
-                          ),
-                        )),
+                          child: PopupMenuButton(
+                              position: PopupMenuPosition.under,
+                              child: const Icon(
+                                Icons.edit,
+                                color: Color.fromARGB(255, 255, 255, 255),
+                              ),
+                              onSelected: (value) =>
+                                 value == 1 ? pickImage() : pickImageC(),
+                              itemBuilder: (context) => [
+                                    const PopupMenuItem(
+                                     value: 1,
+                                     child:
+                                        Text("Escoger de la galería"),
+                                    ),
+                                    const PopupMenuItem(
+                                      value: 2,
+                                      child: Text("Tomar foto"),
+                                    )
+                               ]))),
                   ],
-                ),
+                )),
               ),
               const SizedBox(
                 height: 35,
@@ -205,6 +341,9 @@ class _EditarPerfilState extends State<EditarPerfil> {
                     UsuarioController usuarioController = Get.find();
                     await usuarioController.updateUser(nameController.text,
                         edadController.text, generoController.text);
+                        // print(nameController.text);
+                        // print(edadController.text);
+                        // print(generoController.text);
                     Get.back();
                   },
                   style: ElevatedButton.styleFrom(
@@ -219,7 +358,7 @@ class _EditarPerfilState extends State<EditarPerfil> {
                   child: const Text('Guardar')),
             ],
           ),
-        ),
+        
       ),
     );
   }
