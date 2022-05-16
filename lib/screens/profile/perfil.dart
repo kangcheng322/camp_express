@@ -114,6 +114,7 @@ const Perfil({Key? key}) : super(key: key);
                             ),
                             Text(
                               authController.userEmail(),
+                              
                               style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
