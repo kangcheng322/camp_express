@@ -1,4 +1,5 @@
 import 'package:camp_express/controller/address_controller.dart';
+import 'package:camp_express/controller/agregar_producto.dart';
 import 'package:camp_express/controller/auth_controller.dart';
 import 'package:camp_express/firebase_auth/firebase_central.dart';
 import 'package:camp_express/routes/routes.dart';
@@ -18,6 +19,8 @@ import 'controller/tarjeta_controller.dart';
 import 'controller/usuario_controller.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   Get.put(LoginController());
   Get.put(ProductosController());
   Get.lazyPut(() => TarjetaController());
@@ -28,6 +31,7 @@ Future<void> main() async {
   Get.put(UsuarioController());
   Get.put(AddressController());
 
+  Get.put(AgregarProductoController());
   runApp(const MyApp());
 }
 

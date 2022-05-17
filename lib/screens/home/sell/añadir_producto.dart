@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:camp_express/controller/agregar_producto.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,6 +12,7 @@ class AnadirProducto extends StatefulWidget {
 }
 
 class _AnadirProductoState extends State<AnadirProducto> {
+  AgregarProductoController agregarProductoController = Get.find();
   String dropdownvalue = 'C.C.';
   var items = [
     'C.C.',
@@ -47,12 +51,59 @@ class _AnadirProductoState extends State<AnadirProducto> {
             buildTextField("Descripción", "Las mejores papas del mercado"),
             buildTextField("Precio", "10000.0\$"),
             buildTextField("Cantidad", "1500 g"),
-            buildTextField("Imagen", "https://imgix.com/imagen"),
+            Row(
+              children: [
+                const SizedBox(width: 8),
+                Container(
+                  color: Colors.transparent,
+                  width: 150,
+                  height: 150,
+                  child: FittedBox(
+                    fit: BoxFit.cover,
+                    child: Container(
+                        color: Colors.transparent,
+                        width: 100.0,
+                        height: 100.0,
+                        child: Obx(() => Center(
+                            child: agregarProductoController
+                                    .image.path.isNotEmpty
+                                ? Image.file(agregarProductoController.image)
+                                : const Text("No image selected")))),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Column(children: [
+                  MaterialButton(
+                      color: Colors.blue,
+                      child: const Text("Pick Image from Gallery",
+                          style: TextStyle(
+                              color: Colors.white70,
+                              fontWeight: FontWeight.bold)),
+                      onPressed: () {
+                        agregarProductoController.pickImage();
+                      }),
+                  MaterialButton(
+                      color: Colors.blue,
+                      child: const Text("Pick Image from Camera",
+                          style: TextStyle(
+                              color: Colors.white70,
+                              fontWeight: FontWeight.bold)),
+                      onPressed: () {
+                        agregarProductoController.pickImageC();
+                      }),
+                ]),
+              ],
+            ),
+            //buildTextField("Imagen", "https://imgix.com/imagen"),
             const SizedBox(
               height: 35,
             ),
             ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  agregarProductoController.uploadStatusImage();
+                  agregarProductoController.image = File('');
+                  Get.back();
+                },
                 style: ElevatedButton.styleFrom(
                     primary: const Color.fromARGB(255, 78, 160, 62),
                     fixedSize: const Size(314.0, 70.0),

@@ -6,6 +6,7 @@ import 'package:camp_express/domain/usuario.dart';
 import 'package:camp_express/screens/profile/edit/direccion_envio.dart';
 import 'package:camp_express/screens/profile/edit/mapa_direcciones.dart';
 import 'package:camp_express/screens/profile/noti/notificacion.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,20 +15,49 @@ import '../orders/ordenes.dart';
 import 'edit/editar_perfil.dart';
 import 'edit/tarjetas.dart';
 
-class Perfil extends StatelessWidget {
-const Perfil({Key? key}) : super(key: key);
+class Perfil extends StatefulWidget {
+  const Perfil({Key? key}) : super(key: key);
 
+  @override
+  State<Perfil> createState() => _PerfilState();
+}
+
+class _PerfilState extends State<Perfil> {
+  List<dynamic> postList = [];
+  String? image2;
+  void initState() {
+    super.initState();
+    //Referenciar la base de datos
+    DatabaseReference postsRef = FirebaseDatabase.instance.ref('Posts');
+    //Escuchar y obtener los valores del Realtime Database
+    postsRef.onValue.listen((DatabaseEvent event) {
+      var data = event.snapshot.value;
+      if (data != null) {
+        Map<String, dynamic>.from(data as dynamic)
+            .forEach((key, value) => postList.add(value));
+      }
+      //Mostrar las url de cada imagen
+      for (var i = 0; i < postList.length; i++) {
+        print(postList[i]['image']);
+      }
+      //Utilizo una url para cargarla como imagen
+      setState(
+          () => image2 = postList.isNotEmpty ? postList[0]['image'] : null);
+
+      print(image2);
+      postList = [];
+    });
+  }
   // Usuario usuario = Usuario("", "", "", "", "");
-
 
   // initState(){
   //   UsuarioController usuarioController = Get.find();
   //   usuarioController.getUserData()
   //   .then((value)  {
   //     setState(() {
-        
+
   //     });
-      
+
   //   });
   // }
 
@@ -104,8 +134,14 @@ const Perfil({Key? key}) : super(key: key);
                                     radius: 50.0,
                                     backgroundColor: Colors.transparent,
                                     child: ClipRRect(
-                                      child: Image.asset(
-                                          'assets/images/avatar.png'),
+                                      child: image2 != null
+                                          ? Image.network(image2!)
+                                          : const Icon(
+                                              Icons.person,
+                                              size: 100,
+                                              color: Color.fromARGB(
+                                                  255, 78, 160, 62),
+                                            ),
                                       borderRadius: BorderRadius.circular(50.0),
                                     ),
                                   ),

@@ -39,11 +39,13 @@ dependencies:
   flutter_credit_card: ^3.0.1
   firebase_core: ^1.14.0
   firebase_auth: ^3.3.12
+  firebase_database: ^9.0.14
+  firebase_storage: ^10.2.16
   cloud_firestore: ^3.1.13
   geolocator: ^8.2.1
   google_maps_flutter: ^2.1.4
   geocode: ^1.0.1
-
+  image_picker: ^0.8.5+3
 dev_dependencies:
   flutter_test:
     sdk: flutter

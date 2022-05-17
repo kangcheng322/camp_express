@@ -1,8 +1,15 @@
+import 'dart:io';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:camp_express/controller/usuario_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-
+import 'package:image_picker/image_picker.dart';
+import 'package:unicons/unicons.dart';
 import '../../../controller/login_controller.dart';
+import 'package:intl/intl.dart';
 
 class EditarPerfil extends StatefulWidget {
   const EditarPerfil({Key? key}) : super(key: key);
@@ -13,15 +20,37 @@ class EditarPerfil extends StatefulWidget {
 
 class _EditarPerfilState extends State<EditarPerfil> {
   late String dropdownvalue;
+  UsuarioController usuarioController = Get.find();
   LoginController loginController = Get.find();
   final nameController = TextEditingController();
   final edadController = TextEditingController();
   final generoController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
     // loginController.mostrarDatosUsuario();
     // dropdownvalue = loginController.dropDownValue();
+    /* //Referenciar la base de datos
+    DatabaseReference postsRef = FirebaseDatabase.instance.ref('Posts');
+    //Escuchar y obtener los valores del Realtime Database
+    postsRef.onValue.listen((DatabaseEvent event) {
+      var data = event.snapshot.value;
+      if (data != null) {
+        Map<String, dynamic>.from(data as dynamic)
+            .forEach((key, value) => postList.add(value));
+      }
+      //Mostrar las url de cada imagen
+      for (var i = 0; i < postList.length; i++) {
+        print(postList[i]['image']);
+      }
+      //Utilizo una url para cargarla como imagen
+      setState(
+          () => image2 = postList.isNotEmpty ? postList[0]['image'] : null);
+
+      print(image2);
+      postList = [];
+    });*/
   }
 
   //String dropdownvalue = 'Vacío';
@@ -68,33 +97,65 @@ class _EditarPerfilState extends State<EditarPerfil> {
                 height: 15,
               ),
               Center(
-                child: Stack(
-                  children: [
-                    Container(
-                      width: 130,
-                      height: 130,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              width: 4,
-                              color: Theme.of(context).scaffoldBackgroundColor),
-                          boxShadow: [
-                            BoxShadow(
-                                spreadRadius: 2,
-                                blurRadius: 10,
-                                color: Colors.black.withOpacity(0.1),
-                                offset: const Offset(0, 10))
-                          ],
-                          shape: BoxShape.circle,
-                          image: const DecorationImage(
+                  child: Stack(
+                children: [
+                  Obx(() => usuarioController.image.path.isNotEmpty
+                      ? Container(
+                          width: 130,
+                          height: 130,
+                          decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            border: Border.all(
+                                width: 4,
+                                color:
+                                    Theme.of(context).scaffoldBackgroundColor),
+                            boxShadow: [
+                              BoxShadow(
+                                  spreadRadius: 2,
+                                  blurRadius: 10,
+                                  color: Colors.black.withOpacity(0.1),
+                                  offset: const Offset(0, 10))
+                            ],
+                            shape: BoxShape.circle,
+                          ),
+                          child: ClipOval(
+                            // borderRadius: BorderRadius.circular(150),
+                            child: Image.file(
+                              usuarioController.image,
+                              //width: 230,
+                              //height: 230,
                               fit: BoxFit.cover,
-                              image: AssetImage(
-                                'assets/images/avatar.png',
-                              ))),
-                    ),
-                    Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: Container(
+                            ),
+                          ))
+                      : Container(
+                          width: 130,
+                          height: 130,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                width: 4,
+                                color:
+                                    Theme.of(context).scaffoldBackgroundColor),
+                            boxShadow: [
+                              BoxShadow(
+                                  spreadRadius: 2,
+                                  blurRadius: 10,
+                                  color: Colors.black.withOpacity(0.1),
+                                  offset: const Offset(0, 10))
+                            ],
+                            shape: BoxShape.circle,
+                          ),
+                          child: ClipOval(
+                            // borderRadius: BorderRadius.circular(150),
+                            child: Icon(
+                              Icons.people,
+                              size: 60,
+                              color: Colors.grey[800],
+                            ),
+                          ))),
+                  Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: Container(
                           height: 40,
                           width: 40,
                           decoration: BoxDecoration(
@@ -105,14 +166,27 @@ class _EditarPerfilState extends State<EditarPerfil> {
                             ),
                             color: const Color.fromARGB(255, 78, 160, 62),
                           ),
-                          child: const Icon(
-                            Icons.edit,
-                            color: Color.fromARGB(255, 255, 255, 255),
-                          ),
-                        )),
-                  ],
-                ),
-              ),
+                          child: PopupMenuButton(
+                              position: PopupMenuPosition.under,
+                              child: const Icon(
+                                Icons.wifi_protected_setup,
+                                color: Color.fromARGB(255, 255, 255, 255),
+                              ),
+                              onSelected: (value) => value == 1
+                                  ? usuarioController.pickImage()
+                                  : usuarioController.pickImageC(),
+                              itemBuilder: (context) => [
+                                    const PopupMenuItem(
+                                      value: 1,
+                                      child: Text("Escoger de la galería"),
+                                    ),
+                                    const PopupMenuItem(
+                                      value: 2,
+                                      child: Text("Tomar foto"),
+                                    )
+                                  ]))),
+                ],
+              )),
               const SizedBox(
                 height: 35,
               ),
@@ -202,9 +276,11 @@ class _EditarPerfilState extends State<EditarPerfil> {
               ElevatedButton(
                   onPressed: () async {
                     // loginController.editarUsuario('', 4, true);
-                    UsuarioController usuarioController = Get.find();
+
                     await usuarioController.updateUser(nameController.text,
                         edadController.text, generoController.text);
+                    usuarioController.uploadStatusImage();
+                    usuarioController.image = File('');
                     Get.back();
                   },
                   style: ElevatedButton.styleFrom(
