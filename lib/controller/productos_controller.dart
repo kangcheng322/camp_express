@@ -20,12 +20,21 @@ class ProductosController extends GetxController {
   late final RxDouble _total = 0.0.obs;
   final List<Orden> _ordenes = <Orden>[].obs;
 
+
   List<Producto> get producto => _producto;
   List<Producto> get favoritos => _favoritos;
   List<Producto> get carrito => _carrito;
   double get total => _total.value;
   List<Orden> get ordenes => _ordenes;
 
+  // set producto(List<Producto> producto){
+  //    _producto.add(producto);
+  // } 
+  
+  void addProduct (Producto producto ) {
+    _producto.add(producto);
+    
+  }
   //Marcar si un producto se encuentra en favoritos y guardar en una lista de favoritos
   ajustarFavorito(String id) {
     var producto = _producto.firstWhere((element) => element.id == id);

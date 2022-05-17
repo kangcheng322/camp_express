@@ -1,5 +1,9 @@
+import 'package:camp_express/controller/agregar_producto.dart';
+import 'package:camp_express/controller/auth_controller.dart';
+import 'package:camp_express/controller/usuario_controller.dart';
 import 'package:camp_express/screens/home/sell/a%C3%B1adir_producto.dart';
 import 'package:camp_express/screens/home/sell/editar_producto.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,6 +15,45 @@ class Venta extends StatefulWidget {
 }
 
 class _VentaState extends State<Venta> {
+  //UsuarioController usuarioController =Get.find();
+  List<dynamic> postList = [];
+  List<dynamic> newList = [];
+  String? image2;
+  AgregarProductoController agregarProductoController = Get.find();
+  AuthController authController = Get.find();
+
+    void initState() {
+    super.initState();
+    //Referenciar la base de datos
+    DatabaseReference postsRef = FirebaseDatabase.instance.ref('Productos');
+    //Escuchar y obtener los valores del Realtime Database
+    postsRef.onValue.listen((DatabaseEvent event) {
+      var data = event.snapshot.value;
+      if (data != null) {
+        
+        Map<String, dynamic>.from(data as dynamic)
+            .forEach((key, value) => postList.add(value));
+      }
+      //postList.where((element) => postList[element] == postList)
+      //Mostrar las url de cada imagen
+      newList = [];
+      for (var i = 0; i < postList.length; i++) {
+        if(postList[i]['email'] == authController.userEmail()){
+          newList.add(postList[i]);
+          print(newList);
+          //newList = postList[i];
+        }
+        
+        //print(postList[i]['image']);
+      }
+      //Utilizo una url para cargarla como imagen
+      setState(
+          () => image2 = postList.isNotEmpty ? postList[0]['image'] : null);
+
+      //print(image2);
+      postList = [];
+    });
+  } 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,6 +64,7 @@ class _VentaState extends State<Venta> {
         backgroundColor: Colors.transparent,
         leading: IconButton(
           onPressed: () {
+            newList = [];
             Get.back();
           },
           icon: const Icon(Icons.arrow_back,
@@ -42,6 +86,7 @@ class _VentaState extends State<Venta> {
               color: Color.fromARGB(255, 78, 160, 62),
             ),
             onPressed: () {
+              newList = [];
               Get.to(() => const AnadirProducto());
             },
           ),
@@ -55,13 +100,31 @@ class _VentaState extends State<Venta> {
           children: [
             const SizedBox(height: 10),
             Expanded(
-              child: ListView(
-                children: [
-                  Card(
+              child: ListView.separated(
+                  padding: const EdgeInsets.all(8),
+                  itemCount: newList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                    return  Card(
                     child: ListTile(
                         iconColor: Color.fromARGB(255, 78, 160, 62),
-                        leading: Image.asset('assets/images/notificacion.png'),
-                        title: const Text('Nombre del producto',
+                        leading:
+                        Container(
+                    color: Colors.transparent,
+                    width: 75,
+                    height: 75,
+                    child: FittedBox(
+                      fit: BoxFit.cover,
+                      child: Container(
+                          color: Colors.transparent,
+                          width: 100.0,
+                          height: 100.0,
+                          child: Center(
+                            child:Image.network(newList[index]['image']) ,
+                          )),
+                    ),
+                  ),
+
+                        title: Text(newList[index]['product'],
                             style: TextStyle(
                               color: Color.fromARGB(255, 78, 160, 62),
                             )),
@@ -87,8 +150,12 @@ class _VentaState extends State<Venta> {
                                     value: 2,
                                   )
                                 ])),
-                  ),
-                ],
+                  );
+                  
+                }, separatorBuilder: (BuildContext context, int index) =>
+                const Divider(
+                  color: Color.fromARGB(255, 255, 255, 255),
+                ),          
               ),
             ),
           ],
