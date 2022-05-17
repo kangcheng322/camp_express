@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:camp_express/controller/auth_controller.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -8,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 
 class AgregarProductoController extends GetxController {
   final _image = File('').obs;
+  AuthController authController = Get.find(); 
 
   File get image {
     print('Entro ${_image.value}');
@@ -49,7 +51,7 @@ class AgregarProductoController extends GetxController {
   }
 
   //Subir imagen a Storage
-  void uploadStatusImage() async {
+  void uploadStatusImage(String nameProduct, String descripcion, String price, String quantity) async {
     String url = '';
     //Referenciar storage
     final storageRef = FirebaseStorage.instance.ref().child('Productos');
@@ -62,11 +64,11 @@ class AgregarProductoController extends GetxController {
     var imageUrl = await (await uploadTask).ref.getDownloadURL();
     url = imageUrl.toString();
 
-    saveToDatabase(url);
+    saveToDatabase(url, nameProduct, descripcion, price, quantity);
   }
 
   //Guardar datos a Realtime Database
-  void saveToDatabase(String url) {
+  void saveToDatabase(String url, String nameProduct, String descripcion, String price, String quantity) {
     //Tiempo actual
     var dbTimeKey = DateTime.now();
     //Formato de fecha
@@ -79,7 +81,12 @@ class AgregarProductoController extends GetxController {
     //Referenciar la base de datos
     DatabaseReference ref = FirebaseDatabase.instance.ref('Productos');
     //Crear el cuerpo que se va a enviar
-    var data = {'image': url, 'date': date, 'time': time};
+    var data = {'image': url, 'date': date, 'time': time, 
+                'product': nameProduct, 
+                'description': descripcion, 
+                'price': price, 
+                'quantity':quantity,
+                'email': authController.userEmail() };
     //Mandar los datos a la base de datos
     ref.push().set(data);
     // getValues();
