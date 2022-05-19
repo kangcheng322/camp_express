@@ -22,7 +22,7 @@ class _VentaState extends State<Venta> {
   AgregarProductoController agregarProductoController = Get.find();
   AuthController authController = Get.find();
 
-    void initState() {
+  void initState() {
     super.initState();
     //Referenciar la base de datos
     DatabaseReference postsRef = FirebaseDatabase.instance.ref('Productos');
@@ -30,7 +30,6 @@ class _VentaState extends State<Venta> {
     postsRef.onValue.listen((DatabaseEvent event) {
       var data = event.snapshot.value;
       if (data != null) {
-        
         Map<String, dynamic>.from(data as dynamic)
             .forEach((key, value) => postList.add(value));
       }
@@ -38,22 +37,23 @@ class _VentaState extends State<Venta> {
       //Mostrar las url de cada imagen
       newList = [];
       for (var i = 0; i < postList.length; i++) {
-        if(postList[i]['email'] == authController.userEmail()){
+        if (postList[i]['email'] == authController.userEmail()) {
           newList.add(postList[i]);
           print(newList);
           //newList = postList[i];
         }
-        
+
         //print(postList[i]['image']);
       }
       //Utilizo una url para cargarla como imagen
       setState(
           () => image2 = postList.isNotEmpty ? postList[0]['image'] : null);
 
-      //print(image2);
+      print(event.snapshot.key);
       postList = [];
     });
-  } 
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,29 +101,27 @@ class _VentaState extends State<Venta> {
             const SizedBox(height: 10),
             Expanded(
               child: ListView.separated(
-                  padding: const EdgeInsets.all(8),
-                  itemCount: newList.length,
-                    itemBuilder: (BuildContext context, int index) {
-                    return  Card(
+                padding: const EdgeInsets.all(8),
+                itemCount: newList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Card(
                     child: ListTile(
                         iconColor: Color.fromARGB(255, 78, 160, 62),
-                        leading:
-                        Container(
-                    color: Colors.transparent,
-                    width: 75,
-                    height: 75,
-                    child: FittedBox(
-                      fit: BoxFit.cover,
-                      child: Container(
+                        leading: Container(
                           color: Colors.transparent,
-                          width: 100.0,
-                          height: 100.0,
-                          child: Center(
-                            child:Image.network(newList[index]['image']) ,
-                          )),
-                    ),
-                  ),
-
+                          width: 55,
+                          height: 55,
+                          child: FittedBox(
+                            fit: BoxFit.cover,
+                            child: Container(
+                                color: Colors.transparent,
+                                width: 100.0,
+                                height: 100.0,
+                                child: Center(
+                                  child: Image.network(newList[index]['image']),
+                                )),
+                          ),
+                        ),
                         title: Text(newList[index]['product'],
                             style: TextStyle(
                               color: Color.fromARGB(255, 78, 160, 62),
@@ -151,11 +149,11 @@ class _VentaState extends State<Venta> {
                                   )
                                 ])),
                   );
-                  
-                }, separatorBuilder: (BuildContext context, int index) =>
-                const Divider(
+                },
+                separatorBuilder: (BuildContext context, int index) =>
+                    const Divider(
                   color: Color.fromARGB(255, 255, 255, 255),
-                ),          
+                ),
               ),
             ),
           ],

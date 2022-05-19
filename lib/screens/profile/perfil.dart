@@ -23,12 +23,15 @@ class Perfil extends StatefulWidget {
 }
 
 class _PerfilState extends State<Perfil> {
+  AuthController authController = Get.find();
   List<dynamic> postList = [];
   String? image2;
   void initState() {
     super.initState();
+    String imagenPerfil = '';
     //Referenciar la base de datos
-    DatabaseReference postsRef = FirebaseDatabase.instance.ref('Posts');
+    DatabaseReference postsRef =
+        FirebaseDatabase.instance.ref('Perfiles_fotos');
     //Escuchar y obtener los valores del Realtime Database
     postsRef.onValue.listen((DatabaseEvent event) {
       var data = event.snapshot.value;
@@ -36,30 +39,17 @@ class _PerfilState extends State<Perfil> {
         Map<String, dynamic>.from(data as dynamic)
             .forEach((key, value) => postList.add(value));
       }
-      //Mostrar las url de cada imagen
+      //Buscar la foto de perfil actual del usuario
       for (var i = 0; i < postList.length; i++) {
-        print(postList[i]['image']);
+        if (postList[i]['email'] == authController.userEmail()) {
+          imagenPerfil = postList[i]['image'];
+        }
       }
       //Utilizo una url para cargarla como imagen
-      setState(
-          () => image2 = postList.isNotEmpty ? postList[0]['image'] : null);
-
-      print(image2);
+      setState(() => image2 = postList.isNotEmpty ? imagenPerfil : null);
       postList = [];
     });
   }
-  // Usuario usuario = Usuario("", "", "", "", "");
-
-  // initState(){
-  //   UsuarioController usuarioController = Get.find();
-  //   usuarioController.getUserData()
-  //   .then((value)  {
-  //     setState(() {
-
-  //     });
-
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {

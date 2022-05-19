@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:camp_express/controller/auth_controller.dart';
 import 'package:camp_express/domain/usuario.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,6 +18,7 @@ class UsuarioController extends GetxController {
   //List<Usuario> usersList = [];
   //final user = Usuario(id: "", correo: "",name: "", edad: "", genero: "").obs;
   final _image = File('').obs;
+  AuthController authController = Get.find();
 
   File get image {
     return _image.value;
@@ -156,7 +158,7 @@ class UsuarioController extends GetxController {
   void uploadStatusImage() async {
     String url = '';
     //Referenciar storage
-    final storageRef = FirebaseStorage.instance.ref().child('Post Images');
+    final storageRef = FirebaseStorage.instance.ref().child('Perfiles_fotos');
     //Tiempo actual
     DateTime timeKey = DateTime.now();
     //Agregar imagen a la carpeta
@@ -181,11 +183,15 @@ class UsuarioController extends GetxController {
     String date = formatDate.format(dbTimeKey);
     String time = formatTime.format(dbTimeKey);
     //Referenciar la base de datos
-    DatabaseReference ref = FirebaseDatabase.instance.ref('Posts');
+    DatabaseReference ref = FirebaseDatabase.instance.ref('Perfiles_fotos');
     //Crear el cuerpo que se va a enviar
-    var data = {'image': url, 'date': date, 'time': time};
+    var data = {
+      'image': url,
+      'date': date,
+      'time': time,
+      'email': authController.userEmail()
+    };
     //Mandar los datos a la base de datos
     ref.push().set(data);
-    // getValues();
   }
 }

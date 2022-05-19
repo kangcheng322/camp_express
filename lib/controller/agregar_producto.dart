@@ -9,7 +9,7 @@ import 'package:image_picker/image_picker.dart';
 
 class AgregarProductoController extends GetxController {
   final _image = File('').obs;
-  AuthController authController = Get.find(); 
+  AuthController authController = Get.find();
 
   File get image {
     print('Entro ${_image.value}');
@@ -51,7 +51,8 @@ class AgregarProductoController extends GetxController {
   }
 
   //Subir imagen a Storage
-  void uploadStatusImage(String nameProduct, String descripcion, String price, String quantity) async {
+  void uploadStatusImage(String nameProduct, String descripcion, String price,
+      String quantity) async {
     String url = '';
     //Referenciar storage
     final storageRef = FirebaseStorage.instance.ref().child('Productos');
@@ -68,7 +69,8 @@ class AgregarProductoController extends GetxController {
   }
 
   //Guardar datos a Realtime Database
-  void saveToDatabase(String url, String nameProduct, String descripcion, String price, String quantity) {
+  void saveToDatabase(String url, String nameProduct, String descripcion,
+      String price, String quantity) {
     //Tiempo actual
     var dbTimeKey = DateTime.now();
     //Formato de fecha
@@ -80,15 +82,20 @@ class AgregarProductoController extends GetxController {
     String time = formatTime.format(dbTimeKey);
     //Referenciar la base de datos
     DatabaseReference ref = FirebaseDatabase.instance.ref('Productos');
+
     //Crear el cuerpo que se va a enviar
-    var data = {'image': url, 'date': date, 'time': time, 
-                'product': nameProduct, 
-                'description': descripcion, 
-                'price': price, 
-                'quantity':quantity,
-                'email': authController.userEmail() };
+    var data = {
+      'image': url,
+      'date': date,
+      'time': time,
+      'product': nameProduct,
+      'description': descripcion,
+      'price': price,
+      'quantity': quantity,
+      'email': authController.userEmail()
+    };
+
     //Mandar los datos a la base de datos
     ref.push().set(data);
-    // getValues();
   }
 }
