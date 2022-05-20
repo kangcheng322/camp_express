@@ -2,6 +2,8 @@ import 'package:camp_express/firebase_auth/firebase_central.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../controller/productos_controller.dart';
+
 class Presentacion extends StatefulWidget {
   const Presentacion({Key? key}) : super(key: key);
 
@@ -11,6 +13,7 @@ class Presentacion extends StatefulWidget {
 
 class _PresentacionState extends State<Presentacion>
     with TickerProviderStateMixin {
+  ProductosController productosController = Get.find();
   late final AnimationController _controller = AnimationController(
     duration: const Duration(seconds: 4),
     vsync: this,
@@ -23,6 +26,7 @@ class _PresentacionState extends State<Presentacion>
   void initState() {
     super.initState();
     _cambiar();
+    productosController.addProduct();
   }
 
   void dispose() {

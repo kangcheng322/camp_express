@@ -15,30 +15,35 @@ Widget todoLosProductos(Size size) {
           top: size.height * 0.03,
           left: size.width * 0.03,
         ),
-        child: ListView(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          primary: true,
-          children: <Widget>[
-            SizedBox(
-              width: size.width,
-              height: size.height * 1.02,
-              child: GridView.builder(
-                primary: false,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  childAspectRatio: 0.68,
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 9,
-                  mainAxisSpacing: 9,
+        child: Obx(
+          () => ListView(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            primary: true,
+            children: <Widget>[
+              SizedBox(
+                width: size.width,
+                height: size.height * 1.02,
+                child: GridView.builder(
+                  primary: false,
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    childAspectRatio: 0.68,
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 9,
+                    mainAxisSpacing: 9,
+                  ),
+                  itemCount: productosController.producto.length,
+                  itemBuilder: (context, i) {
+                    print('Hello world' +
+                        productosController.producto.length.toString());
+                    return construirCuadro(
+                        i, size, productosController.producto);
+                  },
                 ),
-                itemCount: productosController.producto.length,
-                itemBuilder: (context, i) {
-                  return construirCuadro(i, size, productosController.producto);
-                },
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     ],

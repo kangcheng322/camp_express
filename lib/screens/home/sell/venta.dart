@@ -33,23 +33,13 @@ class _VentaState extends State<Venta> {
         Map<String, dynamic>.from(data as dynamic)
             .forEach((key, value) => postList.add(value));
       }
-      //postList.where((element) => postList[element] == postList)
       //Mostrar las url de cada imagen
       newList = [];
       for (var i = 0; i < postList.length; i++) {
         if (postList[i]['email'] == authController.userEmail()) {
-          newList.add(postList[i]);
-          print(newList);
-          //newList = postList[i];
+          setState(() => newList.add(postList[i]));
         }
-
-        //print(postList[i]['image']);
       }
-      //Utilizo una url para cargarla como imagen
-      setState(
-          () => image2 = postList.isNotEmpty ? postList[0]['image'] : null);
-
-      print(event.snapshot.key);
       postList = [];
     });
   }
@@ -106,7 +96,7 @@ class _VentaState extends State<Venta> {
                 itemBuilder: (BuildContext context, int index) {
                   return Card(
                     child: ListTile(
-                        iconColor: Color.fromARGB(255, 78, 160, 62),
+                        iconColor: const Color.fromARGB(255, 78, 160, 62),
                         leading: Container(
                           color: Colors.transparent,
                           width: 55,
@@ -123,29 +113,31 @@ class _VentaState extends State<Venta> {
                           ),
                         ),
                         title: Text(newList[index]['product'],
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Color.fromARGB(255, 78, 160, 62),
                             )),
                         trailing: PopupMenuButton(
                             onSelected: (value) => value == 1
-                                ? Get.to(() => EditarProducto())
+                                ? Get.to(() => EditarProducto(
+                                      clave: newList[index]['key'],
+                                    ))
                                 : null,
                             itemBuilder: (context) => [
                                   const PopupMenuItem(
+                                    value: 1,
                                     child: Text("Editar",
                                         style: TextStyle(
                                           color:
                                               Color.fromARGB(255, 78, 160, 62),
                                         )),
-                                    value: 1,
                                   ),
                                   const PopupMenuItem(
+                                    value: 2,
                                     child: Text("Borrar",
                                         style: TextStyle(
                                           color:
                                               Color.fromARGB(255, 78, 160, 62),
                                         )),
-                                    value: 2,
                                   )
                                 ])),
                   );

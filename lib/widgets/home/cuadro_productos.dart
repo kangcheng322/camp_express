@@ -44,7 +44,7 @@ Padding construirCuadro(int i, Size size, List<Producto> tipo) {
               child: SizedBox(
                 width: size.width * 0.3,
                 height: size.height * 0.18,
-                child: Obx(() => Image.asset(
+                child: Obx(() => Image.network(
                       tipo.elementAt(i).image,
                       errorBuilder: (context, error, stackTrace) {
                         return const CircularProgressIndicator.adaptive();

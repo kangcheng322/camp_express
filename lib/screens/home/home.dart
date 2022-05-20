@@ -2,9 +2,13 @@ import 'package:camp_express/widgets/home/menu_lateral.dart';
 import 'package:camp_express/widgets/home/todos_los_productos.dart';
 import 'package:camp_express/widgets/home/construir_botones_productos.dart';
 import 'package:camp_express/widgets/home/populares.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unicons/unicons.dart';
+
+import '../../controller/productos_controller.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -14,6 +18,30 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  ProductosController productosController = Get.find();
+  List<dynamic> postList = [];
+
+  @override
+  /*void initState() {
+    super.initState();
+
+    //Referenciar la base de datos
+    DatabaseReference postsRef = FirebaseDatabase.instance.ref('Productos');
+    //Escuchar y obtener los valores del Realtime Database
+    postsRef.onValue.listen((DatabaseEvent event) {
+      //productosController.reiniciar();
+      var data = event.snapshot.value;
+      if (data != null) {
+        Map<String, dynamic>.from(data as dynamic)
+            .forEach((key, value) => postList.add(value));
+      }
+      for (var i = 0; i < postList.length; i++) {
+        productosController.addProduct(postList[i]);
+      }
+      postList = [];
+    });
+  }*/
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -96,8 +124,8 @@ class _HomeState extends State<Home> {
                 ],
               ),
             ),
-            construirBotonesProductos(size),
-            populares(size),
+            //construirBotonesProductos(size),
+            //populares(size),
             todoLosProductos(size),
           ],
         ),

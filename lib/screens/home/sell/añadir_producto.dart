@@ -13,15 +13,10 @@ class AnadirProducto extends StatefulWidget {
 
 class _AnadirProductoState extends State<AnadirProducto> {
   AgregarProductoController agregarProductoController = Get.find();
-   final nameProduct = TextEditingController();
-   final descripcion = TextEditingController();
-   final price = TextEditingController();
-   final quantity = TextEditingController();
-  String dropdownvalue = 'C.C.';
-  var items = [
-    'C.C.',
-    'C.E.',
-  ];
+  final nameProduct = TextEditingController();
+  final descripcion = TextEditingController();
+  final price = TextEditingController();
+  final quantity = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -51,50 +46,50 @@ class _AnadirProductoState extends State<AnadirProducto> {
         padding: const EdgeInsets.only(left: 16, top: 50, right: 16),
         child: ListView(
           children: [
-                    Padding(
-                            padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
-                            child: TextFormField(
-                              controller: nameProduct,
-                              decoration: const InputDecoration(
-                                  border: InputBorder.none,
-                                  filled: true,
-                                  fillColor: Color(0xFFF6F6F6),
-                                  labelText: 'Nombre del producto'),
-                            ),
-                          ),
-                    Padding(
-                            padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
-                            child: TextFormField(
-                              controller: descripcion,
-                              decoration: const InputDecoration(
-                                  border: InputBorder.none,
-                                  filled: true,
-                                  fillColor: Color(0xFFF6F6F6),
-                                  labelText: 'Descripción'),
-                            ),
-                          ),
-                    Padding(
-                            padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
-                            child: TextFormField(
-                              controller: price,
-                              decoration: const InputDecoration(
-                                  border: InputBorder.none,
-                                  filled: true,
-                                  fillColor: Color(0xFFF6F6F6),
-                                  labelText: 'Precio'),
-                            ),
-                          ),
-                    Padding(
-                            padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
-                            child: TextFormField(
-                              controller: quantity,
-                              decoration: const InputDecoration(
-                                  border: InputBorder.none,
-                                  filled: true,
-                                  fillColor: Color(0xFFF6F6F6),
-                                  labelText: 'Cantidad'),
-                            ),
-                          ),
+            Padding(
+              padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
+              child: TextFormField(
+                controller: nameProduct,
+                decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    filled: true,
+                    fillColor: Color(0xFFF6F6F6),
+                    labelText: 'Nombre del producto'),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
+              child: TextFormField(
+                controller: descripcion,
+                decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    filled: true,
+                    fillColor: Color(0xFFF6F6F6),
+                    labelText: 'Descripción'),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
+              child: TextFormField(
+                controller: price,
+                decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    filled: true,
+                    fillColor: Color(0xFFF6F6F6),
+                    labelText: 'Precio'),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
+              child: TextFormField(
+                controller: quantity,
+                decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    filled: true,
+                    fillColor: Color(0xFFF6F6F6),
+                    labelText: 'Cantidad'),
+              ),
+            ),
             Row(
               children: [
                 const SizedBox(width: 8),
@@ -138,14 +133,13 @@ class _AnadirProductoState extends State<AnadirProducto> {
                 ]),
               ],
             ),
-            //buildTextField("Imagen", "https://imgix.com/imagen"),
             const SizedBox(
               height: 35,
             ),
             ElevatedButton(
                 onPressed: () {
-                  
-                  agregarProductoController.uploadStatusImage(nameProduct.text, descripcion.text,price.text,quantity.text);
+                  agregarProductoController.uploadStatusImage(nameProduct.text,
+                      descripcion.text, price.text, quantity.text);
                   agregarProductoController.image = File('');
                   Get.back();
                 },

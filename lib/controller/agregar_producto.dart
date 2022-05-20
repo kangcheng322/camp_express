@@ -82,9 +82,13 @@ class AgregarProductoController extends GetxController {
     String time = formatTime.format(dbTimeKey);
     //Referenciar la base de datos
     DatabaseReference ref = FirebaseDatabase.instance.ref('Productos');
+    // Get a key for a new Post.
+    final newPostKey =
+        FirebaseDatabase.instance.ref().child('posts').push().key;
 
     //Crear el cuerpo que se va a enviar
     var data = {
+      'key': newPostKey,
       'image': url,
       'date': date,
       'time': time,

@@ -116,7 +116,7 @@ class _DetailsPageState extends State<Detalles> {
             children: [
               ListView(
                 children: [
-                  Image.asset(
+                  Image.network(
                     widget.image,
                     height: size.height * 0.535,
                   ),

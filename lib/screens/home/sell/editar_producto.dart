@@ -5,7 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class EditarProducto extends StatefulWidget {
-  const EditarProducto({Key? key}) : super(key: key);
+  final String clave;
+  const EditarProducto({
+    Key? key,
+    required this.clave,
+  }) : super(key: key);
 
   @override
   State<EditarProducto> createState() => _EditarProductoState();
@@ -17,11 +21,6 @@ class _EditarProductoState extends State<EditarProducto> {
   final descripcion = TextEditingController();
   final price = TextEditingController();
   final quantity = TextEditingController();
-  String dropdownvalue = 'C.C.';
-  var items = [
-    'C.C.',
-    'C.E.',
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +51,7 @@ class _EditarProductoState extends State<EditarProducto> {
         child: ListView(
           children: [
             Padding(
-              padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
+              padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
               child: TextFormField(
                 controller: nameProduct,
                 decoration: const InputDecoration(
@@ -63,7 +62,7 @@ class _EditarProductoState extends State<EditarProducto> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
+              padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
               child: TextFormField(
                 controller: descripcion,
                 decoration: const InputDecoration(
@@ -85,7 +84,7 @@ class _EditarProductoState extends State<EditarProducto> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
+              padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
               child: TextFormField(
                 controller: quantity,
                 decoration: const InputDecoration(
@@ -138,7 +137,6 @@ class _EditarProductoState extends State<EditarProducto> {
                 ]),
               ],
             ),
-            //buildTextField("Imagen", "https://imgix.com/imagen"),
             const SizedBox(
               height: 35,
             ),

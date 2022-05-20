@@ -1,9 +1,10 @@
 import 'package:camp_express/domain/orden.dart';
 import 'package:camp_express/domain/productos.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 
 class ProductosController extends GetxController {
-  final List<Producto> _producto = <Producto>[
+  /*final List<Producto> _producto = <Producto>[
     Producto('0', 'Papas criollas', 7200, "0\$ - 149.0\$", '470 g', 5.0,
         'assets/images/papas.png'),
     Producto('1', 'Mazorca', 6800, '150.0\$ - 499.0\$', '2 und', 3.5,
@@ -14,12 +15,12 @@ class ProductosController extends GetxController {
         'assets/images/arroz.png'),
     Producto('4', 'Tomate', 7800, '500.0\$ - 1500.0\$', '1 kg', 3.5,
         'assets/images/tomate.png')
-  ].obs;
+  ].obs;*/
+  final List<Producto> _producto = <Producto>[].obs;
   final List<Producto> _favoritos = <Producto>[].obs;
   final List<Producto> _carrito = <Producto>[].obs;
   late final RxDouble _total = 0.0.obs;
   final List<Orden> _ordenes = <Orden>[].obs;
-
 
   List<Producto> get producto => _producto;
   List<Producto> get favoritos => _favoritos;
@@ -27,14 +28,33 @@ class ProductosController extends GetxController {
   double get total => _total.value;
   List<Orden> get ordenes => _ordenes;
 
-  // set producto(List<Producto> producto){
-  //    _producto.add(producto);
-  // } 
-  
-  void addProduct (Producto producto ) {
-    _producto.add(producto);
-    
+  void addProduct() {
+    List<dynamic> postList = [];
+    //Referenciar la base de datos
+    DatabaseReference postsRef = FirebaseDatabase.instance.ref('Productos');
+    //Escuchar y obtener los valores del Realtime Database
+    postsRef.onValue.listen((DatabaseEvent event) {
+      //productosController.reiniciar();
+      var data = event.snapshot.value;
+      if (data != null) {
+        Map<String, dynamic>.from(data as dynamic)
+            .forEach((key, value) => postList.add(value));
+      }
+      _producto.clear();
+      for (var i = 0; i < postList.length; i++) {
+        _producto.add(Producto(
+            postList[i]['key'].toString(),
+            postList[i]['product'].toString(),
+            double.parse(postList[i]['price']),
+            "0\$ - 149.0\$",
+            postList[i]['quantity'].toString(),
+            5.0,
+            postList[i]['image'].toString()));
+      }
+      postList = [];
+    });
   }
+
   //Marcar si un producto se encuentra en favoritos y guardar en una lista de favoritos
   ajustarFavorito(String id) {
     var producto = _producto.firstWhere((element) => element.id == id);

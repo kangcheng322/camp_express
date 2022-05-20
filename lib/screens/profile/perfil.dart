@@ -124,6 +124,7 @@ class _PerfilState extends State<Perfil> {
                                     radius: 50.0,
                                     backgroundColor: Colors.transparent,
                                     child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(50.0),
                                       child: image2 != null
                                           ? Image.network(image2!)
                                           : const Icon(
@@ -132,7 +133,6 @@ class _PerfilState extends State<Perfil> {
                                               color: Color.fromARGB(
                                                   255, 78, 160, 62),
                                             ),
-                                      borderRadius: BorderRadius.circular(50.0),
                                     ),
                                   ),
                                 )
