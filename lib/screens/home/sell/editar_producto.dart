@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class EditarProducto extends StatefulWidget {
-  final String clave;
+  final List<String> llave;
+  final int indice;
   const EditarProducto({
     Key? key,
-    required this.clave,
+    required this.llave,
+    required this.indice,
   }) : super(key: key);
 
   @override
@@ -109,8 +111,9 @@ class _EditarProductoState extends State<EditarProducto> {
                         height: 100.0,
                         child: Obx(() => Center(
                             child: agregarProductoController
-                                    .image.path.isNotEmpty
-                                ? Image.file(agregarProductoController.image)
+                                    .imageUpdate.path.isNotEmpty
+                                ? Image.file(
+                                    agregarProductoController.imageUpdate)
                                 : const Text("No image selected")))),
                   ),
                 ),
@@ -123,7 +126,7 @@ class _EditarProductoState extends State<EditarProducto> {
                               color: Colors.white70,
                               fontWeight: FontWeight.bold)),
                       onPressed: () {
-                        agregarProductoController.pickImage();
+                        agregarProductoController.pickImageUpdate();
                       }),
                   MaterialButton(
                       color: Colors.blue,
@@ -132,7 +135,7 @@ class _EditarProductoState extends State<EditarProducto> {
                               color: Colors.white70,
                               fontWeight: FontWeight.bold)),
                       onPressed: () {
-                        agregarProductoController.pickImageC();
+                        agregarProductoController.pickImageCUpdate();
                       }),
                 ]),
               ],
@@ -142,9 +145,14 @@ class _EditarProductoState extends State<EditarProducto> {
             ),
             ElevatedButton(
                 onPressed: () {
-                  agregarProductoController.uploadStatusImage(nameProduct.text,
-                      descripcion.text, price.text, quantity.text);
-                  agregarProductoController.image = File('');
+                  agregarProductoController.updateDatabase(
+                      widget.llave,
+                      widget.indice,
+                      nameProduct.text,
+                      descripcion.text,
+                      price.text,
+                      quantity.text);
+                  agregarProductoController.imageUpdate = File('');
                   Get.back();
                 },
                 style: ElevatedButton.styleFrom(

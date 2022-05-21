@@ -1,6 +1,5 @@
 import 'package:camp_express/controller/agregar_producto.dart';
 import 'package:camp_express/controller/auth_controller.dart';
-import 'package:camp_express/controller/usuario_controller.dart';
 import 'package:camp_express/screens/home/sell/a%C3%B1adir_producto.dart';
 import 'package:camp_express/screens/home/sell/editar_producto.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -18,10 +17,13 @@ class _VentaState extends State<Venta> {
   //UsuarioController usuarioController =Get.find();
   List<dynamic> postList = [];
   List<dynamic> newList = [];
+  List<String> keyList = [];
+  List<String> newKeyList = [];
   String? image2;
   AgregarProductoController agregarProductoController = Get.find();
   AuthController authController = Get.find();
 
+  @override
   void initState() {
     super.initState();
     //Referenciar la base de datos
@@ -30,18 +32,31 @@ class _VentaState extends State<Venta> {
     postsRef.onValue.listen((DatabaseEvent event) {
       var data = event.snapshot.value;
       if (data != null) {
-        Map<String, dynamic>.from(data as dynamic)
-            .forEach((key, value) => postList.add(value));
+        Map<String, dynamic>.from(data as dynamic).forEach((key, value) {
+          keyList.add(key);
+          postList.add(value);
+        });
       }
       //Mostrar las url de cada imagen
       newList = [];
+      newKeyList = [];
       for (var i = 0; i < postList.length; i++) {
         if (postList[i]['email'] == authController.userEmail()) {
-          setState(() => newList.add(postList[i]));
+          setState(() {
+            newList.add(postList[i]);
+            newKeyList.add(keyList[i]);
+          });
         }
       }
       postList = [];
+      keyList = [];
     });
+  }
+
+  void eliminarProducto(int index) {
+    agregarProductoController.deleteDatabase(newKeyList, index);
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (BuildContext context) => super.widget));
   }
 
   @override
@@ -55,6 +70,7 @@ class _VentaState extends State<Venta> {
         leading: IconButton(
           onPressed: () {
             newList = [];
+            newKeyList = [];
             Get.back();
           },
           icon: const Icon(Icons.arrow_back,
@@ -77,6 +93,7 @@ class _VentaState extends State<Venta> {
             ),
             onPressed: () {
               newList = [];
+              newKeyList = [];
               Get.to(() => const AnadirProducto());
             },
           ),
@@ -119,9 +136,10 @@ class _VentaState extends State<Venta> {
                         trailing: PopupMenuButton(
                             onSelected: (value) => value == 1
                                 ? Get.to(() => EditarProducto(
-                                      clave: newList[index]['key'],
+                                      llave: newKeyList,
+                                      indice: index,
                                     ))
-                                : null,
+                                : eliminarProducto(index),
                             itemBuilder: (context) => [
                                   const PopupMenuItem(
                                     value: 1,
