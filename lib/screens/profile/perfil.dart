@@ -2,7 +2,6 @@ import 'package:camp_express/controller/address_controller.dart';
 import 'package:camp_express/controller/auth_controller.dart';
 import 'package:camp_express/controller/login_controller.dart';
 import 'package:camp_express/controller/tarjeta_controller.dart';
-import 'package:camp_express/domain/usuario.dart';
 import 'package:camp_express/screens/profile/edit/direccion_envio.dart';
 import 'package:camp_express/screens/profile/edit/mapa_direcciones.dart';
 import 'package:camp_express/screens/profile/noti/notificacion.dart';
@@ -29,6 +28,8 @@ class _PerfilState extends State<Perfil> {
   void initState() {
     super.initState();
     String imagenPerfil = '';
+    image2 =
+        'https://firebasestorage.googleapis.com/v0/b/campexpress-36d33.appspot.com/o/Necesario%2Fusuario_anonimo.png?alt=media&token=0f77bea5-d44e-4905-9546-8a4379f027e4';
     //Referenciar la base de datos
     DatabaseReference postsRef =
         FirebaseDatabase.instance.ref('Perfiles_fotos');
@@ -46,7 +47,12 @@ class _PerfilState extends State<Perfil> {
         }
       }
       //Utilizo una url para cargarla como imagen
-      setState(() => image2 = postList.isNotEmpty ? imagenPerfil : null);
+
+      setState(() {
+        if (imagenPerfil != '') {
+          image2 = imagenPerfil;
+        }
+      });
       postList = [];
     });
   }
@@ -124,16 +130,9 @@ class _PerfilState extends State<Perfil> {
                                     radius: 50.0,
                                     backgroundColor: Colors.transparent,
                                     child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(50.0),
-                                      child: image2 != null
-                                          ? Image.network(image2!)
-                                          : const Icon(
-                                              Icons.person,
-                                              size: 100,
-                                              color: Color.fromARGB(
-                                                  255, 78, 160, 62),
-                                            ),
-                                    ),
+                                        borderRadius:
+                                            BorderRadius.circular(50.0),
+                                        child: Image.network(image2!)),
                                   ),
                                 )
                               ],

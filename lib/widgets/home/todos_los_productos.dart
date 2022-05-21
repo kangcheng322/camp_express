@@ -35,8 +35,6 @@ Widget todoLosProductos(Size size) {
                   ),
                   itemCount: productosController.producto.length,
                   itemBuilder: (context, i) {
-                    print('Hello world' +
-                        productosController.producto.length.toString());
                     return construirCuadro(
                         i, size, productosController.producto);
                   },
