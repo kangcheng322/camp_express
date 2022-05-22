@@ -76,29 +76,41 @@ class _DetailsPageState extends State<Detalles> {
           centerTitle: true,
           actions: <Widget>[
             Padding(
-              padding: EdgeInsets.only(right: size.width * 0.05, top: 8),
-              child: Container(
-                height: size.width * 0.1,
-                width: size.width * 0.1,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(10),
-                  ),
-                ),
-                child: IconButton(
-                  icon: Obx(() => Icon(
-                        productosController.obtenerFavorito(widget.id)
-                            ? Icons.favorite
-                            : UniconsLine.heart,
+                //padding: EdgeInsets.only(right: size.width * 0.05, top: 8),
+                padding: EdgeInsets.only(right: size.width * 0.025, top: 8),
+                /* child: Container(
+                  height: size.width * 0.1,
+                  width: size.width * 0.1,
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10),
+                    ),
+                  ),*/
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: Icon(
+                        UniconsLine.heart_break,
                         size: size.height * 0.03,
                         color: const Color.fromARGB(255, 78, 160, 62),
-                      )),
-                  onPressed: () {
-                    productosController.ajustarFavorito(widget.id);
-                  },
+                      ),
+                      onPressed: () {
+                        productosController.ajustarFavorito1(widget.id);
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        UniconsLine.heart_medical,
+                        size: size.height * 0.03,
+                        color: const Color.fromARGB(255, 78, 160, 62),
+                      ),
+                      onPressed: () {
+                        productosController.ajustarFavorito2(widget.id);
+                      },
+                    ),
+                  ],
+                ) //),
                 ),
-              ),
-            ),
           ],
         ),
       ),

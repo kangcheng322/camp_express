@@ -6,18 +6,7 @@ import 'package:get/get.dart';
 
 class ProductosController extends GetxController {
   AuthController authController = Get.find();
-  /*final List<Producto> _producto = <Producto>[
-    Producto('0', 'Papas criollas', 7200, "0\$ - 149.0\$", '470 g', 5.0,
-        'assets/images/papas.png'),
-    Producto('1', 'Mazorca', 6800, '150.0\$ - 499.0\$', '2 und', 3.5,
-        'assets/images/maiz.png'),
-    Producto('2', 'Patilla', 7497, '500.0\$ - 1500.0\$', '1 und', 2.5,
-        'assets/images/sandia.png'),
-    Producto('3', 'Arroz', 9600, '500.0\$ - 1500.0\$', '3000 g', 4.0,
-        'assets/images/arroz.png'),
-    Producto('4', 'Tomate', 7800, '500.0\$ - 1500.0\$', '1 kg', 3.5,
-        'assets/images/tomate.png')
-  ].obs;*/
+
   final List<Producto> _producto = <Producto>[].obs;
   final List<String> _productoPos = <String>[].obs;
   final List<Producto> _favoritos = <Producto>[].obs;
@@ -65,21 +54,6 @@ class ProductosController extends GetxController {
           ),
         );
         _productoPos.add(keyList[i]);
-        /* if (postList[i]['favorito'] == 'true') {
-          _favoritos.add(
-            Producto(
-              postList[i]['key'].toString(),
-              postList[i]['product'].toString(),
-              double.parse(postList[i]['price']),
-              "0\$ - 149.0\$",
-              postList[i]['quantity'].toString(),
-              5.0,
-              postList[i]['image'].toString(),
-              true,
-              postList[i]['email'].toString(),
-            ),
-          );
-        }*/
       }
       keyList = [];
       postList = [];
@@ -100,6 +74,7 @@ class ProductosController extends GetxController {
         });
       }
       _favoritos.clear();
+      _productoPosFav.clear();
       for (var i = 0; i < favList.length; i++) {
         if (favList[i]['email'] == authController.userEmail()) {
           _favoritos.add(
@@ -115,7 +90,6 @@ class ProductosController extends GetxController {
               favList[i]['email'].toString(),
             ),
           );
-          print('Entroooooooo1');
           _productoPosFav.add(favkeyList[i]);
         }
       }
@@ -124,23 +98,27 @@ class ProductosController extends GetxController {
     });
   }
 
-  //Marcar si un producto se encuentra en favoritos y guardar en una lista de favoritos
-  ajustarFavorito(String id) {
-    var producto = _producto.firstWhere((element) => element.id == id);
-    var indice = _producto.indexWhere((element) => element.id == id);
-    var referencia = FirebaseDatabase.instance
-        .ref()
-        .child('Productos')
-        .child(productoPos[indice]);
-    var ref = FirebaseDatabase.instance.ref('Favoritos');
-    if (producto.favorito == false) {
-      producto.favorito = true;
-      _favoritos.add(producto);
-      //Modificar favorito en base de datos
-      var data = {'favorito': 'true'};
-      referencia.update(data);
+  ajustarFavorito1(String id) {
+    if (favoritos.isNotEmpty) {
+      for (var i = 0; i < favoritos.length; i++) {
+        if (favoritos[i].id == id &&
+            favoritos[i].email == authController.userEmail()) {
+          var indice2 = _favoritos.indexWhere((element) => element.id == id);
+          FirebaseDatabase.instance
+              .ref()
+              .child('Favoritos')
+              .child(_productoPosFav[indice2])
+              .remove();
+          break;
+        }
+      }
+    }
+  }
 
-      //Añadir el producto en la coleccion Favoritos
+  ajustarFavorito2(String id) {
+    var producto = _producto.firstWhere((element) => element.id == id);
+    if (favoritos.isEmpty) {
+      var ref = FirebaseDatabase.instance.ref('Favoritos');
       var data2 = {
         'key': producto.id,
         'image': producto.image,
@@ -151,17 +129,37 @@ class ProductosController extends GetxController {
       };
       ref.push().set(data2);
     } else {
-      producto.favorito = false;
-      var indice2 = _favoritos.indexWhere((element) => element.id == id);
-      _favoritos.removeAt(indice2);
-      //Modificar favorito en base de datos
-      var data = {'favorito': 'false'};
-      //Modificar favorito en base de datos
-      referencia.update(data);
-      //Eliminar el producto en la coleccion Favoritos
-      ref.child(_productoPosFav[indice2]).remove();
+      bool sw = false;
+      for (var i = 0; i < favoritos.length; i++) {
+        if (favoritos[i].id != id &&
+            favoritos[i].email == authController.userEmail()) {
+          sw = true;
+        } else {
+          if (favoritos[i].id == id &&
+              favoritos[i].email != authController.userEmail()) {
+            sw = true;
+          } else {
+            if (favoritos[i].id == id &&
+                favoritos[i].email == authController.userEmail()) {
+              sw = false;
+              break;
+            }
+          }
+        }
+      }
+      if (sw == true) {
+        var ref = FirebaseDatabase.instance.ref('Favoritos');
+        var data2 = {
+          'key': producto.id,
+          'image': producto.image,
+          'product': producto.nombre,
+          'price': producto.precio,
+          'quantity': producto.cantidad,
+          'email': authController.userEmail(),
+        };
+        ref.push().set(data2);
+      }
     }
-    _producto.fillRange(indice, indice + 1, producto);
   }
 
   //Si el producto está en favorito esto devuelve true o false para que el ícono de corazón se rellene o no

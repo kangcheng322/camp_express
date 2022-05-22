@@ -10,7 +10,7 @@ class Producto {
   bool cesta = false;
   int cantidadCarrito = 0;
   double subtotal = 0;
-  String vendedor;
+  String email;
   Producto(this.id, this.nombre, this.precio, this.rango, this.cantidad,
-      this.rating, this.image, this.favorito, this.vendedor);
+      this.rating, this.image, this.favorito, this.email);
 }
