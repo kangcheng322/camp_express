@@ -27,6 +27,7 @@ class _PresentacionState extends State<Presentacion>
     super.initState();
     _cambiar();
     productosController.addProduct();
+    productosController.addFavProduct();
   }
 
   void dispose() {

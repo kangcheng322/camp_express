@@ -22,9 +22,9 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   Get.put(LoginController());
+  Get.put(AuthController());
   Get.put(ProductosController());
   Get.lazyPut(() => TarjetaController());
-  Get.put(AuthController());
   Get.put(TarjetaController());
 
   //Get.put(UserController());

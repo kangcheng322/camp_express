@@ -1,9 +1,11 @@
+import 'package:camp_express/controller/auth_controller.dart';
 import 'package:camp_express/domain/orden.dart';
 import 'package:camp_express/domain/productos.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 
 class ProductosController extends GetxController {
+  AuthController authController = Get.find();
   /*final List<Producto> _producto = <Producto>[
     Producto('0', 'Papas criollas', 7200, "0\$ - 149.0\$", '470 g', 5.0,
         'assets/images/papas.png'),
@@ -19,6 +21,7 @@ class ProductosController extends GetxController {
   final List<Producto> _producto = <Producto>[].obs;
   final List<String> _productoPos = <String>[].obs;
   final List<Producto> _favoritos = <Producto>[].obs;
+  final List<String> _productoPosFav = <String>[].obs;
   final List<Producto> _carrito = <Producto>[].obs;
   late final RxDouble _total = 0.0.obs;
   final List<Orden> _ordenes = <Orden>[].obs;
@@ -26,10 +29,10 @@ class ProductosController extends GetxController {
   List<Producto> get producto => _producto;
   List<String> get productoPos => _productoPos;
   List<Producto> get favoritos => _favoritos;
+  List<String> get productoPosFav => _productoPosFav;
   List<Producto> get carrito => _carrito;
   double get total => _total.value;
   List<Orden> get ordenes => _ordenes;
-
   void addProduct() {
     List<dynamic> postList = [];
     List<String> keyList = [];
@@ -46,10 +49,25 @@ class ProductosController extends GetxController {
         });
       }
       _producto.clear();
-      _favoritos.clear();
+      //_favoritos.clear();
       for (var i = 0; i < postList.length; i++) {
         _producto.add(
           Producto(
+            postList[i]['key'].toString(),
+            postList[i]['product'].toString(),
+            double.parse(postList[i]['price']),
+            "0\$ - 149.0\$",
+            postList[i]['quantity'].toString(),
+            5.0,
+            postList[i]['image'].toString(),
+            postList[i]['favorito'] == 'false' ? false : true,
+            postList[i]['email'].toString(),
+          ),
+        );
+        _productoPos.add(keyList[i]);
+        /* if (postList[i]['favorito'] == 'true') {
+          _favoritos.add(
+            Producto(
               postList[i]['key'].toString(),
               postList[i]['product'].toString(),
               double.parse(postList[i]['price']),
@@ -57,25 +75,52 @@ class ProductosController extends GetxController {
               postList[i]['quantity'].toString(),
               5.0,
               postList[i]['image'].toString(),
-              postList[i]['favorito'] == 'false' ? false : true),
-        );
-        _productoPos.add(keyList[i]);
-        if (postList[i]['favorito'] == 'true') {
-          _favoritos.add(
-            Producto(
-                postList[i]['key'].toString(),
-                postList[i]['product'].toString(),
-                double.parse(postList[i]['price']),
-                "0\$ - 149.0\$",
-                postList[i]['quantity'].toString(),
-                5.0,
-                postList[i]['image'].toString(),
-                true),
+              true,
+              postList[i]['email'].toString(),
+            ),
           );
-        }
+        }*/
       }
       keyList = [];
       postList = [];
+    });
+  }
+
+  void addFavProduct() {
+    List<dynamic> favList = [];
+    List<String> favkeyList = [];
+    //Referenciar la base de datos
+    DatabaseReference favRef = FirebaseDatabase.instance.ref('Favoritos');
+    favRef.onValue.listen((DatabaseEvent event) {
+      var data = event.snapshot.value;
+      if (data != null) {
+        Map<String, dynamic>.from(data as dynamic).forEach((key, value) {
+          favkeyList.add(key);
+          favList.add(value);
+        });
+      }
+      _favoritos.clear();
+      for (var i = 0; i < favList.length; i++) {
+        if (favList[i]['email'] == authController.userEmail()) {
+          _favoritos.add(
+            Producto(
+              favList[i]['key'].toString(),
+              favList[i]['product'].toString(),
+              double.parse(favList[i]['price'].toString()),
+              "0\$ - 149.0\$",
+              favList[i]['quantity'].toString(),
+              5.0,
+              favList[i]['image'].toString(),
+              true,
+              favList[i]['email'].toString(),
+            ),
+          );
+          print('Entroooooooo1');
+          _productoPosFav.add(favkeyList[i]);
+        }
+      }
+      favkeyList = [];
+      favList = [];
     });
   }
 
@@ -87,12 +132,24 @@ class ProductosController extends GetxController {
         .ref()
         .child('Productos')
         .child(productoPos[indice]);
+    var ref = FirebaseDatabase.instance.ref('Favoritos');
     if (producto.favorito == false) {
       producto.favorito = true;
       _favoritos.add(producto);
       //Modificar favorito en base de datos
       var data = {'favorito': 'true'};
       referencia.update(data);
+
+      //Añadir el producto en la coleccion Favoritos
+      var data2 = {
+        'key': producto.id,
+        'image': producto.image,
+        'product': producto.nombre,
+        'price': producto.precio,
+        'quantity': producto.cantidad,
+        'email': authController.userEmail(),
+      };
+      ref.push().set(data2);
     } else {
       producto.favorito = false;
       var indice2 = _favoritos.indexWhere((element) => element.id == id);
@@ -101,6 +158,8 @@ class ProductosController extends GetxController {
       var data = {'favorito': 'false'};
       //Modificar favorito en base de datos
       referencia.update(data);
+      //Eliminar el producto en la coleccion Favoritos
+      ref.child(_productoPosFav[indice2]).remove();
     }
     _producto.fillRange(indice, indice + 1, producto);
   }

@@ -14,6 +14,12 @@ class Favoritos extends StatefulWidget {
 class _FavoritosState extends State<Favoritos> {
   ProductosController productosController = Get.find();
   @override
+  void initState() {
+    super.initState();
+    productosController.addFavProduct();
+  }
+
+  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
