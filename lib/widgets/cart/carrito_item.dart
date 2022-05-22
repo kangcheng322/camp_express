@@ -34,8 +34,8 @@ class CartItem extends StatelessWidget {
       child: Padding(
           padding: const EdgeInsets.only(top: 20, bottom: 20, left: 20),
           child: Row(children: [
-            Image(
-              image: AssetImage(assetPath),
+            Image.network(
+              assetPath,
               width: 80,
               height: 105,
               fit: BoxFit.cover,

@@ -12,9 +12,9 @@ class FirebaseCentral extends StatelessWidget {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return BottomNavBar();
+          return const BottomNavBar();
         } else {
-          return Login();
+          return const Login();
         }
       },
     );

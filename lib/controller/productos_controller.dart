@@ -17,12 +17,14 @@ class ProductosController extends GetxController {
         'assets/images/tomate.png')
   ].obs;*/
   final List<Producto> _producto = <Producto>[].obs;
+  final List<String> _productoPos = <String>[].obs;
   final List<Producto> _favoritos = <Producto>[].obs;
   final List<Producto> _carrito = <Producto>[].obs;
   late final RxDouble _total = 0.0.obs;
   final List<Orden> _ordenes = <Orden>[].obs;
 
   List<Producto> get producto => _producto;
+  List<String> get productoPos => _productoPos;
   List<Producto> get favoritos => _favoritos;
   List<Producto> get carrito => _carrito;
   double get total => _total.value;
@@ -30,6 +32,7 @@ class ProductosController extends GetxController {
 
   void addProduct() {
     List<dynamic> postList = [];
+    List<String> keyList = [];
     //Referenciar la base de datos
     DatabaseReference postsRef = FirebaseDatabase.instance.ref('Productos');
     //Escuchar y obtener los valores del Realtime Database
@@ -37,20 +40,41 @@ class ProductosController extends GetxController {
       //productosController.reiniciar();
       var data = event.snapshot.value;
       if (data != null) {
-        Map<String, dynamic>.from(data as dynamic)
-            .forEach((key, value) => postList.add(value));
+        Map<String, dynamic>.from(data as dynamic).forEach((key, value) {
+          keyList.add(key);
+          postList.add(value);
+        });
       }
       _producto.clear();
+      _favoritos.clear();
       for (var i = 0; i < postList.length; i++) {
-        _producto.add(Producto(
-            postList[i]['key'].toString(),
-            postList[i]['product'].toString(),
-            double.parse(postList[i]['price']),
-            "0\$ - 149.0\$",
-            postList[i]['quantity'].toString(),
-            5.0,
-            postList[i]['image'].toString()));
+        _producto.add(
+          Producto(
+              postList[i]['key'].toString(),
+              postList[i]['product'].toString(),
+              double.parse(postList[i]['price']),
+              "0\$ - 149.0\$",
+              postList[i]['quantity'].toString(),
+              5.0,
+              postList[i]['image'].toString(),
+              postList[i]['favorito'] == 'false' ? false : true),
+        );
+        _productoPos.add(keyList[i]);
+        if (postList[i]['favorito'] == 'true') {
+          _favoritos.add(
+            Producto(
+                postList[i]['key'].toString(),
+                postList[i]['product'].toString(),
+                double.parse(postList[i]['price']),
+                "0\$ - 149.0\$",
+                postList[i]['quantity'].toString(),
+                5.0,
+                postList[i]['image'].toString(),
+                true),
+          );
+        }
       }
+      keyList = [];
       postList = [];
     });
   }
@@ -59,15 +83,24 @@ class ProductosController extends GetxController {
   ajustarFavorito(String id) {
     var producto = _producto.firstWhere((element) => element.id == id);
     var indice = _producto.indexWhere((element) => element.id == id);
+    var referencia = FirebaseDatabase.instance
+        .ref()
+        .child('Productos')
+        .child(productoPos[indice]);
     if (producto.favorito == false) {
       producto.favorito = true;
-      _favoritos.add(producto); //modificar favorito en base de datos
-      // actualizar la lista con la base de datos
+      _favoritos.add(producto);
+      //Modificar favorito en base de datos
+      var data = {'favorito': 'true'};
+      referencia.update(data);
     } else {
       producto.favorito = false;
       var indice2 = _favoritos.indexWhere((element) => element.id == id);
-      _favoritos.removeAt(indice2); // modificar favorito en base de datos
-      // actualizar la lista con la base de datos
+      _favoritos.removeAt(indice2);
+      //Modificar favorito en base de datos
+      var data = {'favorito': 'false'};
+      //Modificar favorito en base de datos
+      referencia.update(data);
     }
     _producto.fillRange(indice, indice + 1, producto);
   }

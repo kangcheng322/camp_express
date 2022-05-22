@@ -91,11 +91,11 @@ class AgregarProductoController extends GetxController {
     //Referenciar la base de datos
     DatabaseReference ref = FirebaseDatabase.instance.ref('Productos');
     // Get a key for a new Post.
-    //final newPostKey = FirebaseDatabase.instance.ref('Productos').push().key;
+    final newPostKey = FirebaseDatabase.instance.ref('Productos').push().key;
 
     //Crear el cuerpo que se va a enviar
     var data = {
-      //'key': newPostKey,
+      'key': newPostKey,
       'image': url,
       'date': date,
       'time': time,
@@ -103,7 +103,8 @@ class AgregarProductoController extends GetxController {
       'description': descripcion,
       'price': price,
       'quantity': quantity,
-      'email': authController.userEmail()
+      'email': authController.userEmail(),
+      'favorito': 'false'
     };
 
     //Mandar los datos a la base de datos

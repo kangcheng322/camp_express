@@ -17,28 +17,26 @@ Widget todoLosProductos(Size size) {
         ),
         child: Obx(
           () => ListView(
+            scrollDirection: Axis.vertical,
             shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            primary: true,
-            children: <Widget>[
-              SizedBox(
-                width: size.width,
-                height: size.height * 1.02,
-                child: GridView.builder(
-                  primary: false,
-                  physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    childAspectRatio: 0.68,
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 9,
-                    mainAxisSpacing: 9,
-                  ),
-                  itemCount: productosController.producto.length,
-                  itemBuilder: (context, i) {
-                    return construirCuadro(
-                        i, size, productosController.producto);
-                  },
+            physics: const ClampingScrollPhysics(),
+            primary: false,
+            children: [
+              GridView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                physics: const ClampingScrollPhysics(),
+                primary: false,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  childAspectRatio: 0.68,
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 9,
+                  mainAxisSpacing: 9,
                 ),
+                itemCount: productosController.producto.length,
+                itemBuilder: (context, i) {
+                  return construirCuadro(i, size, productosController.producto);
+                },
               ),
             ],
           ),
