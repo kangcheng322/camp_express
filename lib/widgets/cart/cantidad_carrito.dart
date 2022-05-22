@@ -39,7 +39,7 @@ class _CantidadCarritoState extends State<CantidadCarrito> {
                 _n--;
               }
             });*/
-            productosController.resCantidad(widget.id);
+            //productosController.resCantidad(widget.id);
           },
           child: const Text(
             '-',
@@ -81,7 +81,7 @@ class _CantidadCarritoState extends State<CantidadCarrito> {
                 _n++;
               }
             });*/
-            productosController.addCantidad(widget.id);
+            //productosController.addCantidad(widget.id);
           },
           child: const Text(
             '+',

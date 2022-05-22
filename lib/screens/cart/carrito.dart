@@ -15,6 +15,12 @@ class Carrito extends StatefulWidget {
 }
 
 class _CarritoState extends State<Carrito> {
+  ProductosController productosController = Get.find();
+  void initState() {
+    super.initState();
+    productosController.addCarProduct();
+  }
+
   @override
   Widget build(BuildContext context) {
     ProductosController productosController = Get.find();
@@ -24,13 +30,13 @@ class _CarritoState extends State<Carrito> {
         elevation: 0,
         centerTitle: true,
         backgroundColor: Colors.transparent,
-        leading: IconButton(
+        /* leading: IconButton(
           onPressed: () {
             // Navigator.of(context).pop();
           },
           icon: const Icon(Icons.arrow_back,
               color: Color.fromARGB(255, 78, 160, 62)),
-        ),
+        ),*/
         title: const Text(
           "Carrito",
           style: TextStyle(
@@ -68,8 +74,9 @@ class _CarritoState extends State<Carrito> {
                             productosController.carrito.elementAt(index).image,
                         title:
                             productosController.carrito.elementAt(index).nombre,
-                        price:
-                            productosController.carrito.elementAt(index).precio,
+                        price: productosController.carrito
+                            .elementAt(index)
+                            .subtotal,
                         id: productosController.carrito.elementAt(index).id,
                       );
                     },

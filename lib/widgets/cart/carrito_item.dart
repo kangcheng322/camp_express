@@ -40,7 +40,7 @@ class CartItem extends StatelessWidget {
               height: 105,
               fit: BoxFit.cover,
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: 60),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -49,7 +49,7 @@ class CartItem extends StatelessWidget {
                   title,
                   style: GoogleFonts.lato(
                     fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                    fontSize: 20,
                     color: const Color.fromARGB(255, 78, 160, 62),
                   ),
                 ),
@@ -57,26 +57,28 @@ class CartItem extends StatelessWidget {
                 Text(
                   '${this.price}\$',
                   style: GoogleFonts.lato(
-                    fontSize: 15,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),
                 ),
-                CantidadCarrito(id: id),
               ],
             ),
+            const SizedBox(width: 80),
             InkWell(
                 onTap: () {
-                  productosController.agregarCarrito(id);
+                  productosController.eliminarUnCarrito(id);
                 },
                 child: Column(
                   children: [
                     Icon(
                       Icons.delete,
                       color: Colors.red,
-                      size: size.width * 0.05,
+                      size: size.width * 0.1,
                     ),
-                    const SizedBox(height: 85),
+                    const SizedBox(
+                        //height: 10,
+                        ),
                   ],
                 )),
           ])),

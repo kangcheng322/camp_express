@@ -7,6 +7,7 @@ import 'package:camp_express/screens/inicio/login.dart';
 import 'package:camp_express/screens/inicio/presentacion.dart';
 import 'package:camp_express/screens/inicio/registro.dart';
 import 'package:camp_express/screens/inicio/resetear.dart';
+import 'package:camp_express/widgets/details/cantidad.dart';
 import 'package:camp_express/widgets/home/bottom_nav_bar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,6 @@ import 'package:get/get.dart';
 import 'controller/login_controller.dart';
 import 'controller/productos_controller.dart';
 import 'package:flutter/services.dart';
-
 import 'controller/tarjeta_controller.dart';
 import 'controller/usuario_controller.dart';
 

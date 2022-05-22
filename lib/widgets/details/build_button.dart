@@ -16,7 +16,7 @@ Padding buildButton(Size size, String id) {
       width: size.width * 0.75,
       child: InkWell(
         onTap: () {
-          productosController.agregarCarrito(id);
+          // productosController.agregarCarrito(id);
         },
         child: Obx(() => Container(
               decoration: BoxDecoration(

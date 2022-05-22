@@ -32,6 +32,12 @@ class Detalles extends StatefulWidget {
 
 class _DetailsPageState extends State<Detalles> {
   ProductosController productosController = Get.find();
+  int num = 0;
+  void initState() {
+    super.initState();
+    productosController.cantCarrito.value = 0;
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -212,7 +218,7 @@ class _DetailsPageState extends State<Detalles> {
                           ))),
                   Row(
                     children: [
-                      Obx(() => Text(
+                      /*Obx(() => Text(
                             productosController
                                     .obtenerSubtotal(widget.id)
                                     .toString() +
@@ -222,14 +228,97 @@ class _DetailsPageState extends State<Detalles> {
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
                             ),
-                          )),
+                          )),*/
                       const Spacer(),
                       Cantidad(id: widget.id)
                     ],
                   )
                 ],
               ),
-              buildButton(size, widget.id),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: size.height * 0.8,
+                      //right: size.width * 0.03,
+                      //left: size.width * 0.08,
+                    ),
+                    child: SizedBox(
+                      height: size.height * 0.08,
+                      width: size.width * 0.4,
+                      child: InkWell(
+                        onTap: () {
+                          productosController.eliminarUnCarrito(widget.id);
+                          Get.back();
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                15,
+                              ),
+                              color: Colors.red
+
+                              //color: const Color.fromARGB(255, 78, 160, 62),
+                              ),
+                          child: const Align(
+                            child: Text(
+                              'Quitar del carrito',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: size.height * 0.8,
+                      // right: size.width * 0.03,
+                      //left: size.width * 0.08,
+                    ),
+                    child: SizedBox(
+                      height: size.height * 0.08,
+                      width: size.width * 0.4,
+                      child: InkWell(
+                        onTap: () {
+                          productosController.agregarCarrito2(
+                              widget.id, productosController.cantCarrito.value);
+                          Get.back();
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                              15,
+                            ),
+                            color: const Color.fromARGB(255, 78, 160, 62),
+                          ),
+                          child: const Align(
+                            child: Text(
+                              'Agregar al carrito',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+
+              //buildButton(size, widget.id),
             ],
           ),
         ),
