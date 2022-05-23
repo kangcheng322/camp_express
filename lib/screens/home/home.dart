@@ -22,27 +22,6 @@ class _HomeState extends State<Home> {
   List<dynamic> postList = [];
 
   @override
-  /*void initState() {
-    super.initState();
-
-    //Referenciar la base de datos
-    DatabaseReference postsRef = FirebaseDatabase.instance.ref('Productos');
-    //Escuchar y obtener los valores del Realtime Database
-    postsRef.onValue.listen((DatabaseEvent event) {
-      //productosController.reiniciar();
-      var data = event.snapshot.value;
-      if (data != null) {
-        Map<String, dynamic>.from(data as dynamic)
-            .forEach((key, value) => postList.add(value));
-      }
-      for (var i = 0; i < postList.length; i++) {
-        productosController.addProduct(postList[i]);
-      }
-      postList = [];
-    });
-  }*/
-
-  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(

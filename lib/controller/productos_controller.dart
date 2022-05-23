@@ -13,7 +13,7 @@ class ProductosController extends GetxController {
   final List<String> _productoPosFav = <String>[].obs;
   final List<Producto> _carrito = <Producto>[].obs;
   final List<String> _productoPosCar = <String>[].obs;
-  late final RxDouble _total = 0.0.obs;
+  var _total = 0.0.obs;
   final List<Orden> _ordenes = <Orden>[].obs;
   var cantCarrito = 0.obs;
 
@@ -119,6 +119,7 @@ class ProductosController extends GetxController {
       }
       _carrito.clear();
       _productoPosCar.clear();
+      _total.value = 0;
       for (var i = 0; i < carList.length; i++) {
         if (carList[i]['email'] == authController.userEmail()) {
           _carrito.add(
@@ -137,6 +138,9 @@ class ProductosController extends GetxController {
             ),
           );
           _productoPosCar.add(carkeyList[i]);
+          _total.value = total +
+              (carList[i]['cantidadCarrito'] *
+                  double.parse(carList[i]['price'].toString()));
         }
       }
       carkeyList = [];
@@ -245,7 +249,7 @@ class ProductosController extends GetxController {
         'quantity': producto.cantidad,
         'email': authController.userEmail(),
         'cantidadCarrito': num,
-        'subtotal': subTotal(num, producto.precio),
+        'subtotal': num * producto.precio,
       };
       ref.push().set(data3);
     } else {
@@ -277,7 +281,7 @@ class ProductosController extends GetxController {
           'quantity': producto.cantidad,
           'email': authController.userEmail(),
           'cantidadCarrito': num,
-          'subtotal': subTotal(num, producto.precio),
+          'subtotal': num * producto.precio,
         };
         ref.push().set(data3);
       }
@@ -325,9 +329,6 @@ class ProductosController extends GetxController {
     }
   }
 
-  double subTotal(int num, double precio) {
-    return num * precio;
-  }
 /*Aumentar la cantidad del producto al carrito
   addCantidad(String id) {
     var _actualizar = _producto.firstWhere((element) => element.id == id);

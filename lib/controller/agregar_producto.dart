@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:camp_express/controller/auth_controller.dart';
+import 'package:camp_express/controller/productos_controller.dart';
+import 'package:camp_express/screens/cart/carrito.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -7,11 +9,13 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../domain/productos.dart';
+
 class AgregarProductoController extends GetxController {
   final _image = File('').obs;
   final _imageUpdate = File('').obs;
   AuthController authController = Get.find();
-
+  ProductosController productosController = Get.find();
   File get image {
     return _image.value;
   }
@@ -198,6 +202,41 @@ class AgregarProductoController extends GetxController {
     } catch (error) {
       print(error);
       return Future.error(error);
+    }
+  }
+
+  //Guardar en la BD los productos vendidos
+  void agregarProductosVendidos() {
+    //Tiempo actual
+    var dbTimeKey = DateTime.now();
+    //Formato de fecha
+    var formatDate = DateFormat('MMM d, yyyy');
+    //Formato del tiempo
+    var formatTime = DateFormat('EEEE, hh:mm aaa');
+    //Formatear en fecha y hora
+    String date = formatDate.format(dbTimeKey);
+    String time = formatTime.format(dbTimeKey);
+    //Referenciar la base de datos
+    DatabaseReference ref = FirebaseDatabase.instance.ref('ProductosVendidos');
+    for (var element in productosController.carrito) {
+      for (var element2 in productosController.producto) {
+        if (element.id == element2.id) {
+//Crear el cuerpo que se va a enviar
+          var data = {
+            'key': element.id,
+            'image': element.image,
+            'date': date,
+            'time': time,
+            'product': element.nombre,
+            'price': element.precio,
+            'quantity': element.cantidad,
+            'email': element2.email,
+            'cantidadCarrito': element.cantidadCarrito
+          };
+          //Mandar los datos a la base de datos
+          ref.push().set(data);
+        }
+      }
     }
   }
 }

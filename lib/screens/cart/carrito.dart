@@ -1,4 +1,5 @@
 //import 'package:ecommerce_app/screens/checkout.dart';
+import 'package:camp_express/controller/agregar_producto.dart';
 import 'package:camp_express/widgets/cart/carrito_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,6 +17,7 @@ class Carrito extends StatefulWidget {
 
 class _CarritoState extends State<Carrito> {
   ProductosController productosController = Get.find();
+  AgregarProductoController agregarProductoController = Get.find();
   void initState() {
     super.initState();
     productosController.addCarProduct();
@@ -112,8 +114,9 @@ class _CarritoState extends State<Carrito> {
             ElevatedButton(
                 key: const Key('boton_carrito'),
                 onPressed: () {
-                  DateTime nowTime = DateTime.now();
-                  productosController.agregarOrden(nowTime);
+                  //DateTime nowTime = DateTime.now();
+                  //productosController.agregarOrden(nowTime);
+                  agregarProductoController.agregarProductosVendidos();
                   productosController.vaciarCarrito();
                 },
                 style: ElevatedButton.styleFrom(

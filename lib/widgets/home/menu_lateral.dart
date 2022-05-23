@@ -1,5 +1,6 @@
 import 'package:camp_express/controller/auth_controller.dart';
 import 'package:camp_express/screens/home/help/ayuda.dart';
+import 'package:camp_express/screens/home/sell/vendido.dart';
 import 'package:camp_express/screens/home/sell/venta.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -36,6 +37,21 @@ Widget menuLateral(Size size) {
           tileColor: Colors.white.withOpacity(0.7),
           onTap: () {
             Get.to(() => const Venta());
+          },
+        ),
+        const Divider(),
+        ListTile(
+          leading: const Icon(Icons.local_shipping,
+              color: Color.fromARGB(255, 78, 160, 62)),
+          title: const Text(
+            'Productos vendidos',
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 78, 160, 62)),
+          ),
+          tileColor: Colors.white.withOpacity(0.7),
+          onTap: () {
+            Get.to(() => const Vendido());
           },
         ),
         const Divider(),
