@@ -117,6 +117,7 @@ class _CarritoState extends State<Carrito> {
                   //DateTime nowTime = DateTime.now();
                   //productosController.agregarOrden(nowTime);
                   agregarProductoController.agregarProductosVendidos();
+                  agregarProductoController.agregarProductosComprados();
                   productosController.vaciarCarrito();
                 },
                 style: ElevatedButton.styleFrom(

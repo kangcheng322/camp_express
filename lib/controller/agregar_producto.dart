@@ -239,4 +239,35 @@ class AgregarProductoController extends GetxController {
       }
     }
   }
+
+  //Guardar en la BD los productos comprados
+  void agregarProductosComprados() {
+    //Tiempo actual
+    var dbTimeKey = DateTime.now();
+    //Formato de fecha
+    var formatDate = DateFormat('MMM d, yyyy');
+    //Formato del tiempo
+    var formatTime = DateFormat('EEEE, hh:mm aaa');
+    //Formatear en fecha y hora
+    String date = formatDate.format(dbTimeKey);
+    String time = formatTime.format(dbTimeKey);
+    //Referenciar la base de datos
+    DatabaseReference ref = FirebaseDatabase.instance.ref('MisCompras');
+    for (var element in productosController.carrito) {
+//Crear el cuerpo que se va a enviar
+      var data = {
+        'key': element.id,
+        'image': element.image,
+        'date': date,
+        'time': time,
+        'product': element.nombre,
+        'price': element.precio,
+        'quantity': element.cantidad,
+        'email': authController.userEmail(),
+        'cantidadCarrito': element.cantidadCarrito
+      };
+      //Mandar los datos a la base de datos
+      ref.push().set(data);
+    }
+  }
 }

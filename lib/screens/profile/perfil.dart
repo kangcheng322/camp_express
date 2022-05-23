@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controller/usuario_controller.dart';
-import '../orders/ordenes.dart';
+import '../orders/compras.dart';
 import 'edit/editar_perfil.dart';
 import 'edit/tarjetas.dart';
 
@@ -181,9 +181,9 @@ class _PerfilState extends State<Perfil> {
                         Get.to(() => const Direccion());
                       }),
                   PerfilOpciones(
-                      text: 'Ordenes',
+                      text: 'Mis compras',
                       onClick: () {
-                        Get.to(() => const Orden());
+                        Get.to(() => const Compra());
                       }),
                   PerfilOpciones(
                       text: 'Tarjetas',
