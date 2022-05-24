@@ -25,14 +25,17 @@ class _PerfilState extends State<Perfil> {
   AuthController authController = Get.find();
   List<dynamic> postList = [];
   String? image2;
+  List<dynamic> dirList = [];
+  String direccion = '';
+  String barrio = '';
+  String ciudad = '';
   void initState() {
     super.initState();
     String imagenPerfil = '';
     image2 =
         'https://firebasestorage.googleapis.com/v0/b/campexpress-36d33.appspot.com/o/Necesario%2Fusuario_anonimo.png?alt=media&token=0f77bea5-d44e-4905-9546-8a4379f027e4';
     //Referenciar la base de datos
-    DatabaseReference postsRef =
-        FirebaseDatabase.instance.ref('Perfiles_fotos');
+    DatabaseReference postsRef = FirebaseDatabase.instance.ref('Perfiles');
     //Escuchar y obtener los valores del Realtime Database
     postsRef.onValue.listen((DatabaseEvent event) {
       var data = event.snapshot.value;
@@ -54,6 +57,37 @@ class _PerfilState extends State<Perfil> {
         }
       });
       postList = [];
+    });
+    String aux = '';
+    String aux2 = '';
+    String aux3 = '';
+    //Referenciar la base de datos
+    DatabaseReference ref = FirebaseDatabase.instance.ref('Direcciones');
+    //Escuchar y obtener los valores del Realtime Database
+    ref.onValue.listen((DatabaseEvent event) {
+      var data2 = event.snapshot.value;
+      if (data2 != null) {
+        Map<String, dynamic>.from(data2 as dynamic)
+            .forEach((key, value) => dirList.add(value));
+      }
+      //Buscar la foto de perfil actual del usuario
+      for (var i = 0; i < dirList.length; i++) {
+        if (dirList[i]['email'] == authController.userEmail()) {
+          aux = dirList[i]['direccion'];
+          aux2 = dirList[i]['barrio'];
+          aux3 = dirList[i]['ciudad'];
+        }
+      }
+      //Utilizo una url para cargarla como imagen
+
+      setState(() {
+        if (imagenPerfil != '') {
+          direccion = aux;
+          barrio = aux2;
+          ciudad = aux3;
+        }
+      });
+      dirList = [];
     });
   }
 
@@ -147,24 +181,27 @@ class _PerfilState extends State<Perfil> {
                             const SizedBox(height: 12),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               // mainAxisAlignment: MainAxisAlignment.end,
                               children: <Widget>[
+                                const VerticalDivider(
+                                  width: 36,
+                                  thickness: 1,
+                                  indent: 20,
+                                  endIndent: 0,
+                                ),
                                 const Icon(Icons.location_on_outlined),
                                 const SizedBox(
                                   width: 10,
                                 ),
-                                GetX<UsuarioController>(
-                                    builder: (usuarioController) {
-                                  return Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(usuarioController.user.value.name),
-                                      Text(usuarioController.user.value.correo),
-                                      Text(usuarioController.user.value.edad),
-                                    ],
-                                  );
-                                })
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(direccion),
+                                    Text(barrio),
+                                    Text(ciudad),
+                                  ],
+                                )
                               ],
                             )
                           ]),

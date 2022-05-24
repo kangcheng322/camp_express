@@ -279,7 +279,8 @@ class _EditarPerfilState extends State<EditarPerfil> {
 
                     await usuarioController.updateUser(nameController.text,
                         edadController.text, generoController.text);
-                    usuarioController.uploadStatusImage();
+                    usuarioController.uploadStatusImage(nameController.text,
+                        edadController.text, generoController.text);
                     usuarioController.image = File('');
                     Get.back();
                   },

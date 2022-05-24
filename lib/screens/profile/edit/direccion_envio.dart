@@ -1,4 +1,5 @@
 import 'package:camp_express/controller/address_controller.dart';
+import 'package:camp_express/controller/usuario_controller.dart';
 import 'package:camp_express/screens/profile/perfil.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -14,13 +15,19 @@ class Direccion extends StatefulWidget {
 }
 
 class _DireccionState extends State<Direccion> {
-  String dropdownvalue = 'C.C.';
   final direccionController = TextEditingController();
   final barrioController = TextEditingController();
   final ciudadController = TextEditingController();
   final celularController = TextEditingController();
   final nombreController = TextEditingController();
   final numeroController = TextEditingController();
+  late String dropdownvalue;
+  @override
+  void initState() {
+    super.initState();
+    dropdownvalue = 'C.C.';
+  }
+
   var items = [
     'C.C.',
     'C.E.',
@@ -333,7 +340,16 @@ class _DireccionState extends State<Direccion> {
                       latitud = "";
                       longitud = "";
                     });
-                    Get.to(() =>  Perfil());
+                    UsuarioController usuarioController = Get.find();
+                    usuarioController.saveToDatabaseDirection(
+                      direccionController.text,
+                      barrioController.text,
+                      ciudadController.text,
+                      celularController.text,
+                      nombreController.text,
+                      dropdownvalue + ' : ' + numeroController.text,
+                    );
+                    Get.to(() => const Perfil());
                   }
                 },
                 style: ElevatedButton.styleFrom(

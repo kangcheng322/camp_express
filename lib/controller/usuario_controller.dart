@@ -155,7 +155,7 @@ class UsuarioController extends GetxController {
   }
 
   //Subir imagen a Storage
-  void uploadStatusImage() async {
+  void uploadStatusImage(String nombre, String edad, String genero) async {
     String url = '';
     //Referenciar storage
     final storageRef = FirebaseStorage.instance.ref().child('Perfiles_fotos');
@@ -168,11 +168,11 @@ class UsuarioController extends GetxController {
     var imageUrl = await (await uploadTask).ref.getDownloadURL();
     url = imageUrl.toString();
 
-    saveToDatabase(url);
+    saveToDatabase(url, nombre, edad, genero);
   }
 
-  //Guardar datos a Realtime Database
-  void saveToDatabase(String url) {
+  //Guardar datos del perfil de usuario en el Realtime Database
+  void saveToDatabase(String url, String nombre, String edad, String genero) {
     //Tiempo actual
     var dbTimeKey = DateTime.now();
     //Formato de fecha
@@ -183,13 +183,46 @@ class UsuarioController extends GetxController {
     String date = formatDate.format(dbTimeKey);
     String time = formatTime.format(dbTimeKey);
     //Referenciar la base de datos
-    DatabaseReference ref = FirebaseDatabase.instance.ref('Perfiles_fotos');
+    DatabaseReference ref = FirebaseDatabase.instance.ref('Perfiles');
     //Crear el cuerpo que se va a enviar
     var data = {
       'image': url,
       'date': date,
       'time': time,
-      'email': authController.userEmail()
+      'email': authController.userEmail(),
+      'nombre': nombre,
+      'edad': edad,
+      'genero': genero
+    };
+    //Mandar los datos a la base de datos
+    ref.push().set(data);
+  }
+
+  //Guardar datos de la dirección en el Realtime Database
+  void saveToDatabaseDirection(String direccion, String barrio, String ciudad,
+      String celular, String nombre, String documentoIdentidad) {
+    //Tiempo actual
+    var dbTimeKey = DateTime.now();
+    //Formato de fecha
+    var formatDate = DateFormat('MMM d, yyyy');
+    //Formato del tiempo
+    var formatTime = DateFormat('EEEE, hh:mm aaa');
+    //Formatear en fecha y hora
+    String date = formatDate.format(dbTimeKey);
+    String time = formatTime.format(dbTimeKey);
+    //Referenciar la base de datos
+    DatabaseReference ref = FirebaseDatabase.instance.ref('Direcciones');
+    //Crear el cuerpo que se va a enviar
+    var data = {
+      'direccion': direccion,
+      'date': date,
+      'time': time,
+      'email': authController.userEmail(),
+      'nombre': nombre,
+      'barrio': barrio,
+      'ciudad': ciudad,
+      'celular': celular,
+      'documentoIdentidad': documentoIdentidad
     };
     //Mandar los datos a la base de datos
     ref.push().set(data);
