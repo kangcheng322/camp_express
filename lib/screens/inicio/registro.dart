@@ -20,7 +20,7 @@ class Registro extends StatelessWidget {
 
   bool validateData() {
     if (emailController.text == "" || emailController.text.isEmpty) {
-      Get.snackbar('Error', 'Por favor ingrese su dirección',
+      Get.snackbar('Error', 'Por favor ingrese su email',
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Color(0xFF808080),
           colorText: Colors.white,
@@ -32,7 +32,7 @@ class Registro extends StatelessWidget {
     }
 
     if (passwordController.text == "" || passwordController.text.isEmpty) {
-      Get.snackbar('Error', 'Por favor ingrese su barrio',
+      Get.snackbar('Error', 'Por favor ingrese su contraseña',
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Color(0xFF808080),
           colorText: Colors.white,
@@ -44,7 +44,7 @@ class Registro extends StatelessWidget {
     }
 
     if (nameController.text == "" || nameController.text.isEmpty) {
-      Get.snackbar('Error', 'Por favor ingrese su ciudad',
+      Get.snackbar('Error', 'Por favor ingrese su nombre',
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Color(0xFF808080),
           colorText: Colors.white,
@@ -257,7 +257,17 @@ class Registro extends StatelessWidget {
                                         edadController.text,
                                         generoController.text,
                                         emailController.text);
+                                  } else {
+                                    const snackBar = SnackBar(
+                                      content: Text('Llene todos los campos'),
+                                    );
+
+// Find the ScaffoldMessenger in the widget tree
+// and use it to show a SnackBar.
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
                                   }
+
                                   Get.back();
                                 },
                                 style: ElevatedButton.styleFrom(
