@@ -80,6 +80,9 @@ class _CarritoState extends State<Carrito> {
                             .elementAt(index)
                             .subtotal,
                         id: productosController.carrito.elementAt(index).id,
+                        cantidadCarrito: productosController.carrito
+                            .elementAt(index)
+                            .cantidadCarrito,
                       );
                     },
                     separatorBuilder: (BuildContext context, int index) =>

@@ -10,13 +10,15 @@ class CartItem extends StatelessWidget {
   final String title;
   final String assetPath;
   final String id;
-  const CartItem({
-    Key? key,
-    this.price = 0,
-    this.title = 'Título del producto',
-    this.assetPath = '',
-    required this.id,
-  }) : super(key: key);
+  final int cantidadCarrito;
+  const CartItem(
+      {Key? key,
+      this.price = 0,
+      this.title = 'Título del producto',
+      this.assetPath = '',
+      required this.id,
+      required this.cantidadCarrito})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,13 +42,13 @@ class CartItem extends StatelessWidget {
               height: 105,
               fit: BoxFit.cover,
             ),
-            const SizedBox(width: 60),
+            const SizedBox(width: 10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  title,
+                  title + ' x ' + cantidadCarrito.toString(),
                   style: GoogleFonts.lato(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
@@ -55,7 +57,7 @@ class CartItem extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  '${this.price}\$',
+                  'Subtotal: ${this.price}\$',
                   style: GoogleFonts.lato(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -64,7 +66,7 @@ class CartItem extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(width: 80),
+            const SizedBox(width: 20),
             InkWell(
                 onTap: () {
                   productosController.eliminarUnCarrito(id);
