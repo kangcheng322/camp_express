@@ -119,6 +119,7 @@ class _SearchPageState extends State<SearchPage> {
                         image: b.elementAt(index).image,
                         favorito: b.elementAt(index).favorito,
                         id: b.elementAt(index).id,
+                        descripcion: b.elementAt(index).descripcion,
                       ),
                     );
                   },

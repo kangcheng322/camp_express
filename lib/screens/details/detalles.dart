@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:camp_express/widgets/details/build_button.dart';
 import 'package:unicons/unicons.dart';
-
 import '../../controller/productos_controller.dart';
 import '../../widgets/details/cantidad.dart';
 
@@ -15,16 +13,18 @@ class Detalles extends StatefulWidget {
   final String image;
   final bool favorito;
   final String id;
-  const Detalles({
-    Key? key,
-    required this.nombre,
-    required this.precio,
-    required this.cantidad,
-    required this.rating,
-    required this.image,
-    required this.favorito,
-    required this.id,
-  }) : super(key: key);
+  final String descripcion;
+  const Detalles(
+      {Key? key,
+      required this.nombre,
+      required this.precio,
+      required this.cantidad,
+      required this.rating,
+      required this.image,
+      required this.favorito,
+      required this.id,
+      required this.descripcion})
+      : super(key: key);
 
   @override
   _DetailsPageState createState() => _DetailsPageState();
@@ -188,25 +188,56 @@ class _DetailsPageState extends State<Detalles> {
                       ),
                     ],
                   ),
-                  const Padding(
+                  Padding(
                       padding: EdgeInsets.only(top: 20),
-                      child: Text(
-                        'Producto 100% del campo colombiano, cultivado y cuidado siempre con los mejores estándares... ',
-                        style: TextStyle(
-                            fontFamily: 'Raleway',
-                            fontWeight: FontWeight.w400,
-                            fontSize: 17,
-                            color: Colors.black54),
-                      )),
+                      child: widget.descripcion.isEmpty
+                          ? const Text(
+                              'Producto 100% del campo colombiano, cultivado y cuidado siempre con los mejores estándares de calidad',
+                              style: TextStyle(
+                                  fontFamily: 'Raleway',
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 17,
+                                  color: Colors.black54),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis)
+                          : Text(widget.descripcion,
+                              style: const TextStyle(
+                                  fontFamily: 'Raleway',
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 17,
+                                  color: Colors.black54),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis)),
                   Container(
                       alignment: Alignment.centerRight,
                       padding: const EdgeInsets.only(left: 45),
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              primary: Colors.white,
+                              primary: Colors.transparent,
                               padding: const EdgeInsets.all(0.0),
                               elevation: 0.0),
-                          onPressed: () {},
+                          onPressed: () {
+                            showDialog<String>(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                title: const Text('Descripción'),
+                                content: const Text(
+                                    'Producto 100% del campo colombiano, cultivado y cuidado siempre con los mejores estándares de calidad'),
+                                actions: <Widget>[
+                                  /* TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(context, 'Cancel'),
+                                    child: const Text('Cancel'),
+                                  ),*/
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(context, 'OK'),
+                                    child: const Text('OK'),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
                           child: const Text(
                             'Ver más ->',
                             style: TextStyle(

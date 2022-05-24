@@ -55,7 +55,8 @@ class ProductosController extends GetxController {
               postList[i]['favorito'] == 'false' ? false : true,
               postList[i]['email'].toString(),
               0,
-              0),
+              0,
+              postList[i]['description']),
         );
         _productoPos.add(keyList[i]);
       }
@@ -83,18 +84,18 @@ class ProductosController extends GetxController {
         if (favList[i]['email'] == authController.userEmail()) {
           _favoritos.add(
             Producto(
-              favList[i]['key'].toString(),
-              favList[i]['product'].toString(),
-              double.parse(favList[i]['price'].toString()),
-              "0\$ - 149.0\$",
-              favList[i]['quantity'].toString(),
-              5.0,
-              favList[i]['image'].toString(),
-              true,
-              favList[i]['email'].toString(),
-              0,
-              0,
-            ),
+                favList[i]['key'].toString(),
+                favList[i]['product'].toString(),
+                double.parse(favList[i]['price'].toString()),
+                "0\$ - 149.0\$",
+                favList[i]['quantity'].toString(),
+                5.0,
+                favList[i]['image'].toString(),
+                true,
+                favList[i]['email'].toString(),
+                0,
+                0,
+                favList[i]['description']),
           );
           _productoPosFav.add(favkeyList[i]);
         }
@@ -124,18 +125,18 @@ class ProductosController extends GetxController {
         if (carList[i]['email'] == authController.userEmail()) {
           _carrito.add(
             Producto(
-              carList[i]['key'].toString(),
-              carList[i]['product'].toString(),
-              double.parse(carList[i]['price'].toString()),
-              "0\$ - 149.0\$",
-              carList[i]['quantity'].toString(),
-              5.0,
-              carList[i]['image'].toString(),
-              true,
-              carList[i]['email'].toString(),
-              carList[i]['cantidadCarrito'],
-              carList[i]['subtotal'].toDouble(),
-            ),
+                carList[i]['key'].toString(),
+                carList[i]['product'].toString(),
+                double.parse(carList[i]['price'].toString()),
+                "0\$ - 149.0\$",
+                carList[i]['quantity'].toString(),
+                5.0,
+                carList[i]['image'].toString(),
+                true,
+                carList[i]['email'].toString(),
+                carList[i]['cantidadCarrito'],
+                carList[i]['subtotal'].toDouble(),
+                ''),
           );
           _productoPosCar.add(carkeyList[i]);
           _total.value = total +
@@ -176,6 +177,7 @@ class ProductosController extends GetxController {
         'price': producto.precio,
         'quantity': producto.cantidad,
         'email': authController.userEmail(),
+        'description': producto.descripcion
       };
       ref.push().set(data2);
     } else {
@@ -206,6 +208,7 @@ class ProductosController extends GetxController {
           'price': producto.precio,
           'quantity': producto.cantidad,
           'email': authController.userEmail(),
+          'description': producto.descripcion
         };
         ref.push().set(data2);
       }

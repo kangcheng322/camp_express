@@ -30,6 +30,7 @@ Padding construirCuadro(int i, Size size, List<Producto> tipo) {
               image: tipo.elementAt(i).image,
               favorito: tipo.elementAt(i).favorito,
               id: tipo.elementAt(i).id,
+              descripcion: tipo.elementAt(i).descripcion,
             ),
           );
         },
@@ -38,14 +39,15 @@ Padding construirCuadro(int i, Size size, List<Producto> tipo) {
             Padding(
               padding: EdgeInsets.only(
                 top: size.height * 0.03,
-                left: size.width * 0.03,
+                //left: size.width * 0.03,
                 bottom: size.height * 0.04,
               ),
               child: SizedBox(
-                width: size.width * 0.3,
+                width: size.width * 0.4,
                 height: size.height * 0.18,
                 child: Obx(() => Image.network(
                       tipo.elementAt(i).image,
+                      fit: BoxFit.fill,
                       errorBuilder: (context, error, stackTrace) {
                         return const CircularProgressIndicator.adaptive();
                       },
