@@ -1,6 +1,7 @@
 import 'package:camp_express/controller/auth_controller.dart';
 import 'package:camp_express/domain/orden.dart';
 import 'package:camp_express/domain/productos.dart';
+import 'package:camp_express/widgets/inicio/input.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 
@@ -16,6 +17,9 @@ class ProductosController extends GetxController {
   var _total = 0.0.obs;
   final List<Orden> _ordenes = <Orden>[].obs;
   var cantCarrito = 0.obs;
+  final List<Producto> _campo = <Producto>[].obs;
+  //final List<String> _productoPosCampo = <String>[].obs;
+  final List<Producto> _artesanias = <Producto>[].obs;
 
   List<Producto> get producto => _producto;
   List<String> get productoPos => _productoPos;
@@ -25,6 +29,9 @@ class ProductosController extends GetxController {
   List<String> get productoPosCar => _productoPosCar;
   double get total => _total.value;
   List<Orden> get ordenes => _ordenes;
+  List<Producto> get campo => _campo;
+  //List<String> get productoPosCampo => _productoPosCampo;
+  List<Producto> get artesanias => _artesanias;
 
   void addProduct() {
     List<dynamic> postList = [];
@@ -149,6 +156,89 @@ class ProductosController extends GetxController {
       }
       carkeyList = [];
       carList = [];
+    });
+  }
+
+  void addCampo() {
+    List<dynamic> postListCampo = [];
+    List<String> keyListCampo = [];
+    //Referenciar la base de datos
+    DatabaseReference postsRef = FirebaseDatabase.instance.ref('Productos');
+    //Escuchar y obtener los valores del Realtime Database
+    postsRef.onValue.listen((DatabaseEvent event) {
+      //productosController.reiniciar();
+      var data = event.snapshot.value;
+      if (data != null) {
+        Map<String, dynamic>.from(data as dynamic).forEach((key, value) {
+          keyListCampo.add(key);
+          postListCampo.add(value);
+        });
+      }
+      _campo.clear();
+      for (var i = 0; i < postListCampo.length; i++) {
+        if (postListCampo[i]['categoria'] == 'Campo') {
+          _campo.add(
+            Producto(
+                postListCampo[i]['key'].toString(),
+                postListCampo[i]['product'].toString(),
+                double.parse(postListCampo[i]['price']),
+                "0\$ - 149.0\$",
+                postListCampo[i]['quantity'].toString(),
+                5.0,
+                postListCampo[i]['image'].toString(),
+                postListCampo[i]['favorito'] == 'false' ? false : true,
+                postListCampo[i]['email'].toString(),
+                0,
+                0,
+                postListCampo[i]['description'],
+                postListCampo[i]['categoria']),
+          );
+          // _productoPosCampo.add(keyListCampo[i]);
+        }
+      }
+      keyListCampo = [];
+      postListCampo = [];
+    });
+  }
+
+  void addArtesanias() {
+    List<dynamic> postListArtesanias = [];
+    List<String> keyListArtesanias = [];
+    //Referenciar la base de datos
+    DatabaseReference postsRef = FirebaseDatabase.instance.ref('Productos');
+    //Escuchar y obtener los valores del Realtime Database
+    postsRef.onValue.listen((DatabaseEvent event) {
+      //productosController.reiniciar();
+      var data = event.snapshot.value;
+      if (data != null) {
+        Map<String, dynamic>.from(data as dynamic).forEach((key, value) {
+          keyListArtesanias.add(key);
+          postListArtesanias.add(value);
+        });
+      }
+      _artesanias.clear();
+      for (var i = 0; i < postListArtesanias.length; i++) {
+        if (postListArtesanias[i]['categoria'] == 'Artesanias') {
+          _artesanias.add(
+            Producto(
+                postListArtesanias[i]['key'].toString(),
+                postListArtesanias[i]['product'].toString(),
+                double.parse(postListArtesanias[i]['price']),
+                "0\$ - 149.0\$",
+                postListArtesanias[i]['quantity'].toString(),
+                5.0,
+                postListArtesanias[i]['image'].toString(),
+                postListArtesanias[i]['favorito'] == 'false' ? false : true,
+                postListArtesanias[i]['email'].toString(),
+                0,
+                0,
+                postListArtesanias[i]['description'],
+                postListArtesanias[i]['categoria']),
+          );
+        }
+      }
+      keyListArtesanias = [];
+      postListArtesanias = [];
     });
   }
 

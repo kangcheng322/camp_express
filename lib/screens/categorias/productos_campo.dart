@@ -16,7 +16,7 @@ class _ProductosCampoState extends State<ProductosCampo> {
   @override
   void initState() {
     super.initState();
-    productosController.addFavProduct();
+    productosController.addCampo();
   }
 
   @override
@@ -31,6 +31,13 @@ class _ProductosCampoState extends State<ProductosCampo> {
           automaticallyImplyLeading: false,
           titleSpacing: 0,
           leadingWidth: size.width * 0.15,
+          leading: IconButton(
+            onPressed: () {
+              Get.back();
+            },
+            icon: const Icon(Icons.arrow_back,
+                color: Color.fromARGB(255, 78, 160, 62)),
+          ),
           title: Image.asset(
             'assets/images/logo.png',
             height: size.height * 0.07,
@@ -51,7 +58,7 @@ class _ProductosCampoState extends State<ProductosCampo> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Favoritos',
+                      'Campo',
                       style: GoogleFonts.poppins(
                         color: const Color.fromARGB(255, 78, 160, 62),
                         fontSize: 32,
@@ -68,32 +75,33 @@ class _ProductosCampoState extends State<ProductosCampo> {
                       top: size.height * 0.03,
                       left: size.width * 0.03,
                     ),
-                    child: ListView(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      primary: true,
-                      children: <Widget>[
-                        SizedBox(
-                          width: size.width,
-                          height: size.height * 1.02,
-                          child: Obx(() => GridView.builder(
-                                primary: false,
-                                physics: const NeverScrollableScrollPhysics(),
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                  childAspectRatio: 0.68,
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 9,
-                                  mainAxisSpacing: 9,
-                                ),
-                                itemCount: productosController.favoritos.length,
-                                itemBuilder: (context, i) {
-                                  return construirCuadro(
-                                      i, size, productosController.favoritos);
-                                },
-                              )),
-                        ),
-                      ],
+                    child: Obx(
+                      () => ListView(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        physics: const ClampingScrollPhysics(),
+                        primary: false,
+                        children: [
+                          GridView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            physics: const ClampingScrollPhysics(),
+                            primary: false,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              childAspectRatio: 0.68,
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 9,
+                              mainAxisSpacing: 9,
+                            ),
+                            itemCount: productosController.campo.length,
+                            itemBuilder: (context, i) {
+                              return construirCuadro(
+                                  i, size, productosController.campo);
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

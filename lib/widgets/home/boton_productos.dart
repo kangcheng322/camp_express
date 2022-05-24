@@ -1,3 +1,4 @@
+import 'package:camp_express/screens/categorias/artesanias.dart';
 import 'package:camp_express/screens/categorias/productos_campo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,7 +17,9 @@ Center botonProductos(Size size, String text) {
           onPressed: () {
             if (text == 'Campo') {
               Get.to(const ProductosCampo());
-            } else {}
+            } else {
+              Get.to(const Artesanias());
+            }
           },
           child: Text(
             text,

@@ -29,6 +29,8 @@ class _PresentacionState extends State<Presentacion>
     productosController.addProduct();
     productosController.addFavProduct();
     productosController.addCarProduct();
+    productosController.addCampo();
+    productosController.addArtesanias();
   }
 
   void dispose() {

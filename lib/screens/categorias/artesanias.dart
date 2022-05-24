@@ -4,19 +4,19 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../controller/productos_controller.dart';
 import '../../widgets/home/cuadro_productos.dart';
 
-class Favoritos extends StatefulWidget {
-  const Favoritos({Key? key}) : super(key: key);
+class Artesanias extends StatefulWidget {
+  const Artesanias({Key? key}) : super(key: key);
 
   @override
-  _FavoritosState createState() => _FavoritosState();
+  _ArtesaniasState createState() => _ArtesaniasState();
 }
 
-class _FavoritosState extends State<Favoritos> {
+class _ArtesaniasState extends State<Artesanias> {
   ProductosController productosController = Get.find();
   @override
   void initState() {
     super.initState();
-    productosController.addFavProduct();
+    productosController.addArtesanias();
   }
 
   @override
@@ -31,6 +31,13 @@ class _FavoritosState extends State<Favoritos> {
           automaticallyImplyLeading: false,
           titleSpacing: 0,
           leadingWidth: size.width * 0.15,
+          leading: IconButton(
+            onPressed: () {
+              Get.back();
+            },
+            icon: const Icon(Icons.arrow_back,
+                color: Color.fromARGB(255, 78, 160, 62)),
+          ),
           title: Image.asset(
             'assets/images/logo.png',
             height: size.height * 0.07,
@@ -51,7 +58,7 @@ class _FavoritosState extends State<Favoritos> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Favoritos',
+                      'Artesanias',
                       style: GoogleFonts.poppins(
                         color: const Color.fromARGB(255, 78, 160, 62),
                         fontSize: 32,
@@ -87,10 +94,10 @@ class _FavoritosState extends State<Favoritos> {
                               crossAxisSpacing: 9,
                               mainAxisSpacing: 9,
                             ),
-                            itemCount: productosController.favoritos.length,
+                            itemCount: productosController.artesanias.length,
                             itemBuilder: (context, i) {
                               return construirCuadro(
-                                  i, size, productosController.favoritos);
+                                  i, size, productosController.artesanias);
                             },
                           ),
                         ],
