@@ -228,17 +228,13 @@ class _DetailsPageState extends State<Detalles> {
                                             fontFamily: 'Raleway',
                                             fontWeight: FontWeight.w400,
                                             fontSize: 17,
-                                            color: Colors.black54),
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis)
+                                            color: Colors.black54),)
                                     : Text(widget.descripcion,
                                         style: const TextStyle(
                                             fontFamily: 'Raleway',
                                             fontWeight: FontWeight.w400,
                                             fontSize: 17,
-                                            color: Colors.black54),
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis),
+                                            color: Colors.black54),),
                                 actions: <Widget>[
                                   /* TextButton(
                                     onPressed: () =>
