@@ -56,7 +56,8 @@ class ProductosController extends GetxController {
               postList[i]['email'].toString(),
               0,
               0,
-              postList[i]['description']),
+              postList[i]['description'],
+              postList[i]['categoria']),
         );
         _productoPos.add(keyList[i]);
       }
@@ -95,7 +96,8 @@ class ProductosController extends GetxController {
                 favList[i]['email'].toString(),
                 0,
                 0,
-                favList[i]['description']),
+                favList[i]['description'],
+                ''),
           );
           _productoPosFav.add(favkeyList[i]);
         }
@@ -136,6 +138,7 @@ class ProductosController extends GetxController {
                 carList[i]['email'].toString(),
                 carList[i]['cantidadCarrito'],
                 carList[i]['subtotal'].toDouble(),
+                '',
                 ''),
           );
           _productoPosCar.add(carkeyList[i]);

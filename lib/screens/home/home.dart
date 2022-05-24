@@ -65,7 +65,7 @@ class _HomeState extends State<Home> {
                   ),
                   onPressed: () => Navigator.of(context).push(
                       MaterialPageRoute(builder: (_) => const SearchPage())),
-                  color: Colors.purple,
+                  color: const Color.fromARGB(255, 78, 160, 62),
                   iconSize: 40,
                 )),
           ),
@@ -94,16 +94,16 @@ class _HomeState extends State<Home> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(right: size.width * 0.1),
-                    child: Icon(
+                    /*child: Icon(
                       UniconsLine.search_alt,
                       color: const Color.fromARGB(255, 78, 160, 62),
                       size: size.width * 0.06,
-                    ),
+                    ),*/
                   ),
                 ],
               ),
             ),
-            //construirBotonesProductos(size),
+            construirBotonesProductos(size),
             //populares(size),
             todoLosProductos(size),
           ],

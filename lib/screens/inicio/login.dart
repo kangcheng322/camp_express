@@ -98,6 +98,9 @@ class _LoginState extends State<Login> {
                         //         style: TextStyle(
                         //             color: Colors.white,
                         //             decoration: TextDecoration.underline))),
+                        const SizedBox(
+                          height: 40,
+                        ),
                         ElevatedButton(
                             key: const Key('boton_iniciar_sesión'),
                             onPressed: () async {

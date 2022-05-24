@@ -258,6 +258,7 @@ class Registro extends StatelessWidget {
                                         generoController.text,
                                         emailController.text);
                                   }
+                                  Get.back();
                                 },
                                 style: ElevatedButton.styleFrom(
                                     primary: const Color.fromARGB(
@@ -286,8 +287,7 @@ class Registro extends StatelessWidget {
                                       decoration: TextDecoration.underline),
                                 ),
                                 onPressed: () {
-                                  Navigator.pushReplacementNamed(
-                                      context, "login");
+                                  Get.back();
                                 },
                               )),
                           Container(

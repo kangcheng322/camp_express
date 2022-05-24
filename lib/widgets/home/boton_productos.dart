@@ -1,4 +1,6 @@
+import 'package:camp_express/screens/categorias/productos_campo.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 Center botonProductos(Size size, String text) {
   return Center(
@@ -12,7 +14,9 @@ Center botonProductos(Size size, String text) {
         height: size.height * 0.06,
         child: OutlinedButton(
           onPressed: () {
-            //
+            if (text == 'Campo') {
+              Get.to(const ProductosCampo());
+            } else {}
           },
           child: Text(
             text,

@@ -12,6 +12,7 @@ class Producto {
   double subtotal;
   String email;
   String descripcion;
+  String categoria;
   Producto(
       this.id,
       this.nombre,
@@ -24,5 +25,6 @@ class Producto {
       this.email,
       this.cantidadCarrito,
       this.subtotal,
-      this.descripcion);
+      this.descripcion,
+      this.categoria);
 }

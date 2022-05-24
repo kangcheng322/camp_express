@@ -7,11 +7,13 @@ import 'package:get/get.dart';
 class EditarProducto extends StatefulWidget {
   final List<String> llave;
   final int indice;
-  const EditarProducto({
-    Key? key,
-    required this.llave,
-    required this.indice,
-  }) : super(key: key);
+  final List<dynamic> producto;
+  const EditarProducto(
+      {Key? key,
+      required this.llave,
+      required this.indice,
+      required this.producto})
+      : super(key: key);
 
   @override
   State<EditarProducto> createState() => _EditarProductoState();
@@ -23,7 +25,17 @@ class _EditarProductoState extends State<EditarProducto> {
   final descripcion = TextEditingController();
   final price = TextEditingController();
   final quantity = TextEditingController();
+  late String dropdownvalue;
+  void initState() {
+    super.initState();
+    // Initial Selected Value
+    dropdownvalue = 'Campo';
+  }
 
+  var items = [
+    'Campo',
+    'Artesanias',
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,6 +108,28 @@ class _EditarProductoState extends State<EditarProducto> {
                     labelText: 'Cantidad'),
               ),
             ),
+            DropdownButton(
+              // Initial Value
+              value: dropdownvalue,
+
+              // Down Arrow Icon
+              icon: const Icon(Icons.keyboard_arrow_down),
+
+              // Array list of items
+              items: items.map((String items) {
+                return DropdownMenuItem(
+                  value: items,
+                  child: Text(items),
+                );
+              }).toList(),
+              // After selecting the desired option,it will
+              // change button value to selected value
+              onChanged: (String? newValue) {
+                setState(() {
+                  dropdownvalue = newValue!;
+                });
+              },
+            ),
             Row(
               children: [
                 const SizedBox(width: 8),
@@ -120,8 +154,8 @@ class _EditarProductoState extends State<EditarProducto> {
                 const SizedBox(width: 8),
                 Column(children: [
                   MaterialButton(
-                      color: Colors.blue,
-                      child: const Text("Pick Image from Gallery",
+                      color: const Color.fromARGB(255, 78, 160, 62),
+                      child: const Text("Escoger de la galería",
                           style: TextStyle(
                               color: Colors.white70,
                               fontWeight: FontWeight.bold)),
@@ -129,8 +163,8 @@ class _EditarProductoState extends State<EditarProducto> {
                         agregarProductoController.pickImageUpdate();
                       }),
                   MaterialButton(
-                      color: Colors.blue,
-                      child: const Text("Pick Image from Camera",
+                      color: const Color.fromARGB(255, 78, 160, 62),
+                      child: const Text("Tomar foto",
                           style: TextStyle(
                               color: Colors.white70,
                               fontWeight: FontWeight.bold)),
@@ -146,12 +180,14 @@ class _EditarProductoState extends State<EditarProducto> {
             ElevatedButton(
                 onPressed: () {
                   agregarProductoController.updateDatabase(
+                      widget.producto,
                       widget.llave,
                       widget.indice,
                       nameProduct.text,
                       descripcion.text,
                       price.text,
-                      quantity.text);
+                      quantity.text,
+                      dropdownvalue);
                   agregarProductoController.imageUpdate = File('');
                   Get.back();
                 },

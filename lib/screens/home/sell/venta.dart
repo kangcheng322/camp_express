@@ -138,6 +138,7 @@ class _VentaState extends State<Venta> {
                                 ? Get.to(() => EditarProducto(
                                       llave: newKeyList,
                                       indice: index,
+                                      producto: newList,
                                     ))
                                 : eliminarProducto(index),
                             itemBuilder: (context) => [

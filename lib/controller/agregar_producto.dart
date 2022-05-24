@@ -64,7 +64,7 @@ class AgregarProductoController extends GetxController {
 
   //Subir imagen a Storage
   void uploadStatusImage(String nameProduct, String descripcion, String price,
-      String quantity) async {
+      String quantity, String categoria) async {
     String url = '';
     //Referenciar storage
     final storageRef = FirebaseStorage.instance.ref().child('Productos');
@@ -77,12 +77,12 @@ class AgregarProductoController extends GetxController {
     var imageUrl = await (await uploadTask).ref.getDownloadURL();
     url = imageUrl.toString();
 
-    saveToDatabase(url, nameProduct, descripcion, price, quantity);
+    saveToDatabase(url, nameProduct, descripcion, price, quantity, categoria);
   }
 
   //Guardar datos a Realtime Database
   void saveToDatabase(String url, String nameProduct, String descripcion,
-      String price, String quantity) {
+      String price, String quantity, String categoria) {
     //Tiempo actual
     var dbTimeKey = DateTime.now();
     //Formato de fecha
@@ -108,27 +108,37 @@ class AgregarProductoController extends GetxController {
       'price': price,
       'quantity': quantity,
       'email': authController.userEmail(),
-      'favorito': 'false'
+      'favorito': 'false',
+      'categoria': categoria
     };
 
     //Mandar los datos a la base de datos
     ref.push().set(data);
   }
 
-  Future<void> updateDatabase(var newKeyList, int posicion, String nameProduct,
-      String descripcion, String price, String quantity) async {
+  Future<void> updateDatabase(
+      var newList,
+      var newKeyList,
+      int posicion,
+      String nameProduct,
+      String descripcion,
+      String price,
+      String quantity,
+      String categoria) async {
     try {
       String url = '';
       //Referenciar storage
       final storageRef = FirebaseStorage.instance.ref().child('Productos');
       //Tiempo actual
       DateTime timeKey = DateTime.now();
-      //Agregar imagen a la carpeta
-      final UploadTask uploadTask =
-          storageRef.child('$timeKey.jpg').putFile(imageUpdate);
-      //Obtener url
-      var imageUrl = await (await uploadTask).ref.getDownloadURL();
-      url = imageUrl.toString();
+      if (imageUpdate.path.isNotEmpty) {
+        //Agregar imagen a la carpeta
+        final UploadTask uploadTask =
+            storageRef.child('$timeKey.jpg').putFile(imageUpdate);
+        //Obtener url
+        var imageUrl = await (await uploadTask).ref.getDownloadURL();
+        url = imageUrl.toString();
+      }
       //Tiempo actual
       var dbTimeKey = DateTime.now();
       //Formato de fecha
@@ -138,7 +148,21 @@ class AgregarProductoController extends GetxController {
       //Formatear en fecha y hora
       String date = formatDate.format(dbTimeKey);
       String time = formatTime.format(dbTimeKey);
-
+      if (url.isEmpty) {
+        url = newList[posicion]['image'];
+      }
+      if (nameProduct.isEmpty) {
+        nameProduct = newList[posicion]['product'];
+      }
+      if (descripcion.isEmpty) {
+        descripcion = newList[posicion]['description'];
+      }
+      if (price.isEmpty) {
+        price = newList[posicion]['price'];
+      }
+      if (quantity.isEmpty) {
+        quantity = newList[posicion]['quantity'];
+      }
       //Crear el cuerpo que se va a enviar
       var data = {
         'image': url,
@@ -148,7 +172,8 @@ class AgregarProductoController extends GetxController {
         'description': descripcion,
         'price': price,
         'quantity': quantity,
-        'email': authController.userEmail()
+        'email': authController.userEmail(),
+        'categoria': categoria
       };
 
       FirebaseDatabase.instance
