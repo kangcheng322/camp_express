@@ -221,8 +221,24 @@ class _DetailsPageState extends State<Detalles> {
                               context: context,
                               builder: (BuildContext context) => AlertDialog(
                                 title: const Text('Descripción'),
-                                content: const Text(
-                                    'Producto 100% del campo colombiano, cultivado y cuidado siempre con los mejores estándares de calidad'),
+                                content: widget.descripcion.isEmpty
+                                    ? const Text(
+                                        'Producto 100% del campo colombiano, cultivado y cuidado siempre con los mejores estándares de calidad',
+                                        style: TextStyle(
+                                            fontFamily: 'Raleway',
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 17,
+                                            color: Colors.black54),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis)
+                                    : Text(widget.descripcion,
+                                        style: const TextStyle(
+                                            fontFamily: 'Raleway',
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 17,
+                                            color: Colors.black54),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis),
                                 actions: <Widget>[
                                   /* TextButton(
                                     onPressed: () =>
