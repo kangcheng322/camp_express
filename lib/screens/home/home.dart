@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:unicons/unicons.dart';
 
 import '../../controller/productos_controller.dart';
+import 'busqueda.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -62,9 +63,8 @@ class _HomeState extends State<Home> {
                     color: const Color.fromARGB(255, 78, 160, 62),
                     size: size.height * 0.025,
                   ),
-                  onPressed: () {
-                    //
-                  },
+                  onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const SearchPage())),
                   color: Colors.purple,
                   iconSize: 40,
                 )),
